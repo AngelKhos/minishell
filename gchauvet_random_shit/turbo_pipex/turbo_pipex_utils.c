@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:33:36 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/02 15:36:51 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:43:48 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "turbo_pipex.h"
 #include <unistd.h>
 
+//just la copy de old_pipex/utils
 char	*find_loop(char	**paths, char	*path_no_cmd, char *cmd)
 {
 	char	*path;
