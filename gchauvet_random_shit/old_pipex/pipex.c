@@ -64,7 +64,7 @@ void	child2_proc(char **argv, char **envp, int *pipes, int pid[2])
 int	main(int argc, char **argv, char **envp)
 {
 	int	pid[2];
-	int	help;
+	int	help; //faudra renommer ton truc chef
 	int	pipes[2];
 
 	if (!envp)
