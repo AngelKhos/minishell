@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:00:31 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/05 15:44:05 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:30:56 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,42 @@
 #include "turbo_pipex.h"
 
 
-void	do_fork(char **cmd, char **env, int index)
+void	do_fork(char *argv, char **env)
 {
-	(void)cmd;
-	(void)env;
+	int	pipes[2];
 	int	pid;
 
+	pipe(pipes);
 	pid = fork();
 	if (pid == 0)
 	{
-		execute(cmd[index], env, 12);
-		ft_printf("bonjour\n");
+		close(pipes[0]);
+		dup2(pipes[1], STDOUT_FILENO);
+		execute(argv, env);
 		exit(0);
+	}
+	else
+	{
+		close(pipes[1]);
+		dup2(pipes[0], STDIN_FILENO);
+		waitpid(pid, NULL, 0);
 	}
 }
 
 int	main(int argc, char **argv, char **env)
 {
+	int infile;
+	int outfile;
 	int	i;
 
-	i = 0;
+	infile = open("infile.txt", O_RDONLY, 0777);
+	outfile = open("outfile.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	dup2(infile, STDIN_FILENO);
+	i = 1;
 	while (i < argc - 1) {
-		do_fork(argv, env, i);
-		wait(NULL);
+		do_fork(argv[i], env);
 		i++;
 	}
+	dup2(outfile, STDOUT_FILENO);
+	execute(argv[argc - 1], env);
 }
