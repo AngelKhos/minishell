@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:46:55 by authomas          #+#    #+#             */
-/*   Updated: 2025/05/09 16:11:05 by authomas         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:55:08 by authomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,18 @@ void printenv(char **envp)
 
 t_ast *tree_from_env(char *envstr)
 {
-	/* TODO */
+	t_ast *new;
+	char *adr;
+	
+	adr = strchr(envstr, '=');
+	if (adr)
+	{
+		new->value = strdup(adr + 1);
+		*adr = '\0';
+	}
+	new->key = strdup(str);
+	new->left = NULL;
+	new->right = NULL;
 }
 
 t_ast *tree_insert(t_ast *node, t_ast *leaf)
@@ -32,7 +43,17 @@ t_ast *tree_insert(t_ast *node, t_ast *leaf)
 
 t_ast *tree_search(t_ast *root, char *key)
 {
-	/* TODO */
+	if(!root)
+		return (NULL);
+	while (root)
+	{
+		if(ft_strncmp(root->key, key, -1) > 0)
+			root = root->right;
+		else if(ft_strncmp(root->key, key, -1) < 0)
+			root = root->left;
+		else
+			return(root);
+	}
 }
 
 void tree_destroy(t_ast *root)
@@ -53,15 +74,7 @@ char **tree_to_envp(t_ast *root)
 
 int main(int argc, char **argv, char **envp)
 {
-	char *str = "OUI=ALED";
-	char *adr = strchr(str, '=');
-	if (adr)
-	{
-		char *value = strdup(adr + 1);
-		*adr = '\0';
-	}
-	char *key = strdup(str);
-
+	
 	printenv(envp);
 	return (0);
 }
