@@ -1,0 +1,6 @@
+oui
+bonjour
+bonsoir
+minishell
+alaide
+wizard
