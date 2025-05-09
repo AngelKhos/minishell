@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   turbo_pipex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:00:31 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/07 15:44:54 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:40:56 by authomas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,21 @@
 #include <sys/wait.h>
 #include "turbo_pipex.h"
 
-void	here_doc()
+void	here_doc(char *argv)
 {
+	char	*end_message = "fin";
+	char	*line;
 	int	pipes[2];
 	int	pid;
+	int here_doc;
 
 	pipe(pipes);
 	pid = fork();
+	if (pid == 0)
+	{
+		here_doc = open(".tmp_here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	}
+	pud2()
 }
 
 void	do_fork(char *argv, char **env)
@@ -63,8 +71,7 @@ int	main(int argc, char **argv, char **env)
 	close(infile);
 	if (ft_strncmp(argv[argc - 1], "here_doc", 8) == 0)
 	{
-
-    }
+	}
 	i = 1;
 	while (i < argc - 1) {
 		do_fork(argv[i], env);
