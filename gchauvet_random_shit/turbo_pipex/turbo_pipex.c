@@ -62,7 +62,9 @@ int	main(int argc, char **argv, char **env)
 	dup2(infile, STDIN_FILENO);
 	close(infile);
 	if (ft_strncmp(argv[argc - 1], "here_doc", 8) == 0)
-	{}
+	{
+
+    }
 	i = 1;
 	while (i < argc - 1) {
 		do_fork(argv[i], env);
