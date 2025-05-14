@@ -2,7 +2,7 @@ NAME=minishell
 # /////////////////////////
 
 CC=cc
-CC_FLAGS=-Wall -Wextra -Werror
+CC_FLAGS=-Wall -Wextra -Werror -lreadline
 
 # /////////////////////////
 
@@ -11,10 +11,10 @@ DIR_DEPS=.deps
 
 # /////////////////////////
 
-SRCS=
+SRCS= core/main.c
 
 LIB= libft/libft.a
-INCS=
+INCS= include/data.h
 OBJS=$(SRCS:srcs/%.c=$(DIR_OBJS)/%.o)
 DEPS=$(SRCS:srcs/%.c=$(DIR_DEPS)/%.d)
 
