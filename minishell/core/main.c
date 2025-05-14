@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.h                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/14 14:49:40 by gchauvet         ###   ########.fr       */
+/*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
+/*   Updated: 2025/05/14 14:54:59 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# define CMD 1 // cat echo ls pwd...
-# define ARG 2 // -l "hello world"...
-# define PIPE 3 // |
-# define OUTFILE 4 // >
-# define INFILE4 5 // <
-# define HEREDOC 6 // <<
-# define APPEND 7 // >>
-# define ENVVAR 8 // $variable_name
+#include <stdlib.h>
 
-typedef struct	s_part
+int main(int argc, char **argv, char **envp)
 {
-	char	*str;
-	int		type;
-}	t_part;
-
-typedef struct	s_cmd
-{
-	t_part	*parts;
-	char	*infile;
-	char	*outfile;
-}	t_cmd;
+    return (EXIT_FAILURE);
+}
