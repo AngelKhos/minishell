@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:41:26 by authomas          #+#    #+#             */
-/*   Updated: 2025/05/09 15:47:25 by authomas         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:08:36 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_ast
 	char *value;
 	struct s_ast *left;
 	struct s_ast *right;
-	/* Potentially add *parent */
+	/* Potentially add *parent, maybe, idk */
 } t_ast;
 
 #endif
