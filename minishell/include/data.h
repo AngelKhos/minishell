@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/14 14:49:40 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:10:48 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define ARG 2 // -l "hello world"...
 # define PIPE 3 // |
 # define OUTFILE 4 // >
-# define INFILE4 5 // <
+# define INFILE 5 // <
 # define HEREDOC 6 // <<
 # define APPEND 7 // >>
 # define ENVVAR 8 // $variable_name
@@ -28,6 +28,12 @@ typedef struct	s_part
 typedef struct	s_cmd
 {
 	t_part	*parts;
+	int		len;
 	char	*infile;
 	char	*outfile;
 }	t_cmd;
+
+typedef struct s_data
+{
+	char	*curent_path;
+}	t_data;
