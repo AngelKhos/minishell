@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/15 15:12:08 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:35:16 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,24 @@
 void	read_cmd(t_data *data, t_cmd *cmd)
 {
 	int	i;
+	int	have_pipe;
+	int	nb_arg;
 
 	i = 0;
+	have_pipe = 0;
+	nb_arg = 0;
 	while (i <= cmd->len)
 	{
 		if (cmd->parts[i].type == CMD)
 		{
-			// exec cmd
-			// check the PIPE and ARG in this if
+			while (have_pipe == 0)
+			{
+				if (cmd->parts[i].type == PIPE)
+					have_pipe = 1;
+				if (cmd->parts[i].type == ARG)
+					nb_arg++;
+				i++;
+			}
 		}
 		else if (cmd->parts[i].type == HEREDOC)
 		{
