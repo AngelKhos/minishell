@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/16 14:35:16 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/18 17:13:50 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,4 @@ void	read_cmd(t_data *data, t_cmd *cmd)
 		}
 		i++;
 	}
-}
+} // tu fais "while (++i <= cmd->len)" et tu set i a -1 au debut stv normer
