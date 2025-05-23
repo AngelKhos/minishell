@@ -6,25 +6,27 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:46:55 by authomas          #+#    #+#             */
-/*   Updated: 2025/05/16 01:36:40 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 16:03:59 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/parsing.h"
 
 t_ast *leaf_from_env(char *envstr)
 {
 	t_ast *new;
-	//char *tmp = ft_strdup(envstr);
 	char *adr;
 	
-	adr = strchr(envstr, '=');
+	new = malloc(sizeof(t_ast));
+	if (!new) 
+		return (NULL);
+	adr = ft_strchr(envstr, '=');
 	if (adr)
 	{
-		new->value = strdup(adr + 1);
+		new->value = ft_strdup(adr + 1);
 		*adr = '\0';
 	}
-	new->key = strdup(envstr);
+	new->key = ft_strdup(envstr);
 	new->left = NULL;
 	new->right = NULL;
 	return (new);
@@ -83,13 +85,44 @@ void tree_destroy(t_ast *root)
 
 t_ast *envp_to_tree(char **envp)
 {
-	t_ast **root;
+	t_ast *root;
+	t_ast *leaf;
+	int i;
 
-	*root = leaf;
-
+	root = leaf_from_env(envp[0]);
+	i = 1;
+	while (envp[i])
+	{
+		leaf = leaf_from_env(envp[i]);
+		tree_insert(root, leaf);
+		///tree_destroy(leaf);//mymysasa, sinon doube-free
+		i++;
+	}
+	return (root);
 }
 
-char **tree_to_envp(t_ast *root)
+// char **tree_to_envp(t_ast *root)
+// {
+// 	/* TODO */
+// }
+
+void print_tree(t_ast *root)
 {
-	/* TODO */
+	if (root == NULL)
+        return;
+	print_tree(root->right);
+    print_tree(root->left);
+	ft_printf("%s = %s\n", root->key, root->value);
+}
+
+
+int main (int ac, char **av, char **envp)
+{
+	(void)ac;
+	(void)av;
+	t_ast *uwu = envp_to_tree(envp);
+	print_tree(uwu);
+
+	tree_destroy(uwu);
+	return (0);
 }

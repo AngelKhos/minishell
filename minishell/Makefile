@@ -2,7 +2,7 @@ NAME=minishell
 # /////////////////////////
 
 CC=cc
-CC_FLAGS=-Wall -Wextra -Werror -lreadline
+CC_FLAGS=-Wall -Wextra -Werror -lreadline -g3
 
 # /////////////////////////
 
@@ -11,7 +11,7 @@ DIR_DEPS=.deps
 
 # /////////////////////////
 
-SRCS= core/main.c
+SRCS= pars/tree_handle.c
 
 LIB= libft/libft.a
 INCS= include/data.h
