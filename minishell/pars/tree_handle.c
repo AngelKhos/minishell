@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:46:55 by authomas          #+#    #+#             */
-/*   Updated: 2025/05/23 16:03:59 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/05/23 18:43:58 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,52 @@ void tree_destroy(t_ast *root)
 	free(root);
 }
 
+// t_ast *leaf_pop(t_ast *parent, int to_pop)
+// {
+// 	t_ast *pop;
+
+// 	if (!to_pop)
+// 	{
+// 		pop = parent->left;
+// 		parent->left = NULL;
+// 	}
+// 	else
+// 	{
+// 		pop = parent->right;
+// 		parent->right = NULL;
+// 	}
+// 	return (pop);
+// }
+
+// void leaf_destroy(t_ast *parent, int to_destroy)
+// {
+// 	t_ast *destroy;
+// 	t_ast *reinsert_left;
+// 	t_ast *reinsert_right;
+
+// 	if (!parent)
+// 		return ;
+// 	if (!to_destroy)
+// 	{
+// 		destroy = leaf_pop(parent, 0);
+// 		reinsert_left = destroy->left;
+// 		reinsert_right = destroy->right;
+// 		tree_insert(parent, reinsert_left);
+// 		tree_insert(parent, reinsert_right);
+// 	}
+// 	else
+// 	{
+// 		destroy = leaf_pop(parent, 1);
+// 		reinsert_left = destroy->left;
+// 		reinsert_right = destroy->right;
+// 		tree_insert(parent, reinsert_left);
+// 		tree_insert(parent, reinsert_right);
+// 	}
+// 	free(destroy->key);
+// 	free(destroy->value);
+// 	free(destroy);
+// }
+
 t_ast *envp_to_tree(char **envp)
 {
 	t_ast *root;
@@ -95,7 +141,6 @@ t_ast *envp_to_tree(char **envp)
 	{
 		leaf = leaf_from_env(envp[i]);
 		tree_insert(root, leaf);
-		///tree_destroy(leaf);//mymysasa, sinon doube-free
 		i++;
 	}
 	return (root);
@@ -115,14 +160,12 @@ void print_tree(t_ast *root)
 	ft_printf("%s = %s\n", root->key, root->value);
 }
 
-
 int main (int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
 	t_ast *uwu = envp_to_tree(envp);
 	print_tree(uwu);
-
 	tree_destroy(uwu);
 	return (0);
 }
