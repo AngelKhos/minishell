@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/16 15:47:31 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:57:53 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,6 @@ typedef struct s_data
 	char	*curent_path;
 	t_cmd	*cmd; // the command to update in the parsing at each call of readline
 }	t_data;
+
+void	pwd(t_data *data);
+void	cd(t_data *data, char *cd_args);
