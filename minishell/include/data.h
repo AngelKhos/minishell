@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/26 14:22:33 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:14:40 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_data
 
 void	pwd(t_data *data);
 void	cd(t_data *data, char *cd_args);
+void	exit_minishell_edition(t_data *data);
 
 //////////////// FREE ////////////////
 

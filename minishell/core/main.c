@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/26 14:50:57 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:16:55 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ int main(int argc, char **argv, char **envp)
 			}
 			if (ft_strncmp(data->input, "exit", -1) == 0)
 			{
-				free_data(data);
-				exit(EXIT_SUCCESS);
+				exit_minishell_edition(data);
 			}
 			free(data->input);
 		}
