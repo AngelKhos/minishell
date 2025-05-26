@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/26 14:23:07 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:39:05 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ int main(int argc, char **argv, char **envp)
 			free(data->input);
 		}
 	}
+	free_data(data);
 	return (EXIT_FAILURE);
 }

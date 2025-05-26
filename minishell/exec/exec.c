@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/18 17:13:50 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/05/26 14:38:17 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	read_cmd(t_data *data, t_cmd *cmd)
 	int	have_pipe;
 	int	nb_arg;
 
-	i = 0;
+	i = -1;
 	have_pipe = 0;
 	nb_arg = 0;
-	while (i <= cmd->len)
+	while (++i <= cmd->len)
 	{
 		if (cmd->parts[i].type == CMD)
 		{
@@ -38,6 +38,5 @@ void	read_cmd(t_data *data, t_cmd *cmd)
 		{
 			// here doc
 		}
-		i++;
 	}
 } // tu fais "while (++i <= cmd->len)" et tu set i a -1 au debut stv normer
