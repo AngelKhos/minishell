@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/26 14:39:05 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:50:57 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_data(t_data *data)
 {
 	data->curent_path = malloc(sizeof(char) * PATH_MAX);
 	getcwd(data->curent_path, PATH_MAX);
+	data->cmd = NULL;
 }
 
 int main(int argc, char **argv, char **envp)
@@ -47,9 +48,13 @@ int main(int argc, char **argv, char **envp)
 				//exec(data);
 				ft_printf("\n");
 			}
+			if (ft_strncmp(data->input, "exit", -1) == 0)
+			{
+				free_data(data);
+				exit(EXIT_SUCCESS);
+			}
 			free(data->input);
 		}
 	}
-	free_data(data);
 	return (EXIT_FAILURE);
 }
