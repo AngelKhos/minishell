@@ -6,9 +6,11 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/27 13:30:05 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:32:19 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "parsing.h"
 
 # define CMD 1 // cat echo ls pwd...
 # define ARG 2 // -l "hello world"...
@@ -37,6 +39,7 @@ typedef struct s_data
 {
 	char	*curent_path;
 	char	*input;
+	t_ast	*env;
 	t_cmd	*cmd; // the command to update in the parsing at each call of readline
 }	t_data;
 
