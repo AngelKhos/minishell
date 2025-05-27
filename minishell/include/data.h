@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/26 15:14:40 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/27 13:30:05 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	exit_minishell_edition(t_data *data);
 
 //////////////// FREE ////////////////
 
+void	free_array(char **array);
 void	free_data(t_data *data);
 
 //////////////// INIT ////////////////
