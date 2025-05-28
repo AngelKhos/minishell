@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/28 13:15:42 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:23:03 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,11 @@ char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 	size = 1;
 	while (cmd->parts[index+size].type == ARG)
 		size++;
-	while (i <= size)
+	while (i < size - 1)
 	{
-		if (i <= 0)
-		{
-			cmd_plus_arg = ft_strdup(cmd->parts[i].str);
-		}
-		else
-			cmd_plus_arg = ft_strjoin(cmd_plus_arg, cmd->parts[i].str);
+		ft_printf("pute %s\n", cmd->parts[i].str);
+		cmd_plus_arg = ft_strjoin(cmd_plus_arg, " ");
+		cmd_plus_arg = ft_strjoin(cmd_plus_arg, cmd->parts[i].str);
 		i++;	
 	}
 	return (cmd_plus_arg);
@@ -48,6 +45,7 @@ void	exec_cmd_no_pipe(t_data *data, t_cmd *cmd, int index)
 	pid = fork();
 	if (pid == 0)
 	{
+		ft_printf("bonjour je suis le fork, cpta : %s\n", cmd_array);
 		execute(cmd_array, data->envp);
 	}
 }
