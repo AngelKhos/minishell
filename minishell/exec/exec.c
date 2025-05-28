@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/27 14:18:58 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:15:42 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,25 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-char	**convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
+char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 {
 	int		size;
 	int		i;
-	char	**cmd_plus_arg;
+	char	*cmd_plus_arg;
 
 	(void)data;
 	i = 0;
 	size = 1;
 	while (cmd->parts[index+size].type == ARG)
 		size++;
-	cmd_plus_arg = malloc(sizeof(char *) * size + 1);
 	while (i <= size)
 	{
-		cmd_plus_arg[i] = ft_strdup(cmd->parts[index+i].str);
+		if (i <= 0)
+		{
+			cmd_plus_arg = ft_strdup(cmd->parts[i].str);
+		}
+		else
+			cmd_plus_arg = ft_strjoin(cmd_plus_arg, cmd->parts[i].str);
 		i++;	
 	}
 	return (cmd_plus_arg);
@@ -38,13 +42,13 @@ char	**convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 void	exec_cmd_no_pipe(t_data *data, t_cmd *cmd, int index)
 {
 	int		pid;
-	char	**cmd_array;
+	char	*cmd_array;
 
 	cmd_array = convert_part_to_arg(data, cmd, index);
 	pid = fork();
 	if (pid == 0)
 	{
-		execute(cmd_array, /*data->env??*/);
+		execute(cmd_array, data->envp);
 	}
 }
 
@@ -61,18 +65,7 @@ void	read_cmd(t_data *data, t_cmd *cmd)
 	{
 		if (cmd->parts[i].type == CMD)
 		{
-			while (have_pipe == 0)
-			{
-				if (cmd->parts[i].type == PIPE)
-					have_pipe = 1;
-				if (cmd->parts[i].type == ARG)
-					nb_arg++;
-				i++;
-			}
-		}
-		else if (cmd->parts[i].type == HEREDOC)
-		{
-			// here doc
+			exec_cmd_no_pipe(data, cmd, i);
 		}
 	}
 } // tu fais "while (++i <= cmd->len)" et tu set i a -1 au debut stv normer

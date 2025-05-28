@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/27 14:32:19 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:01:16 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_data
 	char	*curent_path;
 	char	*input;
 	t_ast	*env;
+	char	**envp; // temp
 	t_cmd	*cmd; // the command to update in the parsing at each call of readline
 }	t_data;
 
@@ -56,4 +57,9 @@ void	free_data(t_data *data);
 
 //////////////// INIT ////////////////
 
-void	init_data(t_data *data);
+void	init_data(t_data *data, char **envp);
+
+//////////////// EXEC ////////////////
+
+int	execute(char *cmd_arg, char **envp);
+void	read_cmd(t_data *data, t_cmd *cmd);
