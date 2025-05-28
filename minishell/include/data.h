@@ -6,25 +6,27 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/28 14:01:16 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:54:13 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-# define CMD 1 // cat echo ls pwd...
-# define ARG 2 // -l "hello world"...
-# define PIPE 3 // |
-# define OUTFILE 4 // >
-# define INFILE 5 // <
-# define HEREDOC 6 // <<
-# define APPEND 7 // >>
-# define ENVVAR 8 // $variable_name
+enum cmd_type {
+	CMD = 1, // cat echo ls pwd...
+	ARG, // -l "hello world"...
+	PIPE, // |
+	OUTFILE, // >
+	INFILE, // <
+	HEREDOC, // <<
+	APPEND, // >>
+	ENVVAR, // $variable_name
+};
 
 typedef struct	s_part
 {
-	char	*str;
-	int		type;
+	char			*str;
+	enum cmd_type	type;
 }	t_part;
 
 typedef struct	s_cmd
@@ -54,6 +56,7 @@ void	exit_minishell_edition(t_data *data);
 
 void	free_array(char **array);
 void	free_data(t_data *data);
+void	free_cmd(t_data *data);
 
 //////////////// INIT ////////////////
 
