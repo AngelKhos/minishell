@@ -11,7 +11,7 @@ DIR_DEPS=.deps
 
 # /////////////////////////
 
-SRCS= pars/tree_handle.c
+SRCS= core/main.c core/free.c builtins/cd.c builtins/pwd.c builtins/exit.c exec/exec.c exec/exec_utils.c
 
 LIB= libft/libft.a
 INCS= include/data.h
