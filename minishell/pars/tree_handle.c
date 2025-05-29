@@ -6,38 +6,67 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:46:55 by authomas          #+#    #+#             */
-/*   Updated: 2025/05/23 18:43:58 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 18:58:33 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parsing.h"
 
-t_ast *leaf_from_env(char *envstr)
+int env_parse_str(char *envstr, t_pair *out)
 {
-	t_ast *new;
+	
 	char *adr;
 	
-	new = malloc(sizeof(t_ast));
-	if (!new) 
-		return (NULL);
+	out->key = NULL;
+	out->value = NULL;
 	adr = ft_strchr(envstr, '=');
 	if (adr)
 	{
-		new->value = ft_strdup(adr + 1);
+		out->value = ft_strdup(adr + 1);
+			if (out->value == NULL)
+		{
+			destroy_data(out);
+			return (1);
+		}
 		*adr = '\0';
 	}
-	new->key = ft_strdup(envstr);
+	out->key = ft_strdup(envstr);
+	if (out->key == NULL)
+	{
+		destroy_data(out);
+		return (1);
+	}
+	return 0;
+}
+
+void destroy_data(t_pair *data)
+{
+	free(data->key);
+	free(data->value);
+}
+
+t_env *env_parse_node(char *envstr)
+{
+	t_env *new;
+	t_pair kv;
+
+	if (env_parse_str(envstr, &kv))
+		return (NULL);
+	new = malloc(sizeof(t_env));
+	if (!new)
+		return (NULL);
+	new->data = kv;
 	new->left = NULL;
 	new->right = NULL;
 	return (new);
 }
 
-t_ast *tree_insert(t_ast *node, t_ast *leaf)
+t_env *tree_insert(t_env *node, t_env *leaf)
 {
-	t_ast **target;
+	t_env **target;
 	int cmp;
 
-	cmp = ft_strncmp(node->key, leaf->key, -1);
+	cmp = ft_strncmp(node->data.key, leaf->data.key, -1);
 	if (cmp > 0)
 		target = &node->right;
 	if (cmp < 0)
@@ -49,22 +78,22 @@ t_ast *tree_insert(t_ast *node, t_ast *leaf)
 		*target = leaf;
 		return (leaf);
 	}
-	free(node->value);
-	node->value = leaf->value;
-	leaf->value = NULL;
+	free(node->data.value);
+	node->data.value = leaf->data.value;
+	leaf->data.value = NULL;
 	tree_destroy(leaf);
 	return (node);
 }
 
-t_ast *tree_search(t_ast *root, char *key)
+t_env *tree_search(t_env *root, char *key)
 {
 	if(!root)
 		return (NULL);
 	while (root)
 	{
-		if(ft_strncmp(root->key, key, -1) > 0)
+		if(ft_strncmp(root->data.key, key, -1) > 0)
 			root = root->right;
-		else if(ft_strncmp(root->key, key, -1) < 0)
+		else if(ft_strncmp(root->data.key, key, -1) < 0)
 			root = root->left;
 		else
 			return(root);
@@ -72,99 +101,77 @@ t_ast *tree_search(t_ast *root, char *key)
 	return (NULL);
 }
 
-void tree_destroy(t_ast *root)
+void tree_destroy(t_env *root)
 {
 	if (!root)
 		return ;
 	tree_destroy(root->left);
 	tree_destroy(root->right);
-	free(root->key);
-	free(root->value);
-	free(root);
+	tree_delete_node(root);
 }
 
-// t_ast *leaf_pop(t_ast *parent, int to_pop)
-// {
-// 	t_ast *pop;
-
-// 	if (!to_pop)
-// 	{
-// 		pop = parent->left;
-// 		parent->left = NULL;
-// 	}
-// 	else
-// 	{
-// 		pop = parent->right;
-// 		parent->right = NULL;
-// 	}
-// 	return (pop);
-// }
-
-// void leaf_destroy(t_ast *parent, int to_destroy)
-// {
-// 	t_ast *destroy;
-// 	t_ast *reinsert_left;
-// 	t_ast *reinsert_right;
-
-// 	if (!parent)
-// 		return ;
-// 	if (!to_destroy)
-// 	{
-// 		destroy = leaf_pop(parent, 0);
-// 		reinsert_left = destroy->left;
-// 		reinsert_right = destroy->right;
-// 		tree_insert(parent, reinsert_left);
-// 		tree_insert(parent, reinsert_right);
-// 	}
-// 	else
-// 	{
-// 		destroy = leaf_pop(parent, 1);
-// 		reinsert_left = destroy->left;
-// 		reinsert_right = destroy->right;
-// 		tree_insert(parent, reinsert_left);
-// 		tree_insert(parent, reinsert_right);
-// 	}
-// 	free(destroy->key);
-// 	free(destroy->value);
-// 	free(destroy);
-// }
-
-t_ast *envp_to_tree(char **envp)
+void tree_delete_node(t_env *node)
 {
-	t_ast *root;
-	t_ast *leaf;
+	destroy_data(&node->data);
+	free(node);
+	node = NULL;
+}
+
+void tree_remove(t_env **root, char *key)
+{
+	t_env *node;
+	t_env *new_node;
+	t_env *to_insert;
+
+	node = tree_search(*root, key);
+	if(!node)
+		return ;
+	new_node = node->right;
+	to_insert = node->left;
+	tree_delete_node(node);
+	if (new_node != NULL)
+		tree_insert(*root, new_node);
+	if (to_insert != NULL)
+		tree_insert(*root, to_insert);
+}
+
+t_env *envp_to_tree(char **envp)
+{
+	t_env *root;
+	t_env *leaf;
 	int i;
 
-	root = leaf_from_env(envp[0]);
+	root = env_parse_node(envp[0]);
 	i = 1;
 	while (envp[i])
 	{
-		leaf = leaf_from_env(envp[i]);
+		leaf = env_parse_node(envp[i]);
 		tree_insert(root, leaf);
 		i++;
 	}
 	return (root);
 }
 
-// char **tree_to_envp(t_ast *root)
+// char **tree_to_envp(t_env *root)
 // {
 // 	/* TODO */
 // }
 
-void print_tree(t_ast *root)
+void print_tree(t_env *root)
 {
 	if (root == NULL)
         return;
+	ft_printf("%s = %s\n", root->data.key, root->data.value);
 	print_tree(root->right);
     print_tree(root->left);
-	ft_printf("%s = %s\n", root->key, root->value);
 }
 
 int main (int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	t_ast *uwu = envp_to_tree(envp);
+	t_env *uwu = envp_to_tree(envp);
+	tree_remove(&uwu, "USER");
 	print_tree(uwu);
 	tree_destroy(uwu);
 	return (0);

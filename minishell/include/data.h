@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/28 16:54:13 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:24:47 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_data
 {
 	char	*curent_path;
 	char	*input;
-	t_ast	*env;
+	t_env	*env;
 	char	**envp; // temp
 	t_cmd	*cmd; // the command to update in the parsing at each call of readline
 }	t_data;
