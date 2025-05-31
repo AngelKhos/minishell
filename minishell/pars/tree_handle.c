@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:46:55 by authomas          #+#    #+#             */
-/*   Updated: 2025/05/29 18:58:33 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/05/31 09:24:36 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,25 +114,50 @@ void tree_delete_node(t_env *node)
 {
 	destroy_data(&node->data);
 	free(node);
-	node = NULL;
 }
 
 void tree_remove(t_env **root, char *key)
 {
-	t_env *node;
 	t_env *new_node;
-	t_env *to_insert;
+	t_env *insert;
 
-	node = tree_search(*root, key);
-	if(!node)
-		return ;
-	new_node = node->right;
-	to_insert = node->left;
-	tree_delete_node(node);
-	if (new_node != NULL)
-		tree_insert(*root, new_node);
-	if (to_insert != NULL)
-		tree_insert(*root, to_insert);
+	new_node = NULL;
+	insert = NULL;
+	if(!root)
+	return ;
+	if (ft_strncmp((*root)->data.key, key, -1) != 0)
+	{
+		tree_remove(&(*root)->left, key);
+		tree_remove(&(*root)->right, key);
+	}
+	else
+	{
+		if(!(*root)->left && !(*root)->right)
+		{
+			tree_delete_node(*root);
+			*root = NULL;
+		}
+		else if((*root)->left && !(*root)->right)
+		{
+			new_node = (*root)->left;
+			tree_delete_node(*root);
+			*root = new_node;
+		}
+		else if (!(*root)->left && (*root)->right)
+		{
+			new_node = (*root)->right;
+			tree_delete_node(*root);
+			*root = new_node;
+		}
+		else if ((*root)->left && (*root)->right)
+		{
+			new_node = (*root)->left;
+			insert = (*root)->right;
+			tree_delete_node(*root);
+			*root = new_node;
+			tree_insert(*root, insert);
+		}
+	}
 }
 
 t_env *envp_to_tree(char **envp)
