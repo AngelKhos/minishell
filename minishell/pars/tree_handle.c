@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:46:55 by authomas          #+#    #+#             */
-/*   Updated: 2025/05/31 09:24:36 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 15:19:33 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int env_parse_str(char *envstr, t_pair *out)
 		destroy_data(out);
 		return (1);
 	}
-	return 0;
+	return (0);
 }
 
 void destroy_data(t_pair *data)
@@ -127,8 +127,10 @@ void tree_remove(t_env **root, char *key)
 	return ;
 	if (ft_strncmp((*root)->data.key, key, -1) != 0)
 	{
-		tree_remove(&(*root)->left, key);
-		tree_remove(&(*root)->right, key);
+		if ((*root)->left)
+			tree_remove(&(*root)->left, key);
+		if ((*root)->right)
+			tree_remove(&(*root)->right, key);
 	}
 	else
 	{
@@ -196,7 +198,6 @@ int main (int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	t_env *uwu = envp_to_tree(envp);
-	tree_remove(&uwu, "USER");
 	print_tree(uwu);
 	tree_destroy(uwu);
 	return (0);
