@@ -6,13 +6,14 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/28 16:57:12 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:48:02 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 #include "../libft/libft.h"
 #include <unistd.h>
+#include <sys/wait.h>
 #include <stdlib.h>
 
 char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
@@ -22,17 +23,19 @@ char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 	char	*cmd_plus_arg;
 
 	(void)data;
+	cmd_plus_arg = NULL;
 	i = 0;
 	size = 1;
 	while (cmd->parts[index+size].type == ARG)
 		size++;
-	while (i < size - 1)
+	while (i < size)
 	{
-		//ft_printf("pute %s\n", cmd->parts[i].str);
+		//ft_printf("str %s\n", cmd->parts[i].str);
 		cmd_plus_arg = ft_strjoin(cmd_plus_arg, " ");
 		cmd_plus_arg = ft_strjoin(cmd_plus_arg, cmd->parts[i].str);
-		i++;	
+		i++;
 	}
+	//ft_printf("cpta : %s\n", cmd_plus_arg);
 	return (cmd_plus_arg);
 }
 
@@ -45,8 +48,11 @@ void	exec_cmd_no_pipe(t_data *data, t_cmd *cmd, int index)
 	pid = fork();
 	if (pid == 0)
 	{
-		//ft_printf("bonjour je suis le fork, cpta : %s\n", cmd_array);
 		execute(cmd_array, data->envp);
+	}
+	else
+	{
+		waitpid(pid, NULL, 0);
 	}
 }
 
@@ -66,4 +72,4 @@ void	read_cmd(t_data *data, t_cmd *cmd)
 			exec_cmd_no_pipe(data, cmd, i);
 		}
 	}
-} // tu fais "while (++i <= cmd->len)" et tu set i a -1 au debut stv normer
+}

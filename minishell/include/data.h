@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/29 16:24:47 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 15:57:52 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,7 @@ void	init_data(t_data *data, char **envp);
 
 int	execute(char *cmd_arg, char **envp);
 void	read_cmd(t_data *data, t_cmd *cmd);
+
+///////////////// DEBUG //////////////
+
+void	display_cmd(t_data *data);

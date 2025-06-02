@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/28 14:01:54 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:28:52 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ void	fake_parsing(t_data *data)
 	size = 0;
 	i = 0;
 	cmd_str = ft_split(data->input, ' ');
+	i = 0;
 	while (cmd_str[size])
 		size++;
-	data->cmd->parts = malloc(sizeof(t_part) * size);
+	data->cmd->parts = ft_calloc(sizeof(t_part), size);
 	data->cmd->len = size;
-	while (i <= size)
+	while (cmd_str[i])
 	{
-		data->cmd->parts[i].str = cmd_str[i];
+		data->cmd->parts[i].str = ft_strdup(cmd_str[i]);
 		if (i <= 0)
 		{
 			data->cmd->parts[i].type = CMD;
@@ -53,7 +54,7 @@ void	display_cmd(t_data *data)
 	i = 0;
 	while (i <= data->cmd->len)
 	{
-		ft_printf("--------------\n part : %i\n str : %s\n type : %i", i, data->cmd->parts[i].str, data->cmd->parts[i].type);
+		ft_printf("\n--------------\n part : %i\n str : %s\n type : %i", i, data->cmd->parts[i].str, data->cmd->parts[i].type);
 		i++;
 	}
 }
@@ -72,19 +73,17 @@ int main(int argc, char **argv, char **envp)
 	
 	(void)argc;
 	(void)argv;
-	data = malloc(sizeof(t_data));
+	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data, envp);
 	while (1)
 	{
-		data->input = readline("prompt.png>");
+		data->input = ft_strdup(readline("prompt.png>"));
 		if (data->input)
 		{
-			ft_printf("%s", data->input);
 			if (ft_strlen(data->input) >= 1)
 			{
 				add_history(data->input);
 				fake_parsing(data);
-				//display_cmd(data);
 				read_cmd(data, data->cmd);
 				ft_printf("\n");
 			}
