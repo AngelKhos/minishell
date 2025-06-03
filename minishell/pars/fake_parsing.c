@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:15:41 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/03 17:13:32 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:45:28 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <readline/history.h>
 #include <limits.h>
 
-int	get_nb_pipes(t_data *data, char **cmd_str)
+int	get_nb_pipes(char **cmd_str)
 {
 	int	nb_pipes;
 	size_t	i;
@@ -44,6 +44,7 @@ void	alloc_cmd_no_pipes(t_data *data, char **cmd_str)
 	
 	is_cmd = 0;
 	i = 0;
+	size = 0;
 	while (cmd_str[size])
 		size++;
 	data->cmd->parts = ft_calloc(sizeof(t_part), size);
@@ -71,6 +72,7 @@ void	alloc_cmd_with_pipes(t_data *data, char **cmd_str)
 	
 	is_cmd = 0;
 	cmd_index = 0;
+	size = 0;
 	i = 0;
 	while (cmd_str[size] && ft_strncmp(cmd_str[i + size], "|", -1) != 0)
 		size++;
@@ -103,10 +105,10 @@ void	alloc_cmd_with_pipes(t_data *data, char **cmd_str)
 void	fake_parsing(t_data *data)
 {
 	char	**cmd_str;
-	int		cmd_index;
+	//int		cmd_index;
 	
 	cmd_str = ft_split(data->input, ' ');
-	data->nb_pipes = get_nb_pipes(data, cmd_str);
+	data->nb_pipes = get_nb_pipes(cmd_str);
 	data->cmd = malloc(sizeof(t_cmd) * data->nb_pipes + 2);
 	if (data->nb_pipes >= 1)
 	{

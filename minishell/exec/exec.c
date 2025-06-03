@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/03 11:49:22 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:42:29 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 	cmd_plus_arg = NULL;
 	i = 0;
 	size = 1;
-	while (cmd->parts[index+size].type == ARG)
+	while (cmd[0].parts[index+size].type == ARG)
 		size++;
 	while (i < size)
 	{
 		//ft_printf("str %s\n", cmd->parts[i].str);
 		cmd_plus_arg = ft_strjoin(cmd_plus_arg, " ");
-		cmd_plus_arg = ft_strjoin(cmd_plus_arg, cmd->parts[i].str);
+		cmd_plus_arg = ft_strjoin(cmd_plus_arg, cmd[0].parts[i].str);
 		i++;
 	}
 	ft_printf("cpta : %s\n", cmd_plus_arg);
