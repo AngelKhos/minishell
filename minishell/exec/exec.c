@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/02 16:48:02 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/03 11:49:22 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,28 @@ char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 		cmd_plus_arg = ft_strjoin(cmd_plus_arg, cmd->parts[i].str);
 		i++;
 	}
-	//ft_printf("cpta : %s\n", cmd_plus_arg);
+	ft_printf("cpta : %s\n", cmd_plus_arg);
 	return (cmd_plus_arg);
 }
 
 void	exec_cmd_no_pipe(t_data *data, t_cmd *cmd, int index)
+{
+	int		pid;
+	char	*cmd_array;
+
+	cmd_array = convert_part_to_arg(data, cmd, index);
+	pid = fork();
+	if (pid == 0)
+	{
+		execute(cmd_array, data->envp);
+	}
+	else
+	{
+		waitpid(pid, NULL, 0);
+	}
+}
+
+void	exec_cmd_with_pipe(t_data *data, t_cmd *cmd, int index)
 {
 	int		pid;
 	char	*cmd_array;
