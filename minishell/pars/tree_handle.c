@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:46:55 by authomas          #+#    #+#             */
-/*   Updated: 2025/06/02 17:18:35 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 20:41:34 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,17 +190,18 @@ void print_tree(t_env *root)
 {
 	if (root == NULL)
         return;
-	ft_printf("%s = %s\n", root->data.key, root->data.value);
+	if (root->data.value)
+		ft_printf("%s = %s\n", root->data.key, root->data.value);
 	print_tree(root->right);
     print_tree(root->left);
 }
 
-int main (int ac, char **av, char **envp)
-{
-	(void)ac;
-	(void)av;
-	t_env *uwu = envp_to_tree(envp);
-	print_tree(uwu);
-	tree_destroy(uwu);
-	return (0);
-}
+// int main (int ac, char **av, char **envp)
+// {
+// 	(void)ac;
+// 	(void)av;
+// 	t_env *uwu = envp_to_tree(envp);
+// 	print_tree(uwu);
+// 	tree_destroy(uwu);
+// 	return (0);
+// }

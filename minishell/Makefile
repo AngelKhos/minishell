@@ -2,7 +2,7 @@ NAME=minishell
 # /////////////////////////
 
 CC=cc
-CC_FLAGS=-Wall -Wextra -Werror -lreadline -g3
+CC_FLAGS=-Wall -Wextra -Werror -g3
 
 # /////////////////////////
 
@@ -32,7 +32,7 @@ libft:
 	$(MAKE) --silent -C ./libft
 
 $(NAME): $(OBJS) $(DEPS) $(INCS)
-	$(CC) $(CC_FLAGS) $(OBJS) $(LIB) -o $@
+	$(CC) $(CC_FLAGS) $(OBJS) $(LIB) -lreadline -o $@
 	echo "$(BLUE) Your minishell is ready $(END)"
 
 

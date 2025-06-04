@@ -6,12 +6,12 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:41:26 by authomas          #+#    #+#             */
-/*   Updated: 2025/05/26 17:15:33 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 20:39:26 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PARSING_H
+# define PARSING_H
 
 # include "../libft/libft.h"
 
@@ -35,8 +35,10 @@ int env_parse_str(char *envstr, t_pair *out);
 t_env *envp_to_tree(char **envp);
 
 void destroy_data(t_pair *data);
+void tree_remove(t_env **root, char *key);
 
 t_env *tree_insert(t_env *node, t_env *leaf);
+void print_tree(t_env *root);
 
 t_env *tree_search(t_env *root, char *key);
 

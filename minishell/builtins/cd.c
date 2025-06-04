@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/23 16:52:49 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/04 21:01:18 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <limits.h>
+#include <linux/limits.h>
 
 void	cd(t_data *data, char *cd_args)
 {
