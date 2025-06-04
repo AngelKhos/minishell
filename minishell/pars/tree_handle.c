@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:46:55 by authomas          #+#    #+#             */
-/*   Updated: 2025/06/02 15:19:33 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 17:18:35 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,9 @@ t_env *envp_to_tree(char **envp)
 
 // char **tree_to_envp(t_env *root)
 // {
-// 	/* TODO */
+// 	char **envp;
+
+	/*to do*/
 // }
 
 void print_tree(t_env *root)
