@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/03 16:17:09 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:11:16 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	init_data(t_data *data, char **envp);
 int	execute(char *cmd_arg, char **envp);
 void	read_cmd(t_data *data, t_cmd *cmd);
 
-///////////////// DEBUG //////////////
+//////////////// DEBUG ///////////////
 
 void	display_cmd(t_data *data);
 void	fake_parsing(t_data *data);

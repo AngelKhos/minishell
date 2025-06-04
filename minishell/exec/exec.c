@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/03 18:42:29 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:23:29 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 	cmd_plus_arg = NULL;
 	i = 0;
 	size = 1;
-	while (cmd[0].parts[index+size].type == ARG)
+	while (cmd[0].parts[index+size].type == ARG) // ajoute une conditon pour repeperer les pipes | doc la fin d'une function
 		size++;
 	while (i < size)
 	{
@@ -39,12 +39,10 @@ char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 	return (cmd_plus_arg);
 }
 
-void	exec_cmd_no_pipe(t_data *data, t_cmd *cmd, int index)
+void	exec_cmd_no_pipe(t_data *data, char *cmd_array)
 {
 	int		pid;
-	char	*cmd_array;
 
-	cmd_array = convert_part_to_arg(data, cmd, index);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -56,19 +54,26 @@ void	exec_cmd_no_pipe(t_data *data, t_cmd *cmd, int index)
 	}
 }
 
-void	exec_cmd_with_pipe(t_data *data, t_cmd *cmd, int index)
+void	exec_cmd_with_pipe(t_data *data, char *cmd_array)
 {
 	int		pid;
-	char	*cmd_array;
+	int		pipes[2];
 
-	cmd_array = convert_part_to_arg(data, cmd, index);
+	pipe(pipes);
 	pid = fork();
 	if (pid == 0)
 	{
+		close(pipes[0]);
+		dup2(pipes[1], STDOUT_FILENO);
+		close(pipes[1]);
 		execute(cmd_array, data->envp);
+		exit(0);
 	}
 	else
 	{
+		close(pipes[1]);
+		dup2(pipes[0], STDIN_FILENO);
+		close(pipes[0]);
 		waitpid(pid, NULL, 0);
 	}
 }
@@ -78,15 +83,25 @@ void	read_cmd(t_data *data, t_cmd *cmd)
 	int	i;
 	int	have_pipe;
 	int	nb_arg;
+	int	cmd_index;
+	char *cmd_array;
 
 	i = -1;
+	cmd_index = 0;
 	have_pipe = 0;
 	nb_arg = 0;
-	while (++i <= cmd->len)
+	if (data->nb_pipes <= 0)
 	{
-		if (cmd->parts[i].type == CMD)
+		cmd_array = convert_part_to_arg(data, cmd, 0);
+		exec_cmd_no_pipe(data, cmd_array);
+	}
+	else
+	{
+		while (cmd_index <= data->nb_pipes)
 		{
-			exec_cmd_no_pipe(data, cmd, i);
+			cmd_array = convert_part_to_arg(data, cmd+cmd_index, 0);
+			exec_cmd_with_pipe(data, cmd_array);
+			cmd_index++;
 		}
 	}
 }

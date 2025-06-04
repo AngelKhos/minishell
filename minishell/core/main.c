@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/03 18:46:01 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:05:33 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,20 @@
 void	display_cmd(t_data *data)
 {
 	int	i;
+	int c_i;
 
 	i = 0;
-	while (i < data->cmd->len)
+	c_i = 0;
+	while (c_i < data->nb_pipes + 1)
 	{
-		ft_printf("\n--------------\n part : %i\n str : %s\n type : %i\n", i, data->cmd->parts[i].str, data->cmd->parts[i].type);
-		i++;
+		i = 0;
+		ft_printf("--------------------------- cmd : %i\ncmd len : %i\n", c_i, data->cmd[c_i].len);
+		while (i < data->cmd[c_i].len)
+		{
+			ft_printf("\n--------------\n part : %i\n str : %s\n type : %i\n", i, data->cmd[c_i].parts[i].str, data->cmd[c_i].parts[i].type);
+			i++;
+		}
+		c_i++;
 	}
 }
 
@@ -56,7 +64,7 @@ int main(int argc, char **argv, char **envp)
 			{
 				add_history(data->input);
 				fake_parsing(data);
-				//display_cmd(data);
+				display_cmd(data);
 				read_cmd(data, data->cmd);
 				//ft_printf("\n");
 			}

@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:15:41 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/03 18:45:28 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:57:30 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ void	alloc_cmd_with_pipes(t_data *data, char **cmd_str)
 	size_t	size;
 	int		cmd_index;
 	int		is_cmd;
+	int		part_i;
 	
 	is_cmd = 0;
+	part_i = 0;
 	cmd_index = 0;
 	size = 0;
 	i = 0;
@@ -82,23 +84,27 @@ void	alloc_cmd_with_pipes(t_data *data, char **cmd_str)
 	{
 		if (ft_strncmp(cmd_str[i], "|", -1) == 0)
 		{
+			ft_printf("je suis la\n");
 			is_cmd = 0;
 			i++;
 			cmd_index++;
 			size = 0;
+			part_i = 0;
 			while (cmd_str[i + size] && ft_strncmp(cmd_str[i + size], "|", -1) != 0)
 				size++;
+			data->cmd[cmd_index].len = size;
 			data->cmd[cmd_index].parts = ft_calloc(sizeof(t_part), size);
 		}
-		data->cmd[cmd_index].parts[i].str = ft_strdup(cmd_str[i]);
+		data->cmd[cmd_index].parts[part_i].str = ft_strdup(cmd_str[i]);
 		if (is_cmd == 0)
 		{
 			is_cmd = 1;
-			data->cmd[cmd_index].parts[i].type = CMD;
+			data->cmd[cmd_index].parts[part_i].type = CMD;
 		}
 		else
-			data->cmd[cmd_index].parts[i].type = ARG;
+			data->cmd[cmd_index].parts[part_i].type = ARG;
 		i++;
+		part_i++;
 	}
 }
 
@@ -112,7 +118,7 @@ void	fake_parsing(t_data *data)
 	data->cmd = malloc(sizeof(t_cmd) * data->nb_pipes + 2);
 	if (data->nb_pipes >= 1)
 	{
-
+		alloc_cmd_with_pipes(data, cmd_str);
 	}
 	else
 	{
