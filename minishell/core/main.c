@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/02 16:28:52 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:05:33 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,42 +20,23 @@
 #include <readline/history.h>
 #include <limits.h>
 
-void	fake_parsing(t_data *data)
-{
-	size_t	size;
-	size_t	i;
-	char	**cmd_str;
-
-	size = 0;
-	i = 0;
-	cmd_str = ft_split(data->input, ' ');
-	i = 0;
-	while (cmd_str[size])
-		size++;
-	data->cmd->parts = ft_calloc(sizeof(t_part), size);
-	data->cmd->len = size;
-	while (cmd_str[i])
-	{
-		data->cmd->parts[i].str = ft_strdup(cmd_str[i]);
-		if (i <= 0)
-		{
-			data->cmd->parts[i].type = CMD;
-		}
-		else
-			data->cmd->parts[i].type = ARG;
-		i++;
-	}
-}
-
 void	display_cmd(t_data *data)
 {
 	int	i;
+	int c_i;
 
 	i = 0;
-	while (i <= data->cmd->len)
+	c_i = 0;
+	while (c_i < data->nb_pipes + 1)
 	{
-		ft_printf("\n--------------\n part : %i\n str : %s\n type : %i", i, data->cmd->parts[i].str, data->cmd->parts[i].type);
-		i++;
+		i = 0;
+		ft_printf("--------------------------- cmd : %i\ncmd len : %i\n", c_i, data->cmd[c_i].len);
+		while (i < data->cmd[c_i].len)
+		{
+			ft_printf("\n--------------\n part : %i\n str : %s\n type : %i\n", i, data->cmd[c_i].parts[i].str, data->cmd[c_i].parts[i].type);
+			i++;
+		}
+		c_i++;
 	}
 }
 
@@ -63,7 +44,6 @@ void	init_data(t_data *data, char **envp)
 {
 	data->curent_path = malloc(sizeof(char) * PATH_MAX);
 	getcwd(data->curent_path, PATH_MAX);
-	data->cmd = malloc(sizeof(t_cmd));
 	data->envp = envp;
 }
 
@@ -84,8 +64,9 @@ int main(int argc, char **argv, char **envp)
 			{
 				add_history(data->input);
 				fake_parsing(data);
+				display_cmd(data);
 				read_cmd(data, data->cmd);
-				ft_printf("\n");
+				//ft_printf("\n");
 			}
 			if (ft_strncmp(data->input, "exit", -1) == 0)
 			{
