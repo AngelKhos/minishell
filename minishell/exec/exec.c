@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/04 17:10:34 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:43:07 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,12 @@ void	exec_cmd_with_pipe(t_data *data, char *cmd_array, int pipes[2])
 
 void	read_cmd(t_data *data, t_cmd *cmd)
 {
-	int		i;
-	int		have_pipe;
 	int		nb_arg;
 	int		cmd_index;
 	char	*cmd_array;
 	int		pipes[2];
 
-	i = -1;
 	cmd_index = 0;
-	have_pipe = 0;
 	nb_arg = 0;
 	if (data->nb_pipes <= 0)
 	{
