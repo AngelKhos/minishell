@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/04 20:42:46 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 17:10:34 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#include <readline/readline.h>
 
 char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 {
@@ -30,7 +31,6 @@ char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 		size++;
 	while (i < size)
 	{
-		//ft_printf("str %s\n", cmd->parts[i].str);
 		cmd_plus_arg = ft_strjoin(cmd_plus_arg, " ");
 		cmd_plus_arg = ft_strjoin(cmd_plus_arg, cmd[0].parts[i].str);
 		i++;
@@ -54,12 +54,10 @@ void	exec_cmd_no_pipe(t_data *data, char *cmd_array)
 	}
 }
 
-void	exec_cmd_with_pipe(t_data *data, char *cmd_array)
+void	exec_cmd_with_pipe(t_data *data, char *cmd_array, int pipes[2])
 {
 	int		pid;
-	int		pipes[2];
-
-	pipe(pipes);
+	
 	pid = fork();
 	if (pid == 0)
 	{
@@ -80,16 +78,17 @@ void	exec_cmd_with_pipe(t_data *data, char *cmd_array)
 
 void	read_cmd(t_data *data, t_cmd *cmd)
 {
-	//int	i;
-	//int	have_pipe;
-	//int	nb_arg;
-	int	cmd_index;
-	char *cmd_array;
+	int		i;
+	int		have_pipe;
+	int		nb_arg;
+	int		cmd_index;
+	char	*cmd_array;
+	int		pipes[2];
 
-	//i = -1;
+	i = -1;
 	cmd_index = 0;
-	//have_pipe = 0;
-	//nb_arg = 0;
+	have_pipe = 0;
+	nb_arg = 0;
 	if (data->nb_pipes <= 0)
 	{
 		cmd_array = convert_part_to_arg(data, cmd, 0);
@@ -97,11 +96,13 @@ void	read_cmd(t_data *data, t_cmd *cmd)
 	}
 	else
 	{
+		pipe(pipes);
 		while (cmd_index <= data->nb_pipes)
 		{
 			cmd_array = convert_part_to_arg(data, cmd+cmd_index, 0);
-			exec_cmd_with_pipe(data, cmd_array);
+			exec_cmd_with_pipe(data, cmd_array, pipes);
 			cmd_index++;
 		}
+		rl_replace_line(" ", 0);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/04 20:59:44 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/05/27 13:32:46 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*find_loop(char	**paths, char	*path_no_cmd, char *cmd)
 			return (path);
 		i++;
 	}
-	write(2, "invalid command\n", 16);
+	write(2, "invalid command\n", 15);
 	return (free_array(paths), free(path), NULL);
 }
 

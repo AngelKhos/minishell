@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/04 20:43:53 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 15:11:16 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DATA_H
-# define DATA_H
-
-# include "parsing.h"
-# include "../libft/libft.h"
-# include <readline/readline.h>
-# include <readline/history.h>
-
+#include "parsing.h"
 
 enum cmd_type {
 	CMD = 1, // cat echo ls pwd...
@@ -79,5 +72,3 @@ void	read_cmd(t_data *data, t_cmd *cmd);
 
 void	display_cmd(t_data *data);
 void	fake_parsing(t_data *data);
-
-#endif
