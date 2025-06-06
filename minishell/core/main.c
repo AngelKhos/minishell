@@ -6,14 +6,18 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/05 20:06:43 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 17:41:36 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "../libft/libft.h"
 #include "../include/data.h"
 #include <linux/limits.h>
 #include <readline/chardefs.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <limits.h>
 
 void	display_cmd(t_data *data)
@@ -64,12 +68,12 @@ int main(int argc, char **argv, char **envp)
 				read_cmd(data, data->cmd);
 				//ft_printf("\n");
 			}
-			if (ft_strncmp(data->input, "exit", -1) == 0)
+			if (ft_strncmp(data->input, "e", -1) == 0)
 			{
-				exit_minishell_edition(data);
+				env(data);
 			}
-			free(data->input);
 		}
+		//ft_printf("input : %s-\n", data->input);
 	}
 	return (EXIT_FAILURE);
 }

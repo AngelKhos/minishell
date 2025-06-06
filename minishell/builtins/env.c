@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 20:07:06 by authomas          #+#    #+#             */
-/*   Updated: 2025/06/04 20:40:01 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 13:12:09 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
+#include "../include/parsing.h"
 
-void env(t_data data)
+void env(t_data *data)
 {
-    print_tree(data.env);
+    print_tree(data->env);
 }

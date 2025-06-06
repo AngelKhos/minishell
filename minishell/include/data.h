@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/04 20:43:53 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 13:08:23 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_data
 void	pwd(t_data *data);
 void	cd(t_data *data, char *cd_args);
 void	exit_minishell_edition(t_data *data);
+void	env(t_data *data);
 
 //////////////// FREE ////////////////
 

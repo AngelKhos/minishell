@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/04 20:42:46 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 16:08:09 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#include <readline/readline.h>
 
 char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 {
@@ -30,7 +31,6 @@ char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 		size++;
 	while (i < size)
 	{
-		//ft_printf("str %s\n", cmd->parts[i].str);
 		cmd_plus_arg = ft_strjoin(cmd_plus_arg, " ");
 		cmd_plus_arg = ft_strjoin(cmd_plus_arg, cmd[0].parts[i].str);
 		i++;
@@ -39,14 +39,14 @@ char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 	return (cmd_plus_arg);
 }
 
-void	exec_cmd_no_pipe(t_data *data, char *cmd_array)
+void	exec_cmd_no_pipe(t_data *data, char *cmd_str)
 {
 	int		pid;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		execute(cmd_array, data->envp);
+		execute(cmd_str, data->envp);
 	}
 	else
 	{
@@ -54,54 +54,49 @@ void	exec_cmd_no_pipe(t_data *data, char *cmd_array)
 	}
 }
 
-void	exec_cmd_with_pipe(t_data *data, char *cmd_array)
+void	exec_cmd_with_pipe(t_data *data, char *cmd_str, int pipes[2], int cmd_index)
 {
 	int		pid;
-	int		pipes[2];
-
-	pipe(pipes);
+	
 	pid = fork();
 	if (pid == 0)
 	{
-		close(pipes[0]);
+		if (cmd_index > 0)
+			dup2(pipes[0], STDIN_FILENO);
 		dup2(pipes[1], STDOUT_FILENO);
+		close(pipes[0]);
 		close(pipes[1]);
-		execute(cmd_array, data->envp);
+		execute(cmd_str, data->envp);
 		exit(0);
 	}
 	else
 	{
-		close(pipes[1]);
-		dup2(pipes[0], STDIN_FILENO);
-		close(pipes[0]);
 		waitpid(pid, NULL, 0);
 	}
 }
 
 void	read_cmd(t_data *data, t_cmd *cmd)
 {
-	//int	i;
-	//int	have_pipe;
-	//int	nb_arg;
-	int	cmd_index;
-	char *cmd_array;
+	int		nb_arg;
+	int		cmd_index;
+	char	*cmd_str;
+	int		pipes[2];
 
-	//i = -1;
 	cmd_index = 0;
-	//have_pipe = 0;
-	//nb_arg = 0;
-	if (data->nb_pipes <= 0)
+	nb_arg = 0;
+	while (cmd_index <= data->nb_pipes)
 	{
-		cmd_array = convert_part_to_arg(data, cmd, 0);
-		exec_cmd_no_pipe(data, cmd_array);
-	}
-	else
-	{
-		while (cmd_index <= data->nb_pipes)
+		pipe(pipes);
+		//ft_printf("execution du pip : %i\n", cmd_index);
+		cmd_str = convert_part_to_arg(data, cmd+cmd_index, 0);
+		if (cmd_index < data->nb_pipes)
 		{
-			cmd_array = convert_part_to_arg(data, cmd+cmd_index, 0);
-			exec_cmd_with_pipe(data, cmd_array);
-			cmd_index++;
+			exec_cmd_with_pipe(data, cmd_str, pipes, cmd_index);
 		}
+		else if (cmd_index >= data->nb_pipes)
+		{
+			exec_cmd_no_pipe(data, cmd_str);
+		}
+		cmd_index++;
 	}
 }

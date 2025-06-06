@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -44,5 +45,7 @@ t_env *tree_search(t_env *root, char *key);
 
 void tree_destroy(t_env *root);
 void tree_delete_node(t_env *node);
+
+void print_tree(t_env *root);
 
 #endif

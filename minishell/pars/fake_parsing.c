@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:15:41 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/05 20:26:52 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/06 17:41:23 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	alloc_cmd_with_pipes(t_data *data, char **cmd_str)
 			data->cmd[cmd_index].parts[part_i].type = ARG;
 		i++;
 		part_i++;
+		//:)
 	}
 }
 
