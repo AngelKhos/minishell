@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/06 15:33:46 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:08:09 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,24 +54,23 @@ void	exec_cmd_no_pipe(t_data *data, char *cmd_str)
 	}
 }
 
-void	exec_cmd_with_pipe(t_data *data, char *cmd_str, int pipes[2])
+void	exec_cmd_with_pipe(t_data *data, char *cmd_str, int pipes[2], int cmd_index)
 {
 	int		pid;
 	
 	pid = fork();
 	if (pid == 0)
 	{
-		close(pipes[0]);
+		if (cmd_index > 0)
+			dup2(pipes[0], STDIN_FILENO);
 		dup2(pipes[1], STDOUT_FILENO);
+		close(pipes[0]);
 		close(pipes[1]);
 		execute(cmd_str, data->envp);
 		exit(0);
 	}
 	else
 	{
-		close(pipes[1]);
-		dup2(pipes[0], STDIN_FILENO);
-		close(pipes[0]);
 		waitpid(pid, NULL, 0);
 	}
 }
@@ -85,29 +84,19 @@ void	read_cmd(t_data *data, t_cmd *cmd)
 
 	cmd_index = 0;
 	nb_arg = 0;
-	// if (data->nb_pipes <= 0)
-	// {
-	// 	cmd_str = convert_part_to_arg(data, cmd, 0);
-	// 	exec_cmd_no_pipe(data, cmd_str);
-	// }
-	// else
-	// {
-		ft_printf("nb pipes : %i\n", data->nb_pipes);
-		//pipe(pipes);
-		while (cmd_index <= data->nb_pipes)
+	while (cmd_index <= data->nb_pipes)
+	{
+		pipe(pipes);
+		//ft_printf("execution du pip : %i\n", cmd_index);
+		cmd_str = convert_part_to_arg(data, cmd+cmd_index, 0);
+		if (cmd_index < data->nb_pipes)
 		{
-			pipe(pipes);
-			ft_printf("execution du pip : %i\n", cmd_index);
-			cmd_str = convert_part_to_arg(data, cmd+cmd_index, 0);
-			if (cmd_index < data->nb_pipes)
-			{
-				exec_cmd_with_pipe(data, cmd_str, pipes);
-			}
-			else if (cmd_index >= data->nb_pipes)
-			{
-				exec_cmd_no_pipe(data, cmd_str);
-			}
-			cmd_index++;
+			exec_cmd_with_pipe(data, cmd_str, pipes, cmd_index);
 		}
-	// }
+		else if (cmd_index >= data->nb_pipes)
+		{
+			exec_cmd_no_pipe(data, cmd_str);
+		}
+		cmd_index++;
+	}
 }
