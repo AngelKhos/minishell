@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/06 13:41:55 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:33:46 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ void	read_cmd(t_data *data, t_cmd *cmd)
 
 	cmd_index = 0;
 	nb_arg = 0;
-	if (data->nb_pipes <= 0)
-	{
-		cmd_str = convert_part_to_arg(data, cmd, 0);
-		exec_cmd_no_pipe(data, cmd_str);
-	}
-	else
-	{
+	// if (data->nb_pipes <= 0)
+	// {
+	// 	cmd_str = convert_part_to_arg(data, cmd, 0);
+	// 	exec_cmd_no_pipe(data, cmd_str);
+	// }
+	// else
+	// {
 		ft_printf("nb pipes : %i\n", data->nb_pipes);
 		//pipe(pipes);
 		while (cmd_index <= data->nb_pipes)
@@ -109,5 +109,5 @@ void	read_cmd(t_data *data, t_cmd *cmd)
 			}
 			cmd_index++;
 		}
-	}
+	// }
 }
