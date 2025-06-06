@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/05 12:43:07 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/06 13:41:55 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 	return (cmd_plus_arg);
 }
 
-void	exec_cmd_no_pipe(t_data *data, char *cmd_array)
+void	exec_cmd_no_pipe(t_data *data, char *cmd_str)
 {
 	int		pid;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		execute(cmd_array, data->envp);
+		execute(cmd_str, data->envp);
 	}
 	else
 	{
@@ -54,7 +54,7 @@ void	exec_cmd_no_pipe(t_data *data, char *cmd_array)
 	}
 }
 
-void	exec_cmd_with_pipe(t_data *data, char *cmd_array, int pipes[2])
+void	exec_cmd_with_pipe(t_data *data, char *cmd_str, int pipes[2])
 {
 	int		pid;
 	
@@ -64,7 +64,7 @@ void	exec_cmd_with_pipe(t_data *data, char *cmd_array, int pipes[2])
 		close(pipes[0]);
 		dup2(pipes[1], STDOUT_FILENO);
 		close(pipes[1]);
-		execute(cmd_array, data->envp);
+		execute(cmd_str, data->envp);
 		exit(0);
 	}
 	else
@@ -80,25 +80,34 @@ void	read_cmd(t_data *data, t_cmd *cmd)
 {
 	int		nb_arg;
 	int		cmd_index;
-	char	*cmd_array;
+	char	*cmd_str;
 	int		pipes[2];
 
 	cmd_index = 0;
 	nb_arg = 0;
 	if (data->nb_pipes <= 0)
 	{
-		cmd_array = convert_part_to_arg(data, cmd, 0);
-		exec_cmd_no_pipe(data, cmd_array);
+		cmd_str = convert_part_to_arg(data, cmd, 0);
+		exec_cmd_no_pipe(data, cmd_str);
 	}
 	else
 	{
-		pipe(pipes);
+		ft_printf("nb pipes : %i\n", data->nb_pipes);
+		//pipe(pipes);
 		while (cmd_index <= data->nb_pipes)
 		{
-			cmd_array = convert_part_to_arg(data, cmd+cmd_index, 0);
-			exec_cmd_with_pipe(data, cmd_array, pipes);
+			pipe(pipes);
+			ft_printf("execution du pip : %i\n", cmd_index);
+			cmd_str = convert_part_to_arg(data, cmd+cmd_index, 0);
+			if (cmd_index < data->nb_pipes)
+			{
+				exec_cmd_with_pipe(data, cmd_str, pipes);
+			}
+			else if (cmd_index >= data->nb_pipes)
+			{
+				exec_cmd_no_pipe(data, cmd_str);
+			}
 			cmd_index++;
 		}
-		rl_replace_line(" ", 0);
 	}
 }

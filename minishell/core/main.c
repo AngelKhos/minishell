@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/04 17:21:15 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/06 13:48:46 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,11 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data, envp);
-	while (1)
-	{
+	//while (1)
+	//{
 		data->input = readline("prompt.png>");
 		if (data->input)
 		{
-			ft_printf("ca boucle ici\n");
 			if (ft_strlen(data->input) >= 1)
 			{
 				add_history(data->input);
@@ -69,12 +68,12 @@ int main(int argc, char **argv, char **envp)
 				read_cmd(data, data->cmd);
 				//ft_printf("\n");
 			}
-			if (ft_strncmp(data->input, "exit", -1) == 0)
+			if (ft_strncmp(data->input, "e", -1) == 0)
 			{
-				exit_minishell_edition(data);
+				env(data);
 			}
-			free(data->input);
 		}
-	}
+		ft_printf("input : %s-\n", data->input);
+	//}
 	return (EXIT_FAILURE);
 }
