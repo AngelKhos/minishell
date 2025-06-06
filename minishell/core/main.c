@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/04 20:44:10 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/05 20:06:43 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int main(int argc, char **argv, char **envp)
 	init_data(data, envp);
 	while (1)
 	{
-		data->input = ft_strdup(readline("prompt.png>"));
+		data->input = readline("prompt.png>");
 		if (data->input)
 		{
 			if (ft_strlen(data->input) >= 1)
