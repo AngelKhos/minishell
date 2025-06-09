@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/06 16:08:09 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:23:46 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 	cmd_plus_arg = NULL;
 	i = 0;
 	size = 1;
-	while (cmd[0].parts[index+size].type == ARG) // ajoute une conditon pour repeperer les pipes | doc la fin d'une function
+	while (cmd[0].parts[index+size].type == ARG)
 		size++;
 	while (i < size)
 	{
@@ -35,68 +35,68 @@ char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 		cmd_plus_arg = ft_strjoin(cmd_plus_arg, cmd[0].parts[i].str);
 		i++;
 	}
-	ft_printf("cpta : %s\n", cmd_plus_arg);
 	return (cmd_plus_arg);
 }
 
-void	exec_cmd_no_pipe(t_data *data, char *cmd_str)
+void	exec_cmd(t_data *data, char *cmd_str, int **pipes, int *pids, int cmd_index)
 {
-	int		pid;
-
-	pid = fork();
-	if (pid == 0)
+	pipe(pipes[cmd_index]);
+	pids[cmd_index] = fork();
+	if (pids[cmd_index] == 0)
 	{
-		execute(cmd_str, data->envp);
-	}
-	else
-	{
-		waitpid(pid, NULL, 0);
-	}
-}
-
-void	exec_cmd_with_pipe(t_data *data, char *cmd_str, int pipes[2], int cmd_index)
-{
-	int		pid;
-	
-	pid = fork();
-	if (pid == 0)
-	{
-		if (cmd_index > 0)
-			dup2(pipes[0], STDIN_FILENO);
-		dup2(pipes[1], STDOUT_FILENO);
-		close(pipes[0]);
-		close(pipes[1]);
+		if (data->nb_pipes > 0)
+		{
+			if (cmd_index > 0)
+				dup2(pipes[cmd_index - 1][0], STDIN_FILENO);
+			if (cmd_index < data->nb_pipes)
+				dup2(pipes[cmd_index][1], STDOUT_FILENO);
+			close(pipes[cmd_index][0]);
+			close(pipes[cmd_index][1]);
+		}
+		ft_printf("cpta : %s\n", cmd_str);
 		execute(cmd_str, data->envp);
 		exit(0);
-	}
-	else
-	{
-		waitpid(pid, NULL, 0);
 	}
 }
 
 void	read_cmd(t_data *data, t_cmd *cmd)
 {
-	int		nb_arg;
 	int		cmd_index;
 	char	*cmd_str;
-	int		pipes[2];
+	int		**pipes;
+	int		*pids;
 
+	pipes = malloc(sizeof(int *) * data->nb_pipes + 1);
+	pids = malloc(sizeof(int) * data->nb_pipes + 1);
 	cmd_index = 0;
-	nb_arg = 0;
 	while (cmd_index <= data->nb_pipes)
 	{
-		pipe(pipes);
-		//ft_printf("execution du pip : %i\n", cmd_index);
+		if (data->nb_pipes > 0 && cmd_index < data->nb_pipes)
+			pipes[cmd_index] = malloc(sizeof(int) * 2);
+		ft_printf("execution du pip : %i\n", cmd_index);
+		ft_printf("nb_pipes %i\n", data->nb_pipes);
 		cmd_str = convert_part_to_arg(data, cmd+cmd_index, 0);
-		if (cmd_index < data->nb_pipes)
-		{
-			exec_cmd_with_pipe(data, cmd_str, pipes, cmd_index);
-		}
-		else if (cmd_index >= data->nb_pipes)
-		{
-			exec_cmd_no_pipe(data, cmd_str);
-		}
+		exec_cmd(data, cmd_str, pipes, pids, cmd_index);
 		cmd_index++;
 	}
+	if (data->nb_pipes > 0)
+	{
+		cmd_index = 0;
+		while (cmd_index <= data->nb_pipes)
+		{
+			close(pipes[cmd_index][0]);
+			close(pipes[cmd_index][1]);
+			free(pipes[cmd_index]);
+			cmd_index++;
+		}
+	}
+	free(pipes);
+	cmd_index = 0;
+	while (cmd_index <= data->nb_pipes)
+	{
+		ft_printf("je suis la\n");
+		waitpid(pids[cmd_index], NULL, 0);
+		cmd_index++;
+	}
+	free(pids);
 }
