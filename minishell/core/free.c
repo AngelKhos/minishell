@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:40:46 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/30 14:37:02 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:52:33 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ void	free_cmd(t_data *data)
 		i++;
 	}
 	free(data->cmd->parts);
-	if (data->cmd->infile)
-		free(data->cmd->infile);
-	if (data->cmd->outfile)
-		free(data->cmd->outfile);
 	free(data->cmd);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/06 17:41:36 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 15:51:19 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	init_data(t_data *data, char **envp)
 	data->curent_path = malloc(sizeof(char) * PATH_MAX);
 	getcwd(data->curent_path, PATH_MAX);
 	data->envp = envp;
+	data->infile = STDIN_FILENO;
+	data->outfile = STDOUT_FILENO;
 }
 
 int main(int argc, char **argv, char **envp)
@@ -55,6 +57,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data, envp);
+	env(data);
 	while (1)
 	{
 		data->input = readline("prompt.png>");
@@ -64,13 +67,9 @@ int main(int argc, char **argv, char **envp)
 			{
 				add_history(data->input);
 				fake_parsing(data);
-				display_cmd(data);
+				//display_cmd(data);
 				read_cmd(data, data->cmd);
 				//ft_printf("\n");
-			}
-			if (ft_strncmp(data->input, "e", -1) == 0)
-			{
-				env(data);
 			}
 		}
 		//ft_printf("input : %s-\n", data->input);
