@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/11 15:12:33 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:07:24 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,20 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <linux/limits.h>
+#include <readline/chardefs.h>
+#include <limits.h>
 
 
 enum cmd_type {
 	CMD = 1, // cat echo ls pwd...
 	ARG, // -l "hello world"...
-	PIPE, // |
-	OUTFILE, // >
-	INFILE, // <
-	HEREDOC, // <<
-	APPEND, // >>
-	ENVVAR, // $variable_name
+	// PIPE, // |
+	// OUTFILE, // >
+	// INFILE, // <
+	// HEREDOC, // <<
+	// APPEND, // >>
+	// ENVVAR, // $variable_name
 };
 
 typedef struct	s_part

@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/11 15:26:24 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:08:26 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
-#include "../libft/libft.h"
-#include <unistd.h>
 #include <sys/wait.h>
-#include <stdlib.h>
-#include <readline/readline.h>
 
 char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
 {

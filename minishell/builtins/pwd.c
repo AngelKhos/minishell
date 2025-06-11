@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:18:43 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/05/23 16:56:27 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:08:56 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
 #include "../include/data.h"
 
 void	pwd(t_data *data)

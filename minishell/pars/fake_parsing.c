@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fake_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:15:41 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/11 13:42:35 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:07:58 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
-#include <linux/limits.h>
-#include <readline/chardefs.h>
-#include <limits.h>
 
 int	get_nb_pipes(char **cmd_str)
 {

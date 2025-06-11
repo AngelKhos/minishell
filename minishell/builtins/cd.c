@@ -6,12 +6,11 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/04 21:01:18 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 16:09:22 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
-#include <linux/limits.h>
 
 void	cd(t_data *data, char *cd_args)
 {

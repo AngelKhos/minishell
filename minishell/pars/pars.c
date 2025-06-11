@@ -6,7 +6,13 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/05/18 17:11:23 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 16:07:16 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/data.h"
+
+void parsing(t_data *data)
+{
+    
+}
