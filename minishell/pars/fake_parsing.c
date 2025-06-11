@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fake_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:15:41 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/06 17:41:23 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 13:42:35 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	alloc_cmd_with_pipes(t_data *data, char **cmd_str)
 	{
 		if (ft_strncmp(cmd_str[i], "|", -1) == 0)
 		{
-			ft_printf("je suis la\n");
 			is_cmd = 0;
 			i++;
 			cmd_index++;
