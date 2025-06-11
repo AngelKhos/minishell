@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/11 14:22:25 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:26:24 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
 	{
 		if (cmd_index > 0)
 		{
-			dup2(pr_pip[0], data->infile);
+			dup2(pr_pip[0], STDIN_FILENO);
 			close(pr_pip[0]);
 			close(pr_pip[1]);
 		}
 		if (cmd_index < data->nb_pipes)
 		{
-			dup2(cur_pip[1], data->outfile);
+			dup2(cur_pip[1], STDOUT_FILENO);
 			close(cur_pip[0]);
 			close(cur_pip[1]);
 		}
@@ -78,6 +78,7 @@ void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	}
 	prev_pipe[0] = curr_pipe[0];
 	prev_pipe[1] = curr_pipe[1];
+	free(cmd_str);
 }
 
 void	read_cmd(t_data *data)
