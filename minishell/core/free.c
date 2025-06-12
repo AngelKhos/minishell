@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:40:46 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/11 16:08:51 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:37:23 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,23 @@ void	free_array(char **array)
 
 void	free_cmd(t_data *data)
 {
-	int	i;
+	int	i_part;
+	int	i_cmd;
 
-	i = 0;
-	while (i <= data->cmd->len)
+	i_part = 0;
+	i_cmd = 0;
+	while (i_cmd <= data->nb_pipes)
 	{
-		if (data->cmd->parts[i].str)
-			free(data->cmd->parts[i].str);
-		i++;
+		while (i_part <= data->cmd[i_cmd].len - 1)
+		{
+			if (data->cmd[i_cmd].parts[i_part].str)
+				free(data->cmd[i_cmd].parts[i_part].str);
+			i_part++;
+		}
+		free(data->cmd[i_cmd].parts);
+		i_part = 0;
+		i_cmd++;
 	}
-	free(data->cmd->parts);
 	free(data->cmd);
 }
 
@@ -47,6 +54,4 @@ void free_data(t_data *data)
 		free(data->curent_path);
 	if (data->input)
 		free(data->input);
-	if (data->cmd)
-		free_cmd(data);
 }

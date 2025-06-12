@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fake_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:15:41 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/11 16:07:58 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:22:10 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	fake_parsing(t_data *data)
 	
 	cmd_str = ft_split(data->input, ' ');
 	data->nb_pipes = get_nb_pipes(cmd_str);
-	data->cmd = malloc(sizeof(t_cmd) * data->nb_pipes + 2);
+	data->cmd = malloc(sizeof(t_cmd) * (data->nb_pipes + 1));
 	if (data->nb_pipes >= 1)
 	{
 		alloc_cmd_with_pipes(data, cmd_str);

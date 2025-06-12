@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/11 16:08:47 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:38:52 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,24 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data, envp);
-	env(data);
+	//env(data);
 	while (1)
 	{
 		data->input = readline("prompt.png>");
 		if (data->input)
 		{
+			if (ft_strncmp(data->input, "exit", -1) == 0)
+				exit_minishell_edition(data);
 			if (ft_strlen(data->input) >= 1)
 			{
 				add_history(data->input);
 				fake_parsing(data);
 				//display_cmd(data);
 				read_cmd(data);
+				free_cmd(data);
 				//ft_printf("\n");
 			}
+			free(data->input);
 		}
 		//ft_printf("input : %s-\n", data->input);
 	}

@@ -3,32 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/11 16:08:26 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/12 15:33:32 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 #include <sys/wait.h>
 
-char	*convert_part_to_arg(t_data *data, t_cmd *cmd, int index)
+char	*convert_part_to_arg(t_data *data, int index)
 {
 	int		size;
 	int		i;
 	char	*cmd_plus_arg;
 
-	(void)data;
 	cmd_plus_arg = NULL;
 	i = 0;
 	size = 1;
-	while (cmd[0].parts[index + size].type == ARG)
-		size++;
-	while (i < size)
+	while (i < data->cmd[index].len)
 	{
 		cmd_plus_arg = ft_strjoin(cmd_plus_arg, " ");
-		cmd_plus_arg = ft_strjoin(cmd_plus_arg, cmd[0].parts[i].str);
+		cmd_plus_arg = ft_strjoin(cmd_plus_arg, data->cmd[index].parts[i].str);
 		i++;
 	}
 	return (cmd_plus_arg);
@@ -58,7 +55,9 @@ void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	int		curr_pipe[2];
 	char	*cmd_str;
 
-	cmd_str = convert_part_to_arg(data, data->cmd + cmd_index, 0);
+	cmd_str = convert_part_to_arg(data, cmd_index);
+	curr_pipe[0] = -1;
+	curr_pipe[1] = -1;
 	pipe(curr_pipe);
 	pids[cmd_index] = fork();
 	if (pids[cmd_index] == 0)
@@ -84,7 +83,9 @@ void	read_cmd(t_data *data)
 	int		*pids;
 
 	cmd_index = 0;
-	pids = malloc(sizeof(int) * data->nb_pipes + 1);
+	prev_pipes[0] = -1;
+	prev_pipes[1] = -1;
+	pids = ft_calloc(sizeof(int), data->nb_pipes + 1);
 	pipe(prev_pipes);
 	while (cmd_index <= data->nb_pipes)
 	{
