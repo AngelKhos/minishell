@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 22:01:20 by authomas          #+#    #+#             */
-/*   Updated: 2024/11/28 16:58:38 by authomas         ###   ########.fr       */
+/*   Updated: 2025/06/14 13:54:16 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,26 +109,3 @@ char	**ft_split(char *str, char charset)
 	}
 	return (words);
 }
-
-// int	main(int argc, char *argv[])
-// {
-// 	char	**words;
-// 	int		i;
-
-// 	i = 0;
-// 	if (argc == 3)
-// 	{
-// 		words = ft_split(argv[1], argv[2][0]);
-// 		while (words[i])
-// 			printf("'%s'\n", words[i++]);
-// 	}
-// 	i = 0;
-// 	while(words[i])
-// 	{
-// 		printf("free - %p\n", words[i]);	
-// 		free(words[i++]);
-// 	}
-// 	printf("free - %p\n", words);	
-// 	free(words);
-// 	return (0);
-// }

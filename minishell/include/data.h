@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/11 16:07:24 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 13:47:50 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ void	read_cmd(t_data *data);
 //////////////// DEBUG ///////////////
 
 void	display_cmd(t_data *data);
-void	fake_parsing(t_data *data);
+void	parsing(t_data *data);
 
 #endif
