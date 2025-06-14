@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/14 13:47:50 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/14 14:03:42 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,7 @@
 enum cmd_type {
 	CMD = 1, // cat echo ls pwd...
 	ARG, // -l "hello world"...
-	// PIPE, // |
-	// OUTFILE, // >
-	// INFILE, // <
-	// HEREDOC, // <<
-	// APPEND, // >>
-	// ENVVAR, // $variable_name
+	BUIL, // builtins
 };
 
 typedef struct	s_part
@@ -76,7 +71,9 @@ void	init_data(t_data *data, char **envp);
 
 //////////////// EXEC ////////////////
 
-int	execute(char *cmd_arg, char **envp);
+void	exec_builtins(t_data *data, int prevpipe[2], int *pids, int cmd_index);
+void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
+int		execute(char *cmd_arg, char **envp);
 void	read_cmd(t_data *data);
 
 //////////////// DEBUG ///////////////
