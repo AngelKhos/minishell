@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/13 15:25:38 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:56:15 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,54 @@
 
 void    builtins_if(t_data *data, int cmd_index)
 {
-    if (ft_strncmp(data->cmd[cmd_index].parts[0].str, "cd", -1) == 0)
+    char *str;
+
+    str = data->cmd[cmd_index].parts[0].str;
+    if (ft_strncmp(str, "cd", -1) == 0)
     {
         cd(data, data->cmd[cmd_index].parts[1].str);
     }
-    else if (ft_strncmp(data->cmd[cmd_index].parts[0].str, "pwd", -1) == 0)
+    else if (ft_strncmp(str, "pwd", -1) == 0)
     {
         pwd(data);
     }
-    else if (ft_strncmp(data->cmd[cmd_index].parts[0].str, "env", -1) == 0)
+    else if (ft_strncmp(str, "env", -1) == 0)
     {
         //code for env
     }
-    else if (ft_strncmp(data->cmd[cmd_index].parts[0].str, "exit", -1) == 0)
+    else if (ft_strncmp(str, "exit", -1) == 0)
     {
         exit_minishell_edition(data);
     }
-    else if (ft_strncmp(data->cmd[cmd_index].parts[0].str, "echo", -1) == 0)
+    else if (ft_strncmp(str, "echo", -1) == 0)
     {
         //code for echo
     }
+}
+
+int     need_fork(char *buil)
+{
+    if (ft_strncmp(buil, "cd", -1) == 0)
+    {
+        return (0);
+    }
+    else if (ft_strncmp(buil, "pwd", -1) == 0)
+    {
+        return (1);
+    }
+    else if (ft_strncmp(buil, "env", -1) == 0)
+    {
+        return (1);
+    }
+    else if (ft_strncmp(buil, "exit", -1) == 0)
+    {
+        return (0);
+    }
+    else if (ft_strncmp(buil, "echo", -1) == 0)
+    {
+        return (1);
+    }
+    return (1);
 }
 
 void	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)

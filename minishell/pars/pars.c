@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/06/14 13:59:58 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 13:11:51 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int checking_missing_stuff(char **inputs)
             // need to add it to the inputs after the pipe
         }
     }
+	return (0); // <------------------- j'ai ajouter ça pour pouvoir compiler
 }
 
 void parsing(t_data *data)
@@ -94,7 +95,7 @@ void parsing(t_data *data)
 	
 	inputs = ft_split(data->input, ' ');
     if (!inputs)
-        return;
+		return;
 	data->nb_pipes = get_nb_pipes(inputs);
 	data->cmd = malloc(sizeof(t_cmd) * (data->nb_pipes + 1));
 	alloc_cmd(data, inputs);

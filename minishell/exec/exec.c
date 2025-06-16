@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/14 14:03:16 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/13 14:33:58 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 char	*convert_part_to_arg(t_data *data, int index)
 {
-	// int		size;
+	int		size;
 	int		i;
 	char	*cmd_plus_arg;
 
 	cmd_plus_arg = NULL;
 	i = 0;
-	// size = 1;
+	size = 1;
 	while (i < data->cmd[index].len)
 	{
 		cmd_plus_arg = ft_strjoin(cmd_plus_arg, " ");
