@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/13 15:56:15 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:32:09 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,27 @@ int     need_fork(char *buil)
     return (1);
 }
 
+void exec_in_parent(t_data *data, int cmd_index, int prev_pipe[2])
+{
+    if (need_fork(data->cmd[cmd_index].parts[0].str) == 0)
+    {
+        builtins_if(data, cmd_index);
+        if (data->nb_pipes <= 0)
+        {
+            close(prev_pipe[0]);
+		    close(prev_pipe[1]);
+            return ;
+        }
+    }
+}
+
 void	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 {
 	int		curr_pipe[2];
 
 	curr_pipe[0] = -1;
 	curr_pipe[1] = -1;
+    exec_in_parent(data, cmd_index, prev_pipe);
 	pipe(curr_pipe);
 	pids[cmd_index] = fork();
 	if (pids[cmd_index] == 0)

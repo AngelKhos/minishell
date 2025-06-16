@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:18:43 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/11 16:08:56 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 16:08:49 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	pwd(t_data *data)
 {
-	ft_printf("%s\n", data->curent_path);
+	ft_printf("pwd -> %s\n", data->curent_path);
 }

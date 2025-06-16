@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/14 14:03:42 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 16:27:02 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,9 @@ void	read_cmd(t_data *data);
 
 void	display_cmd(t_data *data);
 void	parsing(t_data *data);
+
+/////////////// SIGNALE /////////////
+
+void	sigint_handle();
 
 #endif

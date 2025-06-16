@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   signale.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/16 15:32:37 by gchauvet         ###   ########.fr       */
+/*   Created: 2025/06/16 16:09:19 by gchauvet          #+#    #+#             */
+/*   Updated: 2025/06/16 16:46:22 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
+#include <readline/readline.h>
 
-void	cd(t_data *data, char *cd_args)
+void	sigint_handle()
 {
-	chdir(cd_args);
-	free(data->curent_path);
-	data->curent_path = malloc(sizeof(char) * PATH_MAX);
-	getcwd(data->curent_path, PATH_MAX);
+	ft_printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }

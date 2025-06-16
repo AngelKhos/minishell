@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/14 13:54:57 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/16 17:08:28 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
+#include <signal.h>
 
 void	display_cmd(t_data *data)
 {
@@ -47,14 +48,12 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data, envp);
-	//env(data);
+	signal(SIGINT, &sigint_handle);
 	while (1)
 	{
 		data->input = readline("prompt.png>");
 		if (data->input)
 		{
-			if (ft_strncmp(data->input, "exit", -1) == 0)
-				exit_minishell_edition(data);
 			if (ft_strlen(data->input) >= 1)
 			{
 				add_history(data->input);
@@ -65,6 +64,10 @@ int main(int argc, char **argv, char **envp)
 				//ft_printf("\n");
 			}
 			free(data->input);
+		}
+		else if (data->input == NULL)
+		{
+			exit_minishell_edition(data);
 		}
 		//ft_printf("input : %s-\n", data->input);
 	}
