@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/16 16:27:02 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:54:52 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	parsing(t_data *data);
 
 /////////////// SIGNALE /////////////
 
+void	handle_signal();
 void	sigint_handle();
+void	sigabrt_handle();
 
 #endif

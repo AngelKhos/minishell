@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/16 17:08:28 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:30:42 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data, envp);
-	signal(SIGINT, &sigint_handle);
+	handle_signal();
 	while (1)
 	{
 		data->input = readline("prompt.png>");
@@ -58,7 +58,7 @@ int main(int argc, char **argv, char **envp)
 			{
 				add_history(data->input);
 				parsing(data);
-				display_cmd(data);
+				//display_cmd(data);
 				read_cmd(data);
 				free_cmd(data);
 				//ft_printf("\n");
