@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:09:19 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/17 15:00:10 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:12:22 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	sigsegv_handle()
 void	handle_signal()
 {
 	signal(SIGINT, &sigint_handle);
-	signal(SIGSEGV, &sigsegv_handle);
+	//signal(SIGSEGV, &sigsegv_handle);
 	signal(SIGABRT, &sigabrt_handle);
 	signal(SIGQUIT, SIG_IGN);
 }
