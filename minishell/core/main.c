@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/18 17:29:59 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:32:38 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int main(int argc, char **argv, char **envp)
 	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data, envp);
 	handle_signal();
-	here_doc(data, "fin");
+	//here_doc(data, "fin");
 	//print_tree(data->env);
 	while (1)
 	{
