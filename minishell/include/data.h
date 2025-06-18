@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/18 15:23:33 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/18 16:44:40 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct	s_cmd
 	int		len;
 	int		infile;
 	int		outfile;
+	int		here_doc;
 }	t_cmd;
 
 typedef struct s_data
@@ -75,6 +76,7 @@ void	exec_builtins(t_data *data, int prevpipe[2], int *pids, int cmd_index);
 void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
 int		execute(char *cmd_arg, char **envp);
 void	read_cmd(t_data *data);
+void	here_doc(t_data *data, char *word);
 
 //////////////// DEBUG ///////////////
 

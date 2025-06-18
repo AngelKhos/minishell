@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/18 15:20:57 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:29:59 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ int main(int argc, char **argv, char **envp)
 	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data, envp);
 	handle_signal();
+	here_doc(data, "fin");
 	//print_tree(data->env);
 	while (1)
 	{
-		data->input = readline( "\e[0;90mpr\e[0;35mom\e[0;95mpt.\e[0;37mpng\e[0;35m>\e[0m");
+		data->input = readline( "\e[0;35mprompt.png\e[0m>");
 		if (data->input)
 		{
 			if (ft_strlen(data->input) >= 1)
