@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/06/16 16:02:53 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 20:33:17 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,30 +73,23 @@ void	alloc_cmd(t_data *data, char **cmd_str)
 	}
 }
 
-// int checking_missing_stuff(char *inputs)
-// {
-// 	int i = 0;
 
-// 	while(inputs[i])
-// 	{
-		
-// 		if (ft_strncmp(inputs[i], "|", -1) == 0 && !inputs[i + 1])
-// 			return (1);
-// 		// mettre un parsing error si il manque un quote
-// 	}
-// 	return (0); // <------------------- j'ai ajouter ça pour pouvoir compiler
-// }
-
-void parsing(t_data *data)
+int parsing(t_data *data)
 {
 	char	**inputs;
 	
+	if (!first_check(data->input))
+	{
+		ft_printf("parsing error\n");
+		return (0);
+	}
 	inputs = ft_split(data->input, ' ');
 	if (!inputs)
-		return;
+		return (0);
 	data->nb_pipes = get_nb_pipes(inputs);
 	data->cmd = malloc(sizeof(t_cmd) * (data->nb_pipes + 1));
 	alloc_cmd(data, inputs);
+	return (1);
 }
 
 // split les pipes pour avoir les commandes puis split les args

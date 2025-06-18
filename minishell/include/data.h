@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/16 16:27:02 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:32:38 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DATA_H
 # define DATA_H
 
-# include "parsing.h"
+# include "env.h"
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -79,7 +79,8 @@ void	read_cmd(t_data *data);
 //////////////// DEBUG ///////////////
 
 void	display_cmd(t_data *data);
-void	parsing(t_data *data);
+int first_check(char *input);
+int	parsing(t_data *data);
 
 /////////////// SIGNALE /////////////
 

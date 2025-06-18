@@ -11,8 +11,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#ifndef ENV_H
+# define ENV_H
 
 # include "../libft/libft.h"
 

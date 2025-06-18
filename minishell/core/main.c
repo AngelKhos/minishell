@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/16 17:08:28 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:15:14 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,12 @@ int main(int argc, char **argv, char **envp)
 			if (ft_strlen(data->input) >= 1)
 			{
 				add_history(data->input);
-				parsing(data);
-				display_cmd(data);
-				read_cmd(data);
-				free_cmd(data);
+				if (parsing(data))
+				{
+					display_cmd(data);
+					read_cmd(data);
+					free_cmd(data);
+				}
 				//ft_printf("\n");
 			}
 			free(data->input);
