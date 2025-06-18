@@ -6,12 +6,11 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/16 17:15:14 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/18 20:36:25 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
-#include <signal.h>
 
 void	display_cmd(t_data *data)
 {
@@ -38,6 +37,7 @@ void	init_data(t_data *data, char **envp)
 	data->curent_path = malloc(sizeof(char) * PATH_MAX);
 	getcwd(data->curent_path, PATH_MAX);
 	data->envp = envp;
+	data->env = envp_to_tree(envp);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -48,10 +48,12 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data, envp);
-	signal(SIGINT, &sigint_handle);
+	handle_signal();
+	//here_doc(data, "fin");
+	//print_tree(data->env);
 	while (1)
 	{
-		data->input = readline("prompt.png>");
+		data->input = readline( "\e[0;35mprompt.png\e[0m>");
 		if (data->input)
 		{
 			if (ft_strlen(data->input) >= 1)
