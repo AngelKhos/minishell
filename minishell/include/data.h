@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/18 20:36:33 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 14:15:04 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	exec_builtins(t_data *data, int prevpipe[2], int *pids, int cmd_index);
 void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
 int		execute(char *cmd_arg, char **envp);
 void	read_cmd(t_data *data);
-void	here_doc(t_data *data, char *word);
+int		here_doc(t_data *data, char *word);
+void	close_redir(t_data *data);
 
 //////////////// DEBUG ///////////////
 

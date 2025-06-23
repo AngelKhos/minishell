@@ -6,21 +6,35 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:34:36 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/18 16:47:28 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:53:40 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 #include "../libft/libft.h"
+#include <fcntl.h>
 #include <readline/readline.h>
+#include <unistd.h>
 
-void	here_doc(t_data *data, char *word)
+int		here_doc(t_data *data, char *word)
 {
 	(void)data;
+	int		hd_fd;
 	char	*here_doc_input;
-	here_doc_input = readline(">");
+
+	hd_fd = open(".here_doc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	here_doc_input = NULL;
+	ft_printf("pute\n");
 	while (ft_strncmp(here_doc_input, word, -1) != 0)
 	{
+		if (here_doc_input)
+		{
+			write(hd_fd, here_doc_input, ft_strlen(here_doc_input));
+			write(hd_fd, "\n", 1);
+		}
 		here_doc_input = readline(">");
 	}
+	close(hd_fd);
+	hd_fd = open(".here_doc.tmp", O_RDONLY);
+	return (hd_fd);
 }

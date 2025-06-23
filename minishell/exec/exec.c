@@ -6,12 +6,14 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/17 14:35:54 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:29:23 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
+#include <fcntl.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
 char	*convert_part_to_arg(t_data *data, int index)
 {
@@ -33,6 +35,19 @@ char	*convert_part_to_arg(t_data *data, int index)
 
 void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
 {
+	if (cmd_index == 0 && data->cmd[cmd_index].infile != -1)
+	{
+		dup2(data->cmd[cmd_index].infile, STDIN_FILENO);
+		close(pr_pip[0]);
+		close(pr_pip[1]);
+	}
+	if (cmd_index == data->nb_pipes && data->cmd[cmd_index].outfile != -1)
+	{
+		ft_printf("redir outfile\n");
+		dup2(data->cmd[cmd_index].outfile, STDOUT_FILENO);
+		close(cur_pip[0]);
+		close(cur_pip[1]);
+	}
 	if (data->nb_pipes > 0)
 	{
 		if (cmd_index > 0)
@@ -99,5 +114,6 @@ void	read_cmd(t_data *data)
 		waitpid(pids[cmd_index], NULL, 0);
 		cmd_index++;
 	}
+	close_redir(data);
 	free(pids);
 }

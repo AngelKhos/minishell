@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/16 15:32:09 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:16:57 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void    builtins_if(t_data *data, int cmd_index)
     }
     else if (ft_strncmp(str, "env", -1) == 0)
     {
-        //code for env
+        env(data);
     }
     else if (ft_strncmp(str, "exit", -1) == 0)
     {

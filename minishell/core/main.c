@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/18 20:36:25 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/06/23 14:29:55 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ int main(int argc, char **argv, char **envp)
 	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data, envp);
 	handle_signal();
-	//here_doc(data, "fin");
-	//print_tree(data->env);
 	while (1)
 	{
 		data->input = readline( "\e[0;35mprompt.png\e[0m>");
@@ -61,11 +59,10 @@ int main(int argc, char **argv, char **envp)
 				add_history(data->input);
 				if (parsing(data))
 				{
-					display_cmd(data);
+					//display_cmd(data);
 					read_cmd(data);
 					free_cmd(data);
 				}
-				//ft_printf("\n");
 			}
 			free(data->input);
 		}
@@ -73,7 +70,6 @@ int main(int argc, char **argv, char **envp)
 		{
 			exit_minishell_edition(data);
 		}
-		//ft_printf("input : %s-\n", data->input);
 	}
 	return (EXIT_FAILURE);
 }
