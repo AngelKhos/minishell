@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/23 14:29:23 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:19:37 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
 	}
 	if (cmd_index == data->nb_pipes && data->cmd[cmd_index].outfile != -1)
 	{
-		ft_printf("redir outfile\n");
 		dup2(data->cmd[cmd_index].outfile, STDOUT_FILENO);
 		close(cur_pip[0]);
 		close(cur_pip[1]);
@@ -100,6 +99,7 @@ void	read_cmd(t_data *data)
 	pipe(prev_pipes);
 	while (cmd_index <= data->nb_pipes)
 	{
+		data->cmd[cmd_index].infile = here_doc(data, "fin");
 		if (data->cmd[cmd_index].parts[0].type == CMD)
 		{
 			exec_cmd(data, prev_pipes, pids, cmd_index);

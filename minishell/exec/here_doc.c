@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:34:36 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/23 13:53:40 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:19:29 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int		here_doc(t_data *data, char *word)
 
 	hd_fd = open(".here_doc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	here_doc_input = NULL;
-	ft_printf("pute\n");
 	while (ft_strncmp(here_doc_input, word, -1) != 0)
 	{
 		if (here_doc_input)
