@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/20 17:16:57 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:41:06 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void    builtins_if(t_data *data, int cmd_index)
     }
     else if (ft_strncmp(str, "echo", -1) == 0)
     {
-        //code for echo
+        echo(data->cmd[cmd_index].parts[1].str);
     }
 }
 

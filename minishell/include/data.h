@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/23 14:15:04 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:41:39 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	pwd(t_data *data);
 void	cd(t_data *data, char *cd_args);
 void	exit_minishell_edition(t_data *data);
 void	env(t_data *data);
+void	echo(char *arg);
 
 //////////////// FREE ////////////////
 

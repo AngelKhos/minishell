@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/23 15:19:37 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:35:58 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*convert_part_to_arg(t_data *data, int index)
 	return (cmd_plus_arg);
 }
 
-void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
+void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
 {
 	if (cmd_index == 0 && data->cmd[cmd_index].infile != -1)
 	{
@@ -46,7 +46,11 @@ void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
 		dup2(data->cmd[cmd_index].outfile, STDOUT_FILENO);
 		close(cur_pip[0]);
 		close(cur_pip[1]);
-	}
+	}	
+}
+
+void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
+{
 	if (data->nb_pipes > 0)
 	{
 		if (cmd_index > 0)
@@ -74,6 +78,7 @@ void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	pids[cmd_index] = fork();
 	if (pids[cmd_index] == 0)
 	{
+		redir_file(data, prev_pipe, curr_pipe, cmd_index);
 		redir_pipe(data, prev_pipe, curr_pipe, cmd_index);
 		execute(cmd_str, data->envp);
 		exit(0);
@@ -99,7 +104,6 @@ void	read_cmd(t_data *data)
 	pipe(prev_pipes);
 	while (cmd_index <= data->nb_pipes)
 	{
-		data->cmd[cmd_index].infile = here_doc(data, "fin");
 		if (data->cmd[cmd_index].parts[0].type == CMD)
 		{
 			exec_cmd(data, prev_pipes, pids, cmd_index);
