@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/01 15:54:43 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 18:17:51 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	pwd(t_data *data);
 void	cd(t_data *data, char *cd_args);
 void	exit_minishell_edition(t_data *data);
 void	env(t_data *data);
-void	echo(char *arg);
+void	echo(t_cmd cmd);
 
 //////////////// FREE ////////////////
 

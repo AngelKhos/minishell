@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:58:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/24 18:04:04 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:59:47 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,43 +15,46 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "../libft/libft.h"
+#include "../include/data.h"
 
-int		have_flag(char *arg, int *flag)
+int		have_flag(char *arg)
 {
 	size_t	i;
-
-	flag = 0;
-	i = 0;
+	i = 4;
 	while (arg[i])
 	{
+		if (arg[i] == ' ')
+			i++;
 		if (arg[i] == '-')
 		{
 			i++;
-			if (arg[i] == 'n')
-				*flag = 1;
-			i++;
-			if (arg[i] != 'n' && arg[i] != ' ')
-				*flag = 0;
+			while (arg[i] == 'n')
+				i++;
 		}
-		if (arg[i] == ' ')
-			i++;
 		if (arg[i] != ' ' && arg[i] != '-')
-		{
 			break ;
-		}
-		i++;
 	}
 	return (i);
 }
 
-void	echo(char *arg)
+void	echo(t_cmd cmd)
 {
-	int n_flag;
-	int start;
+	int		n_flag;
+	int		start;
+	char	*arg;
+	int		n;
 
+	n = 1;
+	while (n < cmd.len)
+	{
+		arg = ft_strjoin(arg, cmd.parts[n].str);
+		if (n < cmd.len - 1)
+			arg = ft_strjoin(arg, " ");
+		n++;
+	}
 	n_flag = 0;
-	start = have_flag(arg, &n_flag);
+	start = have_flag(arg);
 	write(1, arg+start, ft_strlen(arg + start));
-	if (!n_flag)
+	if (start <= 4)
 		write(1, "\n", 1);
 }

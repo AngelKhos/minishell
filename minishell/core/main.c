@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/23 14:29:55 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:04:25 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		data->input = readline( "\e[0;35mprompt.png\e[0m>");
+		if (data->input == NULL)
+			exit_minishell_edition(data);
 		if (data->input)
 		{
 			if (ft_strlen(data->input) >= 1)
@@ -65,10 +67,6 @@ int main(int argc, char **argv, char **envp)
 				}
 			}
 			free(data->input);
-		}
-		else if (data->input == NULL)
-		{
-			exit_minishell_edition(data);
 		}
 	}
 	return (EXIT_FAILURE);
