@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/24 17:41:39 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:54:43 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	close_redir(t_data *data);
 //////////////// DEBUG ///////////////
 
 void	display_cmd(t_data *data);
-int first_check(char *input);
+char	**ms_split(char *input_str, char separator);
 int	parsing(t_data *data);
 
 /////////////// SIGNALE /////////////

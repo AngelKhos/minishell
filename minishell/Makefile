@@ -11,7 +11,7 @@ DIR_DEPS=.deps
 
 # /////////////////////////
 
-SRCS= core/main.c core/free.c core/signal.c builtins/env.c builtins/cd.c builtins/pwd.c builtins/echo.c pars/first_check.c builtins/exit.c exec/exec.c exec/exec_builtins.c exec/exec_utils.c exec/here_doc.c exec/redir_utils.c pars/pars.c pars/tree_handle.c
+SRCS= core/main.c core/free.c core/signal.c builtins/env.c builtins/cd.c builtins/pwd.c builtins/echo.c pars/ms_split.c builtins/exit.c exec/exec.c exec/exec_builtins.c exec/exec_utils.c exec/here_doc.c exec/redir_utils.c pars/pars.c pars/tree_handle.c
 
 LIB= libft/libft.a
 INCS= include/data.h

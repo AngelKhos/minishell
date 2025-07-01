@@ -6,26 +6,22 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/06/18 20:33:17 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/07/01 17:39:11 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 
-int	get_nb_pipes(char **inputs)
+int	get_tablen(char **inputs)
 {
-	int	nb_pipes;
 	size_t	i;
 
-	nb_pipes = 0;
 	i = 0;
 	while (inputs[i])
 	{
-		if (ft_strncmp(inputs[i], "|", -1) == 0)
-			nb_pipes++;
 		i++;
 	}
-	return nb_pipes;
+	return (i);
 }
 
 void	alloc_cmd(t_data *data, char **cmd_str)
@@ -73,20 +69,29 @@ void	alloc_cmd(t_data *data, char **cmd_str)
 	}
 }
 
+void print_split(char **inputs)
+{
+	int i = 0;
+
+	while (inputs[i])
+	{
+		ft_printf("%d : %s\n", i, inputs[i]);
+		i++;
+	}
+}
 
 int parsing(t_data *data)
 {
 	char	**inputs;
 	
-	if (!first_check(data->input))
+	inputs = ms_split(data->input, '|');
+	if (!inputs)
 	{
-		ft_printf("parsing error\n");
+		ft_printf("parsing error");
 		return (0);
 	}
-	inputs = ft_split(data->input, ' ');
-	if (!inputs)
-		return (0);
-	data->nb_pipes = get_nb_pipes(inputs);
+	print_split(inputs);
+	data->nb_pipes = get_tablen(inputs) - 1;
 	data->cmd = malloc(sizeof(t_cmd) * (data->nb_pipes + 1));
 	alloc_cmd(data, inputs);
 	return (1);
