@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:58:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/01 13:59:47 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:43:49 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int		have_flag(char *arg)
 
 void	echo(t_cmd cmd)
 {
-	int		n_flag;
 	int		start;
 	char	*arg;
 	int		n;
@@ -52,7 +51,6 @@ void	echo(t_cmd cmd)
 			arg = ft_strjoin(arg, " ");
 		n++;
 	}
-	n_flag = 0;
 	start = have_flag(arg);
 	write(1, arg+start, ft_strlen(arg + start));
 	if (start <= 4)

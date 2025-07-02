@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:10:36 by authomas          #+#    #+#             */
-/*   Updated: 2025/07/01 17:25:31 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/07/02 14:29:28 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ static int	fill_token(char **token_lst, char *input_str, char separator, size_t 
 		while (input_str && *input_str == separator)
 			input_str++;
 		len_token = token_len(input_str, separator);
-		ft_printf("len_tken :%d\n", len_token);
 		token_lst[j] = malloc(sizeof(char) * (len_token + 1));
 		if (!token_lst[j])
 			return (0);
