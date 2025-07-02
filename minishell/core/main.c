@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/01 14:04:25 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:38:24 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int main(int argc, char **argv, char **envp)
 	handle_signal();
 	while (1)
 	{
-		data->input = readline( "\e[0;35mprompt.png\e[0m>");
+		data->input = readline("\e[0;35m(つ ╹╹)つ\e[0;91m──\e[0;33m☆*:・ﾟ\e[0m>");
 		if (data->input == NULL)
 			exit_minishell_edition(data);
 		if (data->input)
