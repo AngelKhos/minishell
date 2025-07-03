@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/30 14:31:35 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:24:08 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void    builtins_if(t_data *data, int cmd_index)
     }
     else if (ft_strncmp(str, "exit", -1) == 0)
     {
-        exit_minishell_edition(data);
+        exit_minishell_edition(data, "exit");
     }
     else if (ft_strncmp(str, "echo", -1) == 0)
     {

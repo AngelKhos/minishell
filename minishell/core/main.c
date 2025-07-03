@@ -6,12 +6,14 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/03 13:41:02 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:17:39 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
+#include <unistd.h>
 
+//foinction de debug a supprimer
 void	display_cmd(t_data *data)
 {
 	int	i;
@@ -32,28 +34,11 @@ void	display_cmd(t_data *data)
 	}
 }
 
-void	init_data(t_data *data, char **envp)
+void	handle_readline(t_data *data)
 {
-	data->curent_path = malloc(sizeof(char) * PATH_MAX);
-	getcwd(data->curent_path, PATH_MAX);
-	data->envp = envp;
-	data->env = envp_to_tree(envp);
-}
-
-int main(int argc, char **argv, char **envp)
-{
-	t_data	*data;
-	
-	(void)argc;
-	(void)argv;
-	data = ft_calloc(sizeof(t_data), 1);
-	init_data(data, envp);
-	handle_signal();
-	while (1)
+	while (data->run)
 	{
 		data->input = readline("\e[0;35m(つ ╹╹)つ\e[0;91m──\e[0;33m☆*:・ﾟ\e[0m>");
-		if (data->input == NULL)
-			exit_minishell_edition(data, "exit");
 		if (data->input)
 		{
 			if (ft_strlen(data->input) >= 1)
@@ -61,13 +46,37 @@ int main(int argc, char **argv, char **envp)
 				add_history(data->input);
 				if (parsing(data))
 				{
-					display_cmd(data);
+					//display_cmd(data);
 					read_cmd(data);
 					free_cmd(data);
 				}
 			}
 			free(data->input);
 		}
+		else
+			exit_minishell_edition(data, "exit");
 	}
-	return (EXIT_FAILURE);
+}
+
+void	init_data(t_data *data, char **envp)
+{
+	data->curent_path = malloc(sizeof(char) * PATH_MAX);
+	getcwd(data->curent_path, PATH_MAX);
+	data->envp = envp;
+	data->run = 1;
+	data->env = envp_to_tree(envp);
+}
+
+int main(int argc, char **argv, char **envp)
+{
+	t_data	*data;
+
+	(void)argc;
+	(void)argv;
+	data = ft_calloc(sizeof(t_data), 1);
+	init_data(data, envp);
+	handle_signal();
+	handle_readline(data);
+	free_data(data);
+	return (EXIT_SUCCESS);
 }

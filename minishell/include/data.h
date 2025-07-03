@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/03 13:40:46 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/03 16:59:23 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_data
 	t_env	*env;
 	char	**envp; // temp
 	t_cmd	*cmd; // the command to update in the parsing at each call of readline
+	int		run;
 	int		nb_pipes;
 }	t_data;
 
