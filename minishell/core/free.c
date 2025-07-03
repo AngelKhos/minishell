@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:40:46 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/12 15:37:23 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:00:15 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,6 @@ void free_data(t_data *data)
 		free(data->curent_path);
 	if (data->input)
 		free(data->input);
+	tree_destroy(data->env);
+	free(data);
 }
