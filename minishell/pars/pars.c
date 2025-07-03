@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/07/02 17:05:15 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/07/03 22:45:07 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,13 @@ void alloc_cmd(t_data *data, char **inputs)
 	char **raw_cmd;
 	size_t i;
 	size_t part_i;
+	int is_cmd;
 
 	i = 0;
 	while (inputs[i])
 	{
 		part_i = 0;
+		is_cmd = 0;
 		raw_cmd = ms_split(inputs[i], ' ');
 		data->cmd[i].len = get_tablen(raw_cmd);
 		data->cmd[i].parts = ft_calloc(sizeof(t_part), get_tablen(raw_cmd));
@@ -87,14 +89,15 @@ void alloc_cmd(t_data *data, char **inputs)
 		while(raw_cmd[part_i])
 		{
 			data->cmd[i].parts[part_i].str = ft_strdup(raw_cmd[part_i]);
-			if (i == 0)
+			if (is_cmd == 0)
 			{
-				data->cmd[i].parts[part_i].type = CMD;
+				if (ft_strnstr("echo, cd, env, exit, pwd", raw_cmd[part_i], -1))
+					data->cmd[i].parts[part_i].type = BUIL;
+				else
+					data->cmd[i].parts[part_i].type = CMD;
 			}
 			else
-			{
 				data->cmd[i].parts[part_i].type = ARG;
-			}
 			part_i++;
 		}
 		free_array(raw_cmd);
@@ -113,7 +116,6 @@ void alloc_cmd(t_data *data, char **inputs)
 // void print_split(char **inputs)
 // {
 // 	int i = 0;
-
 // 	while (inputs[i])
 // 	{
 // 		ft_printf("%d : %s\n", i, inputs[i]);
@@ -121,12 +123,45 @@ void alloc_cmd(t_data *data, char **inputs)
 // 	}
 // }
 
+int checking_missing_command(char *input)
+{
+	int i;
+	char *str;
+
+	str = ft_strtrim(input, " \r\t\v\f");
+	if (!str || str[0] == '|')
+	{
+		free(str);
+		return (0);
+	}
+	i = 0;
+	while(str[i])
+	{	
+		if (str[i] == '|')
+		{
+			i++;
+			while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\v' 
+				|| str[i] == '\r' || str[i] == '\f'))
+				i++;
+			if (!str[i] || str[i] == '|')
+				return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 int parsing(t_data *data)
 {
 	char	**inputs;
 	
+	if (!checking_missing_command(data->input))
+	{
+		ft_printf("parsing error");
+		return (0);
+	}
 	inputs = ms_split(data->input, '|');
-	print_split(inputs);
+	//print_split(inputs);
 	if (!inputs)
 	{
 		ft_printf("parsing error");
