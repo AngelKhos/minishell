@@ -6,14 +6,14 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/03 17:17:39 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:00:40 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 #include <unistd.h>
 
-//foinction de debug a supprimer
+//fonction de debug a supprimer
 void	display_cmd(t_data *data)
 {
 	int	i;

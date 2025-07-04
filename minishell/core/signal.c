@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:09:19 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/03 15:57:37 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:01:02 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,8 @@ void	sigint_handle()
 	rl_redisplay();
 }
 
-void	sigabrt_handle()
-{
-	ft_printf("abort\n");
-}
-
-void	sigsegv_handle()
-{
-	ft_printf("Segmentation fault\n");
-	exit(EXIT_FAILURE);
-}
-
 void	handle_signal()
 {
 	signal(SIGINT, &sigint_handle);
-	signal(SIGSEGV, &sigsegv_handle);
-	signal(SIGABRT, &sigabrt_handle);
 	signal(SIGQUIT, SIG_IGN);
 }
