@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/07/03 22:45:07 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/07/11 21:48:18 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,49 @@ int	get_tablen(char **inputs)
 // 		//:)
 // 	}
 // }
+void pars_redir(char *input, t_cmd *cmd)
+{
+	int i;
+	int j;
+	char *file;
+
+	i = 0;
+	file = NULL;
+	cmd->infile = -1;
+	cmd->outfile = -1;
+	while(input[i])
+	{
+		if (input[i] == '<')
+		{
+			i++;
+			while(input[i] == ' ')
+				i++;
+			j = i;
+			while(ft_isalnum(input[j]))
+				j++;
+			file = ft_substr(input, i, j - i);
+			cmd->infile = open(file, O_RDONLY);
+			if (cmd->infile == -1)
+				ft_printf("pa conten");
+		}
+		else if (input[i] == '>')
+		{
+			i++;
+			while(input[i] == ' ')
+				i++;
+			j = i;
+			while(ft_isalnum(input[j]))
+				j++;
+			file = ft_substr(input, i, j - i);
+			cmd->outfile = open(file, O_CREAT | O_WRONLY);
+			if (cmd->outfile == -1)
+				ft_printf("pa conten");
+		}
+		i++;
+	}
+	if (file)
+		free(file);
+}
 
 void alloc_cmd(t_data *data, char **inputs)
 {
@@ -81,11 +124,16 @@ void alloc_cmd(t_data *data, char **inputs)
 	{
 		part_i = 0;
 		is_cmd = 0;
+		pars_redir(inputs[i], &data->cmd[i]);
 		raw_cmd = ms_split(inputs[i], ' ');
+		// while (raw_cmd[part_i])
+		// {
+		// 	ft_printf("%d: %s\n", part_i, raw_cmd[part_i]);
+		// 	part_i++;
+		// }
+		// part_i = 0;
 		data->cmd[i].len = get_tablen(raw_cmd);
 		data->cmd[i].parts = ft_calloc(sizeof(t_part), get_tablen(raw_cmd));
-		data->cmd[i].infile = -1;
-		data->cmd[i].outfile = -1;
 		while(raw_cmd[part_i])
 		{
 			data->cmd[i].parts[part_i].str = ft_strdup(raw_cmd[part_i]);
