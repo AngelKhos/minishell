@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:58:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/04 14:58:08 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:04:12 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	start_point(char *arg)
 			i++;
 			while (arg[i] == 'n')
 				i++;
-			if (arg[i] != ' ')
+			if (arg[i] != ' ' && arg[i] != '\0')
 			{
 				i--;
 				while (arg[i] != '-')
