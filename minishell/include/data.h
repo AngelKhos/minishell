@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/03 16:59:23 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/14 16:35:25 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,13 @@ void	close_redir(t_data *data);
 
 //////////////// DEBUG ///////////////
 
+void	print_char_array(char **array);
 void	display_cmd(t_data *data);
+
+/////////////// PARSING /////////////
+
 char	**ms_split(char *input_str, char separator);
-int	parsing(t_data *data);
+int		parsing(t_data *data);
 
 /////////////// SIGNALE /////////////
 

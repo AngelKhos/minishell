@@ -6,33 +6,12 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/04 17:00:40 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/15 10:30:12 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 #include <unistd.h>
-
-//fonction de debug a supprimer
-void	display_cmd(t_data *data)
-{
-	int	i;
-	int c_i;
-
-	i = 0;
-	c_i = 0;
-	while (c_i < data->nb_pipes + 1)
-	{
-		i = 0;
-		ft_printf("--------------------------- cmd : %i\ncmd len : %i\n", c_i, data->cmd[c_i].len);
-		while (i < data->cmd[c_i].len)
-		{
-			ft_printf("\n--------------\n part : %i\n str : %s\n type : %i\n", i, data->cmd[c_i].parts[i].str, data->cmd[c_i].parts[i].type);
-			i++;
-		}
-		c_i++;
-	}
-}
 
 void	handle_readline(t_data *data)
 {
@@ -76,6 +55,7 @@ int main(int argc, char **argv, char **envp)
 	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data, envp);
 	handle_signal();
+	//print_char_array(tree_to_envp(data->env));
 	handle_readline(data);
 	free_data(data);
 	return (EXIT_SUCCESS);
