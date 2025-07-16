@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tree_handle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:46:55 by authomas          #+#    #+#             */
-/*   Updated: 2025/06/18 20:29:09 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/07/16 13:46:06 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/env.h"
+#include "../libft/libft.h"
+#include <stdio.h>
+#include <stddef.h>
 
 int env_parse_str(char *envstr, t_pair *out)
 {
@@ -124,7 +127,7 @@ void tree_remove(t_env **root, char *key)
 	new_node = NULL;
 	insert = NULL;
 	if(!root)
-	return ;
+		return ;
 	if (ft_strncmp((*root)->data.key, key, -1) != 0)
 	{
 		if ((*root)->left)
@@ -161,47 +164,3 @@ void tree_remove(t_env **root, char *key)
 		}
 	}
 }
-
-t_env *envp_to_tree(char **envp)
-{
-	t_env *root;
-	t_env *leaf;
-	int i;
-
-	root = env_parse_node(envp[0]);
-	i = 1;
-	while (envp[i])
-	{
-		leaf = env_parse_node(envp[i]);
-		tree_insert(root, leaf);
-		i++;
-	}
-	return (root);
-}
-
-// char **tree_to_envp(t_env *root)
-// {
-// 	char **envp;
-
-	/*to do*/
-// }
-
-void print_tree(t_env *root)
-{
-	if (root == NULL)
-        return;
-	if (root->data.value)
-		ft_printf("%s = %s\n", root->data.key, root->data.value);
-	print_tree(root->right);
-    print_tree(root->left);
-}
-
-// int main (int ac, char **av, char **envp)
-// {
-// 	(void)ac;
-// 	(void)av;
-// 	t_env *uwu = envp_to_tree(envp);
-// 	print_tree(uwu);
-// 	tree_destroy(uwu);
-// 	return (0);
-// }
