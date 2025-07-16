@@ -11,10 +11,13 @@ DIR_DEPS=.deps
 
 # /////////////////////////
 
-SRCS= core/main.c core/free.c core/signal.c builtins/env.c builtins/cd.c builtins/pwd.c builtins/echo.c pars/ms_split.c builtins/exit.c exec/exec.c exec/exec_builtins.c exec/exec_utils.c exec/here_doc.c exec/redir_utils.c pars/pars.c pars/tree_handle.c
+SRCS=core/debug_tmp.c core/main.c core/free.c core/signal.c \
+	builtins/env.c builtins/cd.c builtins/pwd.c builtins/echo.c builtins/exit.c \
+	pars/ms_split.c pars/pars.c pars/tree_handle.c pars/tree_utils.c pars/here_doc.c \
+	exec/exec.c exec/exec_builtins.c exec/exec_utils.c exec/redir_utils.c   
 
 LIB= libft/libft.a
-INCS= include/data.h
+INCS= include/data.h include/env.h
 OBJS=$(SRCS:srcs/%.c=$(DIR_OBJS)/%.o)
 DEPS=$(SRCS:srcs/%.c=$(DIR_DEPS)/%.d)
 
