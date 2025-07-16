@@ -31,21 +31,23 @@ typedef struct s_env
 	struct s_env *right;
 } t_env;
 
-t_env *env_parse_node(char *envstr);
-int env_parse_str(char *envstr, t_pair *out);
-t_env *envp_to_tree(char **envp);
+char	**tree_to_envp(t_env *root);
 
-void destroy_data(t_pair *data);
-void tree_remove(t_env **root, char *key);
+t_env	*env_parse_node(char *envstr);
+int		env_parse_str(char *envstr, t_pair *out);
+t_env	*envp_to_tree(char **envp);
 
-t_env *tree_insert(t_env *node, t_env *leaf);
-void print_tree(t_env *root);
+void	destroy_data(t_pair *data);
+void	tree_remove(t_env **root, char *key);
 
-t_env *tree_search(t_env *root, char *key);
+t_env	*tree_insert(t_env *node, t_env *leaf);
+void	print_tree(t_env *root);
 
-void tree_destroy(t_env *root);
-void tree_delete_node(t_env *node);
+t_env	*tree_search(t_env *root, char *key);
 
-void print_tree(t_env *root);
+void	tree_destroy(t_env *root);
+void	tree_delete_node(t_env *node);
+
+void	print_tree(t_env *root);
 
 #endif
