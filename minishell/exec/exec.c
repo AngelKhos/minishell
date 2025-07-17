@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/17 15:31:28 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/17 16:05:31 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@
 
 char	*convert_part_to_arg(t_data *data, int index)
 {
-	//int		size;
 	int		i;
 	char	*cmd_plus_arg;
 
 	cmd_plus_arg = NULL;
 	i = 0;
-	//size = 1;
 	while (i < data->cmd[index].len)
 	{
 		cmd_plus_arg = ft_strjoin(cmd_plus_arg, " ");
@@ -50,7 +48,7 @@ void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
 		dup2(data->cmd[cmd_index].outfile, STDOUT_FILENO);
 		close(cur_pip[0]);
 		close(cur_pip[1]);
-	}	
+	}
 }
 
 void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
@@ -115,21 +113,7 @@ void	read_cmd(t_data *data)
 		pipe(prev_pipes);
 	while (cmd_index <= data->nb_pipes)
 	{
-		if (data->cmd[cmd_index].parts[0].type == CMD)
-		{
-			exec_cmd(data, prev_pipes, pids, cmd_index);
-		}
-		else if (data->cmd[cmd_index].parts[0].type == BUIL)
-		{
-			if (is_exit_or_cd(data, cmd_index) == 1 && data->nb_pipes < 1)// a fix, inv les deux if, je crois... alaide...
-			{
-				builtins_if(data, cmd_index);
-			}
-			else
-			{
-				exec_builtins(data, prev_pipes, pids, cmd_index);
-			}
-		}
+		read_cmd_if(data, cmd_index, prev_pipes, pids);
 		cmd_index++;
 	}
 	cmd_index = 0;
@@ -138,11 +122,7 @@ void	read_cmd(t_data *data)
 		waitpid(pids[cmd_index], NULL, 0);
 		cmd_index++;
 	}
-	if (data->nb_pipes > 0)
-	{
-		close(prev_pipes[0]);
-		close(prev_pipes[1]);
-	}
+	read_cmd_end_close(data, prev_pipes);
 	close_redir(data);
 	free(pids);
 }

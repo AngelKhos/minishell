@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/18 15:10:35 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/17 16:07:52 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*find_loop(char	**paths, char	*path_no_cmd, char *cmd)
 			return (free_array(paths), free(path), NULL);
 		path = ft_strjoin(path_no_cmd, cmd);
 		if (!path)
-			return (free(path_no_cmd), free_array(paths), NULL); 
+			return (free(path_no_cmd), free_array(paths), NULL);
 		if (access(path, X_OK) == 0)
 			return (path);
 		i++;
