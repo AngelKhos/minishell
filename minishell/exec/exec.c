@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/03 12:13:06 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:21:37 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,22 +78,30 @@ void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	char	*cmd_str;
 
 	cmd_str = convert_part_to_arg(data, cmd_index);
-	pipe(curr_pipe);
+	if (data->nb_pipes > 0)
+		pipe(curr_pipe);
 	pids[cmd_index] = fork();
 	if (pids[cmd_index] == 0)
 	{
 		redir_file(data, prev_pipe, curr_pipe, cmd_index);
 		redir_pipe(data, prev_pipe, curr_pipe, cmd_index);
+		if (data->nb_pipes > 0)
+		{
+			close(prev_pipe[0]);
+			close(prev_pipe[1]);
+			close(curr_pipe[0]);
+			close(curr_pipe[1]);
+		}
 		execute(cmd_str, data->envp);
 		exit(0);
 	}
-	if (cmd_index > 0)
+	if (data->nb_pipes > 0)
 	{
 		close(prev_pipe[0]);
 		close(prev_pipe[1]);
+		prev_pipe[0] = curr_pipe[0];
+		prev_pipe[1] = curr_pipe[1];
 	}
-	prev_pipe[0] = curr_pipe[0];
-	prev_pipe[1] = curr_pipe[1];
 	free(cmd_str);
 }
 
@@ -105,7 +113,8 @@ void	read_cmd(t_data *data)
 
 	cmd_index = 0;
 	pids = ft_calloc(sizeof(int), data->nb_pipes + 1);
-	pipe(prev_pipes);
+	if (data->nb_pipes > 0)
+		pipe(prev_pipes);
 	while (cmd_index <= data->nb_pipes)
 	{
 		if (data->cmd[cmd_index].parts[0].type == CMD)
@@ -113,7 +122,16 @@ void	read_cmd(t_data *data)
 			exec_cmd(data, prev_pipes, pids, cmd_index);
 		}
 		else if (data->cmd[cmd_index].parts[0].type == BUIL)
-			exec_builtins(data, prev_pipes, pids, cmd_index);
+		{
+			if (is_exit_or_cd(data, cmd_index) == 0)
+			{
+				exec_builtins(data, prev_pipes, pids, cmd_index);
+			}
+			else
+			{
+				builtins_if(data, cmd_index);
+			}
+		}
 		cmd_index++;
 	}
 	cmd_index = 0;
@@ -121,6 +139,11 @@ void	read_cmd(t_data *data)
 	{
 		waitpid(pids[cmd_index], NULL, 0);
 		cmd_index++;
+	}
+	if (data->nb_pipes > 0)
+	{
+		close(prev_pipes[0]);
+		close(prev_pipes[1]);
 	}
 	close_redir(data);
 	free(pids);

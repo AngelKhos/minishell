@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/03 18:24:08 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:15:16 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,43 +40,20 @@ void    builtins_if(t_data *data, int cmd_index)
     }
 }
 
-int     need_fork(char *buil)
+int     is_exit_or_cd(t_data *data, int cmd_index)
 {
-    if (ft_strncmp(buil, "cd", -1) == 0)
-    {
-        return (0);
-    }
-    else if (ft_strncmp(buil, "pwd", -1) == 0)
-    {
-        return (1);
-    }
-    else if (ft_strncmp(buil, "env", -1) == 0)
-    {
-        return (1);
-    }
-    else if (ft_strncmp(buil, "exit", -1) == 0)
-    {
-        return (0);
-    }
-    else if (ft_strncmp(buil, "echo", -1) == 0)
-    {
-        return (1);
-    }
-    return (1);
-}
+    char *str;
 
-void exec_in_parent(t_data *data, int cmd_index, int prev_pipe[2])
-{
-    if (need_fork(data->cmd[cmd_index].parts[0].str) == 0)
+    str = data->cmd[cmd_index].parts[0].str;
+    if (ft_strncmp(str, "exit", -1) == 0)
     {
-        builtins_if(data, cmd_index);
-        if (data->nb_pipes <= 0)
-        {
-            close(prev_pipe[0]);
-		    close(prev_pipe[1]);
-            return ;
-        }
+        return (1);
     }
+    else if (ft_strncmp(str, "cd", -1) == 0)
+    {
+        return (1);
+    }
+    return (0);
 }
 
 void	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
@@ -85,20 +62,24 @@ void	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 
 	curr_pipe[0] = -1;
 	curr_pipe[1] = -1;
-    exec_in_parent(data, cmd_index, prev_pipe);
-	pipe(curr_pipe);
+    if (data->nb_pipes > 0)
+	    pipe(curr_pipe);
 	pids[cmd_index] = fork();
 	if (pids[cmd_index] == 0)
 	{
 		redir_pipe(data, prev_pipe, curr_pipe, cmd_index);
+        close(prev_pipe[0]);
+		close(prev_pipe[1]);
+        close(curr_pipe[0]);
+		close(curr_pipe[1]);
         builtins_if(data, cmd_index);
 		exit(0);
 	}
-	if (cmd_index > 0)
+	if (data->nb_pipes > 0)
 	{
 		close(prev_pipe[0]);
 		close(prev_pipe[1]);
+        prev_pipe[0] = curr_pipe[0];
+        prev_pipe[1] = curr_pipe[1];
 	}
-	prev_pipe[0] = curr_pipe[0];
-	prev_pipe[1] = curr_pipe[1];
 }
