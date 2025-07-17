@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:40:46 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/03 17:04:39 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:46:48 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	free_cmd(t_data *data)
 	int	i_part;
 	int	i_cmd;
 
-	i_part = 0;
 	i_cmd = 0;
 	while (i_cmd <= data->nb_pipes)
 	{
+		i_part = 0;
 		while (i_part <= data->cmd[i_cmd].len - 1)
 		{
 			if (data->cmd[i_cmd].parts[i_part].str)
@@ -42,7 +42,6 @@ void	free_cmd(t_data *data)
 			i_part++;
 		}
 		free(data->cmd[i_cmd].parts);
-		i_part = 0;
 		i_cmd++;
 	}
 	free(data->cmd);

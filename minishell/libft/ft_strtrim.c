@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:25:33 by authomas          #+#    #+#             */
-/*   Updated: 2024/11/26 21:07:20 by authomas         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:00:51 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	start = 0;
 	end = ft_strlen(s1);
-	while (s1 && ft_strchr(set, s1[start]))
+	while (s1[start] && ft_strchr(set, s1[start]))
 		start++;
-	while (s1 && ft_strchr(set, s1[end]))
+	while (end > start && ft_strchr(set, s1[end]))
 		end--;
 	return (ft_substr (s1, start, (end - start + 1)));
 }

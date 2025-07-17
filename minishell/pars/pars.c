@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/07/11 21:48:18 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 15:53:53 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,102 +17,58 @@ int	get_tablen(char **inputs)
 	size_t	i;
 
 	i = 0;
-	while (inputs[i])
-	{
-		i++;
-	}
+	if (inputs)
+		while (inputs[i])
+			i++;
 	return (i);
 }
 
-// void	alloc_cmd(t_data *data, char **cmd_str)
-// {
-// 	size_t	i;
-// 	size_t	size;
-// 	int		cmd_index;
-// 	int		is_cmd;
-// 	int		part_i;
-	
-// 	// is_cmd = 0;
-// 	// part_i = 0;
-// 	cmd_index = 0;
-// 	// size = 0;
-// 	i = 0;
-// 	// while (cmd_str[size] && ft_strncmp(cmd_str[i + size], "|", -1) != 0)
-// 	// 	size++;
-// 	// data->cmd[0].parts = ft_calloc(sizeof(t_part), size);
-// 	// data->cmd[0].len = size;
-// 	while (cmd_str[i])
-// 	{
-// 		if (ft_strncmp(cmd_str[i], "|", -1) == 0)
-// 		{
-// 			is_cmd = 0;
-// 			i++;
-// 			cmd_index++;
-// 			size = 0;
-// 			part_i = 0;
-// 			while (cmd_str[i + size] && ft_strncmp(cmd_str[i + size], "|", -1) != 0)
-// 				size++;
-// 			data->cmd[cmd_index].len = size;
-// 			data->cmd[cmd_index].parts = ft_calloc(sizeof(t_part), size);
-// 		}
-// 		data->cmd[cmd_index].parts[part_i].str = ft_strdup(cmd_str[i]);
-// 		if (is_cmd == 0)
-// 		{
-// 			is_cmd = 1;
-// 			data->cmd[cmd_index].parts[part_i].type = CMD;
-// 		}
-// 		else
-// 			data->cmd[cmd_index].parts[part_i].type = ARG;
-// 		i++;
-// 		part_i++;
-// 		//:)
-// 	}
-// }
 void pars_redir(char *input, t_cmd *cmd)
 {
-	int i;
-	int j;
+	//int i;
+	//int j;
 	char *file;
 
-	i = 0;
+	//i = 0;
 	file = NULL;
 	cmd->infile = -1;
 	cmd->outfile = -1;
-	while(input[i])
-	{
-		if (input[i] == '<')
-		{
-			i++;
-			while(input[i] == ' ')
-				i++;
-			j = i;
-			while(ft_isalnum(input[j]))
-				j++;
-			file = ft_substr(input, i, j - i);
-			cmd->infile = open(file, O_RDONLY);
-			if (cmd->infile == -1)
-				ft_printf("pa conten");
-		}
-		else if (input[i] == '>')
-		{
-			i++;
-			while(input[i] == ' ')
-				i++;
-			j = i;
-			while(ft_isalnum(input[j]))
-				j++;
-			file = ft_substr(input, i, j - i);
-			cmd->outfile = open(file, O_CREAT | O_WRONLY);
-			if (cmd->outfile == -1)
-				ft_printf("pa conten");
-		}
-		i++;
-	}
+	(void)input;
+	// while(input[i])
+	// {
+	// 	if (input[i] == '<')
+	// 	{
+	// 		i++;
+	// 		while(input[i] == ' ')
+	// 			i++;
+	// 		j = i;
+	// 		while(ft_isalnum(input[j]))
+	// 			j++;
+	// 		file = ft_substr(input, i, j - i);
+	// 		cmd->infile = open(file, O_RDONLY);
+	// 		if (cmd->infile == -1)
+	// 			ft_printf("pa conten");
+	// 	}
+	// 	else if (input[i] == '>')
+	// 	{
+	// 		i++;
+	// 		while(input[i] == ' ')
+	// 			i++;
+	// 		j = i;
+	// 		while(ft_isalnum(input[j]))
+	// 			j++;
+	// 		file = ft_substr(input, i, j - i);
+	// 		cmd->outfile = open(file, O_CREAT | O_WRONLY);
+	// 		if (cmd->outfile == -1)
+	// 			ft_printf("pa conten");
+	// 	}
+	// 	i++;
+	// }//:)
 	if (file)
 		free(file);
 }
 
-void alloc_cmd(t_data *data, char **inputs)
+int alloc_cmd(t_data *data, char **inputs)
 {
 	char **raw_cmd;
 	size_t i;
@@ -126,12 +82,8 @@ void alloc_cmd(t_data *data, char **inputs)
 		is_cmd = 0;
 		pars_redir(inputs[i], &data->cmd[i]);
 		raw_cmd = ms_split(inputs[i], ' ');
-		// while (raw_cmd[part_i])
-		// {
-		// 	ft_printf("%d: %s\n", part_i, raw_cmd[part_i]);
-		// 	part_i++;
-		// }
-		// part_i = 0;
+		if (!raw_cmd)
+			return (0);
 		data->cmd[i].len = get_tablen(raw_cmd);
 		data->cmd[i].parts = ft_calloc(sizeof(t_part), get_tablen(raw_cmd));
 		while(raw_cmd[part_i])
@@ -139,7 +91,7 @@ void alloc_cmd(t_data *data, char **inputs)
 			data->cmd[i].parts[part_i].str = ft_strdup(raw_cmd[part_i]);
 			if (is_cmd == 0)
 			{
-				if (ft_strnstr("echo, cd, env, exit, pwd", raw_cmd[part_i], -1))
+				if (ft_strnstr("echo, cd, env, exit, pwd, export, unset", raw_cmd[part_i], -1))
 					data->cmd[i].parts[part_i].type = BUIL;
 				else
 					data->cmd[i].parts[part_i].type = CMD;
@@ -151,7 +103,7 @@ void alloc_cmd(t_data *data, char **inputs)
 		free_array(raw_cmd);
 		i++;
 	}
-
+	return (1);
 }
 
 // if ("<<")
@@ -205,25 +157,27 @@ int parsing(t_data *data)
 	
 	if (!checking_missing_command(data->input))
 	{
-		ft_printf("parsing error");
+		ft_printf("Error: invalid arguments near token '|'\n");
 		return (0);
 	}
 	inputs = ms_split(data->input, '|');
-	//print_split(inputs);
 	if (!inputs)
 	{
-		ft_printf("parsing error");
+		ft_printf("Error: malloc error in parsing function\n");
 		return (0);
 	}
 	data->nb_pipes = get_tablen(inputs) - 1;
-	data->cmd = malloc(sizeof(t_cmd) * (data->nb_pipes + 1));
+	data->cmd = ft_calloc(sizeof(t_cmd), (data->nb_pipes + 1));
 	if (!data->cmd)
+	{
+		ft_printf("Error: malloc error in parsing function\n");
 		return (0);
-	alloc_cmd(data, inputs);
+	}
+	if(!alloc_cmd(data, inputs))
+		return (0);
 	return (1);
 }
 
-// split les pipes pour avoir les commandes puis split les args
 // quotes faire gaffe a pas faire des bails chelou genre un pipe dans un quote
 // simple quote traduit pas, double quote traduit les $var
 // les $ peuvent etre n'importe ou
