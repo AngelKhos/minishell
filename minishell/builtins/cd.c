@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/17 15:16:35 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/17 16:20:23 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,3 +35,7 @@ void	cd(t_data *data, char *cd_args)
 		env_pwd->data.value = ft_strdup(pwd);
 	}
 }
+
+// todo: cd sans args fais ouvrire le home via la var env HOME
+//				Si HOME est unset 'bash: cd: HOME not set'
+// check si le chdir pete (entrer dans test/test/. et rm ../../test ou un fichier qui existe pas) juste pas cracher

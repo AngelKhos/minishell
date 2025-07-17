@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/17 16:05:31 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/17 16:34:09 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 		redir_file(data, prev_pipe, curr_pipe, cmd_index);
 		redir_pipe(data, prev_pipe, curr_pipe, cmd_index);
 		close_child_pipe(prev_pipe, curr_pipe);
-		execute(cmd_str, data->envp);
+		execute(cmd_str, tree_to_envp(data->env));
 		exit(0);
 	}
 	if (data->nb_pipes > 0)
