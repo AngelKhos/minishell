@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/17 15:25:21 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/17 16:04:28 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,11 @@ void	init_data(t_data *data, char **envp);
 void	exec_builtins(t_data *data, int prevpipe[2], int *pids, int cmd_index);
 void    builtins_if(t_data *data, int cmd_index);
 int     is_exit_or_cd(t_data *data, int cmd_index);
+void	read_cmd_end_close(t_data *data, int prev_pipe[2]);
 void	close_child_pipe(int prev_pipe[2], int curr_pipe[2]);
 void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
+void	read_cmd_if(t_data *data, int cmd_index, int prev_pipes[2], int *pids);
+void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index);
 int		execute(char *cmd_arg, char **envp);
 void	read_cmd(t_data *data);
 int		here_doc(t_data *data, char *word);
