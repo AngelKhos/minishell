@@ -6,16 +6,32 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/16 15:32:37 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:16:35 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
+#include <linux/limits.h>
 
 void	cd(t_data *data, char *cd_args)
 {
+	t_env	*env_pwd;
+	t_env	*env_oldpwd;
+	char	pwd[PATH_MAX];
+
+	env_oldpwd = tree_search(data->env, "OLDPWD");
+	if (env_oldpwd)
+	{
+		free(env_oldpwd->data.value);
+		getcwd(pwd, PATH_MAX);
+		env_oldpwd->data.value = ft_strdup(pwd);
+	}
+	env_pwd = tree_search(data->env, "PWD");
 	chdir(cd_args);
-	free(data->curent_path);
-	data->curent_path = malloc(sizeof(char) * PATH_MAX);
-	getcwd(data->curent_path, PATH_MAX);
+	if (env_pwd)
+	{
+		free(env_pwd->data.value);
+		getcwd(pwd, PATH_MAX);
+		env_pwd->data.value = ft_strdup(pwd);
+	}
 }
