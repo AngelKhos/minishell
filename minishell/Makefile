@@ -14,7 +14,7 @@ DIR_DEPS=.deps
 SRCS=core/debug_tmp.c core/main.c core/free.c core/signal.c \
 	builtins/env.c builtins/cd.c builtins/pwd.c builtins/echo.c builtins/exit.c \
 	pars/ms_split.c pars/pars.c pars/tree_handle.c pars/tree_utils.c pars/here_doc.c \
-	exec/exec.c exec/exec_builtins.c exec/exec_utils.c exec/redir_utils.c   
+	exec/exec.c exec/exec_builtins.c exec/exec_utils.c exec/redir_utils.c exec/exec_utils_2.c 
 
 LIB= libft/libft.a
 INCS= include/data.h include/env.h
@@ -44,7 +44,19 @@ $(DIR_OBJS)/%.o: srcs/%.c Makefile | $(DIR_OBJS) $(DIR_DEPS)
 
 # /////////////////////////
 
-$(DIR_OBJS):
+$(DIR_OBJS):if (data->nb_pipes > 0)
+		{
+			if (prev_pipe[0] != -1)
+			{
+				close(prev_pipe[0]);
+				close(prev_pipe[1]);
+			}
+			if (curr_pipe[0] != -1)
+			{
+				close(curr_pipe[0]);
+				close(curr_pipe[1]);
+			}
+		}
 	mkdir -p $(DIR_OBJS)
 
 $(DIR_DEPS):

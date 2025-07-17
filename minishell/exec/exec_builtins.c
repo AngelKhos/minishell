@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/17 14:15:16 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:26:35 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,7 @@ void	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	if (pids[cmd_index] == 0)
 	{
 		redir_pipe(data, prev_pipe, curr_pipe, cmd_index);
-        close(prev_pipe[0]);
-		close(prev_pipe[1]);
-        close(curr_pipe[0]);
-		close(curr_pipe[1]);
+        close_child_pipe(prev_pipe, curr_pipe);
         builtins_if(data, cmd_index);
 		exit(0);
 	}

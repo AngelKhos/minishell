@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/17 14:21:37 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:31:28 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	char	*cmd_str;
 
 	cmd_str = convert_part_to_arg(data, cmd_index);
+	curr_pipe[0] = -1;
+	curr_pipe[1] = -1;
 	if (data->nb_pipes > 0)
 		pipe(curr_pipe);
 	pids[cmd_index] = fork();
@@ -85,13 +87,7 @@ void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	{
 		redir_file(data, prev_pipe, curr_pipe, cmd_index);
 		redir_pipe(data, prev_pipe, curr_pipe, cmd_index);
-		if (data->nb_pipes > 0)
-		{
-			close(prev_pipe[0]);
-			close(prev_pipe[1]);
-			close(curr_pipe[0]);
-			close(curr_pipe[1]);
-		}
+		close_child_pipe(prev_pipe, curr_pipe);
 		execute(cmd_str, data->envp);
 		exit(0);
 	}
@@ -113,6 +109,8 @@ void	read_cmd(t_data *data)
 
 	cmd_index = 0;
 	pids = ft_calloc(sizeof(int), data->nb_pipes + 1);
+	prev_pipes[0] = -1;
+	prev_pipes[1] = -1;
 	if (data->nb_pipes > 0)
 		pipe(prev_pipes);
 	while (cmd_index <= data->nb_pipes)
@@ -123,13 +121,13 @@ void	read_cmd(t_data *data)
 		}
 		else if (data->cmd[cmd_index].parts[0].type == BUIL)
 		{
-			if (is_exit_or_cd(data, cmd_index) == 0)
+			if (is_exit_or_cd(data, cmd_index) == 1 && data->nb_pipes < 1)// a fix, inv les deux if, je crois... alaide...
 			{
-				exec_builtins(data, prev_pipes, pids, cmd_index);
+				builtins_if(data, cmd_index);
 			}
 			else
 			{
-				builtins_if(data, cmd_index);
+				exec_builtins(data, prev_pipes, pids, cmd_index);
 			}
 		}
 		cmd_index++;
