@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:58:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/17 14:29:29 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/07/21 16:05:10 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../include/data.h"
 
-int check_flag(t_cmd cmd, int *n)
+int	check_flag(t_cmd cmd, int *n)
 {
-	int i;
-	int flag;
+	int	i;
+	int	flag;
 
 	flag = 0;
 	while (*n < cmd.len && cmd.parts[*n].str[0] == '-')
 	{
 		i = 1;
 		flag = 1;
-		while(cmd.parts[*n].str[i] == 'n')
+		while (cmd.parts[*n].str[i] == 'n')
 			i++;
 		if (!cmd.parts[*n].str[i])
 			(*n)++;
 		else
-		{	
+		{
 			flag = 0;
 			return (flag);
 		}
@@ -36,16 +36,15 @@ int check_flag(t_cmd cmd, int *n)
 	return (flag);
 }
 
-void echo(t_cmd cmd)
+void	echo(t_cmd cmd)
 {
-	int n;
-	int flag;
+	int	n;
+	int	flag;
 
 	n = 1;
 	flag = check_flag(cmd, &n);
 	while (n < cmd.len)
 	{
-		
 		ft_printf(cmd.parts[n].str);
 		if (n != cmd.len - 1)
 			ft_printf(" ");
