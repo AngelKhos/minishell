@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/21 16:03:32 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:22:06 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	changer_dir(t_data *data, t_cmd cmd)
 		chdir(home->data.value);
 	}
 	else
-		chdir(cmd.parts[1].str);
+	{
+		if (chdir(cmd.parts[1].str) != 0)
+			ft_printf("cd: %s: No such file or directory\n", cmd.parts[1].str);
+	}
 }
 
 void	cd(t_data *data, t_cmd cmd)
