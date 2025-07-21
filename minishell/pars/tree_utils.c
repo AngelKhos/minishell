@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:44:57 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/16 13:47:01 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/21 12:53:46 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	get_str_key_va(size_t *i, char **envp, t_env *root)
 
 char	**tree_to_envp(t_env *root)
 {
- 	char	**envp;
+	char	**envp;
 	size_t	len;
 	size_t	i;
 
@@ -89,9 +89,9 @@ char	**tree_to_envp(t_env *root)
 void	print_tree(t_env *root)
 {
 	if (root == NULL)
-        return;
+		return ;
 	if (root->data.value)
 		ft_printf("%s=%s\n", root->data.key, root->data.value);
 	print_tree(root->right);
-    print_tree(root->left);
+	print_tree(root->left);
 }
