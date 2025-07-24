@@ -6,12 +6,11 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:09:19 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/04 17:01:02 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:01:20 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
-#include <stdlib.h>
 #include <signal.h>
 #include <readline/readline.h>
 

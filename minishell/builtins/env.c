@@ -6,13 +6,14 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 20:07:06 by authomas          #+#    #+#             */
-/*   Updated: 2025/07/21 16:06:25 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:02:41 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 
-void	env(t_data *data)
+int	env(t_data *data)
 {
 	print_tree(data->env);
+	return (0);
 }

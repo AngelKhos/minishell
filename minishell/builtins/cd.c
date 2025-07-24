@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/21 16:22:06 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:06:26 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	changer_dir(t_data *data, t_cmd cmd)
 	}
 }
 
-void	cd(t_data *data, t_cmd cmd)
+int	cd(t_data *data, t_cmd cmd)
 {
 	t_env	*env_pwd;
 	t_env	*env_oldpwd;
@@ -43,7 +43,7 @@ void	cd(t_data *data, t_cmd cmd)
 	if (cmd.len > 2)
 	{
 		ft_printf("cd: too many arguments\n");
-		return ;
+		return (0);
 	}
 	env_oldpwd = tree_search(data->env, "OLDPWD");
 	if (env_oldpwd)
@@ -60,4 +60,5 @@ void	cd(t_data *data, t_cmd cmd)
 		getcwd(pwd, PATH_MAX);
 		env_pwd->data.value = ft_strdup(pwd);
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/21 15:38:56 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:06:17 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,17 @@ typedef struct s_data
 	t_cmd	*cmd; // the command to update in the parsing at each call of readline
 	int		run;
 	int		nb_pipes;
+	int		exit_code;
 }	t_data;
 
 ////////////// BUILTINS //////////////
 
-void	pwd(t_data *data);
-void	cd(t_data *data, t_cmd cmd);
+int		pwd(t_data *data);
+int		cd(t_data *data, t_cmd cmd);
 void	exit_minishell_edition(t_data *dat, char *ms);
-void	ft_export(t_data *data, char *arg);
-void	env(t_data *data);
-void	echo(t_cmd cmd);
+int		ft_export(t_data *data, char *arg);
+int		env(t_data *data);
+int		echo(t_cmd cmd);
 
 //////////////// FREE ////////////////
 
@@ -83,6 +84,7 @@ void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
 void	read_cmd_if(t_data *data, int cmd_index, int prev_pipes[2], int *pids);
 void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index);
 int		execute(char *cmd_arg, char **envp);
+void	wait_all(t_data *data, int *pids);
 void	read_cmd(t_data *data);
 int		here_doc(t_data *data, char *word);
 void	close_redir(t_data *data);
@@ -102,5 +104,9 @@ int		parsing(t_data *data);
 void	handle_signal();
 void	sigint_handle();
 void	sigabrt_handle();
+
+/////////////// RANDOM //////////////
+
+char	*get_prompt(t_data *data);
 
 #endif

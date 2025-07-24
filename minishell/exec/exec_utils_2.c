@@ -6,12 +6,13 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/17 16:03:37 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:52:58 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "../include/data.h"
+#include <sys/wait.h>
 
 void	close_child_pipe(int prev_pipe[2], int curr_pipe[2])
 {
@@ -52,5 +53,20 @@ void	read_cmd_end_close(t_data *data, int prev_pipe[2])
 	{
 		close(prev_pipe[0]);
 		close(prev_pipe[1]);
+	}
+}
+
+void	wait_all(t_data *data, int *pids)
+{
+	int		cmd_index;
+	int		code;
+
+	code = 0;
+	cmd_index = 0;
+	while (cmd_index <= data->nb_pipes)
+	{
+		waitpid(pids[cmd_index], &code, 0);
+		data->exit_code = WEXITSTATUS(code);
+		cmd_index++;
 	}
 }

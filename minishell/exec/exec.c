@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/17 16:34:09 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 12:38:01 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,7 @@ void	read_cmd(t_data *data)
 		read_cmd_if(data, cmd_index, prev_pipes, pids);
 		cmd_index++;
 	}
-	cmd_index = 0;
-	while (cmd_index <= data->nb_pipes)
-	{
-		waitpid(pids[cmd_index], NULL, 0);
-		cmd_index++;
-	}
+	wait_all(data, pids);
 	read_cmd_end_close(data, prev_pipes);
 	close_redir(data);
 	free(pids);

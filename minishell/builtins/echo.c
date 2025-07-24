@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:58:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/21 16:05:10 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:02:14 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_flag(t_cmd cmd, int *n)
 	return (flag);
 }
 
-void	echo(t_cmd cmd)
+int	echo(t_cmd cmd)
 {
 	int	n;
 	int	flag;
@@ -52,4 +52,5 @@ void	echo(t_cmd cmd)
 	}
 	if (cmd.len <= 1 || !flag)
 		ft_printf("\n");
+	return (0);
 }
