@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/21 15:38:50 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:18:49 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ void	builtins_if(t_data *data, int cmd_index)
 
 	str = data->cmd[cmd_index].parts[0].str;
 	if (ft_strncmp(str, "cd", -1) == 0)
-		cd(data, data->cmd[cmd_index]);
+		data->exit_code = cd(data, data->cmd[cmd_index]);
 	if (ft_strncmp(str, "pwd", -1) == 0)
-		pwd(data);
+		data->exit_code = pwd(data);
 	if (ft_strncmp(str, "env", -1) == 0)
-		env(data);
+		data->exit_code = env(data);
 	if (ft_strncmp(str, "exit", -1) == 0)
 		exit_minishell_edition(data, "exit");
 	if (ft_strncmp(str, "echo", -1) == 0)
-		echo(data->cmd[cmd_index]);
+		data->exit_code = echo(data->cmd[cmd_index]);
 	if (ft_strncmp(str, "export", -1) == 0)
-		ft_export(data, data->cmd[cmd_index].parts[1].str);
+		data->exit_code = ft_export(data, data->cmd[cmd_index].parts[1].str);
 	if (ft_strncmp(str, "unset", -1) == 0)
-		tree_remove(&data->env, data->cmd[cmd_index].parts[1].str);
+		data->exit_code = unset(data, cmd_index);
 }
 
 int	is_exit_or_cd(t_data *data, int cmd_index)

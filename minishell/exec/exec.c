@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/24 15:06:20 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:10:29 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,41 +33,6 @@ char	*convert_part_to_arg(t_data *data, int index)
 		i++;
 	}
 	return (cmd_plus_arg);
-}
-
-void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
-{
-	if (cmd_index == 0 && data->cmd[cmd_index].infile != -1)
-	{
-		dup2(data->cmd[cmd_index].infile, STDIN_FILENO);
-		close(pr_pip[0]);
-		close(pr_pip[1]);
-	}
-	if (cmd_index == data->nb_pipes && data->cmd[cmd_index].outfile != -1)
-	{
-		dup2(data->cmd[cmd_index].outfile, STDOUT_FILENO);
-		close(cur_pip[0]);
-		close(cur_pip[1]);
-	}
-}
-
-void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
-{
-	if (data->nb_pipes > 0)
-	{
-		if (cmd_index > 0)
-		{
-			dup2(pr_pip[0], STDIN_FILENO);
-			close(pr_pip[0]);
-			close(pr_pip[1]);
-		}
-		if (cmd_index < data->nb_pipes)
-		{
-			dup2(cur_pip[1], STDOUT_FILENO);
-			close(cur_pip[0]);
-			close(cur_pip[1]);
-		}
-	}
 }
 
 void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
