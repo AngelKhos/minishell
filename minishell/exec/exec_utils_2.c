@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/24 12:52:58 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:06:04 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,22 @@ void	wait_all(t_data *data, int *pids)
 	cmd_index = 0;
 	while (cmd_index <= data->nb_pipes)
 	{
-		waitpid(pids[cmd_index], &code, 0);
-		data->exit_code = WEXITSTATUS(code);
+		if (pids[cmd_index] != 1)
+		{
+			waitpid(pids[cmd_index], &code, 0);
+			data->exit_code = WEXITSTATUS(code);
+		}
 		cmd_index++;
 	}
+}
+
+void	child_porc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)
+{
+	char	*cmd_str;
+
+	cmd_str = convert_part_to_arg(data, cmd_i);
+	redir_file(data, prev_pipe, curr_pipe, cmd_i);
+	redir_pipe(data, prev_pipe, curr_pipe, cmd_i);
+	close_child_pipe(prev_pipe, curr_pipe);
+	execute(cmd_str, tree_to_envp(data->env));
 }

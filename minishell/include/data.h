@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/24 14:06:17 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:04:10 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_data
 	int		exit_code;
 }	t_data;
 
+extern int	g_pid;
+
 ////////////// BUILTINS //////////////
 
 int		pwd(t_data *data);
@@ -85,6 +87,10 @@ void	read_cmd_if(t_data *data, int cmd_index, int prev_pipes[2], int *pids);
 void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index);
 int		execute(char *cmd_arg, char **envp);
 void	wait_all(t_data *data, int *pids);
+void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
+char	*convert_part_to_arg(t_data *data, int index);
+void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
+void	child_porc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_index);
 void	read_cmd(t_data *data);
 int		here_doc(t_data *data, char *word);
 void	close_redir(t_data *data);

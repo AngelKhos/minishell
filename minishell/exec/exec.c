@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/24 12:38:01 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:06:20 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,19 @@ void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
 void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 {
 	int		curr_pipe[2];
-	char	*cmd_str;
 
-	cmd_str = convert_part_to_arg(data, cmd_index);
 	curr_pipe[0] = -1;
 	curr_pipe[1] = -1;
 	if (data->nb_pipes > 0)
 		pipe(curr_pipe);
-	pids[cmd_index] = fork();
-	if (pids[cmd_index] == 0)
+	g_pid = fork();
+	if (g_pid == 0)
 	{
-		redir_file(data, prev_pipe, curr_pipe, cmd_index);
-		redir_pipe(data, prev_pipe, curr_pipe, cmd_index);
-		close_child_pipe(prev_pipe, curr_pipe);
-		execute(cmd_str, tree_to_envp(data->env));
+		child_porc(data, prev_pipe, curr_pipe, cmd_index);
 		exit(0);
 	}
+	else
+		pids[cmd_index] = g_pid;
 	if (data->nb_pipes > 0)
 	{
 		close(prev_pipe[0]);
@@ -96,7 +93,6 @@ void	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 		prev_pipe[0] = curr_pipe[0];
 		prev_pipe[1] = curr_pipe[1];
 	}
-	free(cmd_str);
 }
 
 void	read_cmd(t_data *data)
