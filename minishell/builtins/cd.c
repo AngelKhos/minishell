@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/24 15:27:15 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/26 13:09:48 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,33 @@ int	changer_dir(t_data *data, t_cmd cmd)
 	return (0);
 }
 
-int	cd(t_data *data, t_cmd cmd)
+void	cd_body(t_data *data, t_cmd cmd, int *code)
 {
 	t_env	*env_pwd;
 	t_env	*env_oldpwd;
 	char	pwd[PATH_MAX];
+
+	env_oldpwd = tree_search(data->env, "OLDPWD");
+	if (env_oldpwd)
+	{
+		if (env_oldpwd->data.value)
+			free(env_oldpwd->data.value);
+		getcwd(pwd, PATH_MAX);
+		env_oldpwd->data.value = ft_strdup(pwd);
+	}
+	*code = changer_dir(data, cmd);
+	env_pwd = tree_search(data->env, "PWD");
+	if (env_pwd)
+	{
+		if (env_pwd->data.value)
+			free(env_pwd->data.value);
+		getcwd(pwd, PATH_MAX);
+		env_pwd->data.value = ft_strdup(pwd);
+	}
+}
+
+int	cd(t_data *data, t_cmd cmd)
+{
 	int		code;
 
 	if (cmd.len > 2)
@@ -50,20 +72,6 @@ int	cd(t_data *data, t_cmd cmd)
 		ft_printf("cd: too many arguments\n");
 		return (0);
 	}
-	env_oldpwd = tree_search(data->env, "OLDPWD");
-	if (env_oldpwd)
-	{
-		free(env_oldpwd->data.value);
-		getcwd(pwd, PATH_MAX);
-		env_oldpwd->data.value = ft_strdup(pwd);
-	}
-	code = changer_dir(data, cmd);
-	env_pwd = tree_search(data->env, "PWD");
-	if (env_pwd)
-	{
-		free(env_pwd->data.value);
-		getcwd(pwd, PATH_MAX);
-		env_pwd->data.value = ft_strdup(pwd);
-	}
+	cd_body(data, cmd, &code);
 	return (code);
 }
