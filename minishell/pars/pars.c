@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/07/17 15:53:53 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 00:05:57 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,75 @@ void pars_redir(char *input, t_cmd *cmd)
 	// 			ft_printf("pa conten");
 	// 	}
 	// 	i++;
-	// }//:)
+	// }
 	if (file)
 		free(file);
+}
+
+void print_split(char **inputs)
+{
+	int i = 0;
+
+	while (inputs[i])
+	{
+		ft_printf("%d : %s\n", i, inputs[i]);
+		i++;
+	}
+}
+
+char *strdup_wquotes(char *s)
+{
+	size_t	i;
+	size_t	j;
+	char	*dest;
+	int quote_flag;
+
+	quote_flag = 0;
+	dest = ft_calloc(sizeof(char), (ft_strlen(s) + 1));
+	if (!dest)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		if (s[i] == '\'' && quote_flag != 2)
+		{
+			if(quote_flag == 1)
+				quote_flag = 0;
+			if(quote_flag == 0)
+				quote_flag = 1;
+		}
+		else if (s[i] == '\"' && quote_flag != 1)
+		{
+			if(quote_flag == 2)
+				quote_flag = 0;
+			if(quote_flag == 0)
+				quote_flag = 2;
+		}
+		else
+		{
+			dest[j] = s[i];
+			j++;
+		}
+		i++;
+	}
+	free(s);
+	return (dest);
+}
+
+void rm_quotes(char **split)
+{
+	int i;
+	char *cpy;
+
+	i = 0;
+
+	while (split[i])
+	{
+		cpy = strdup_wquotes(split[i]);
+		split[i] = cpy;
+		i++;
+	}
 }
 
 int alloc_cmd(t_data *data, char **inputs)
@@ -84,6 +150,8 @@ int alloc_cmd(t_data *data, char **inputs)
 		raw_cmd = ms_split(inputs[i], ' ');
 		if (!raw_cmd)
 			return (0);
+		rm_quotes(raw_cmd);
+		print_split(raw_cmd);
 		data->cmd[i].len = get_tablen(raw_cmd);
 		data->cmd[i].parts = ft_calloc(sizeof(t_part), get_tablen(raw_cmd));
 		while(raw_cmd[part_i])
@@ -102,7 +170,7 @@ int alloc_cmd(t_data *data, char **inputs)
 		}
 		free_array(raw_cmd);
 		i++;
-	}
+	}//:)
 	return (1);
 }
 
@@ -112,16 +180,6 @@ int alloc_cmd(t_data *data, char **inputs)
 // 	change le outfile a un open du fichier qui est donné apres
 // if ("<")
 // 	change le infile a un open du fichier qui est donné avant
-
-// void print_split(char **inputs)
-// {
-// 	int i = 0;
-// 	while (inputs[i])
-// 	{
-// 		ft_printf("%d : %s\n", i, inputs[i]);
-// 		i++;
-// 	}
-// }
 
 int checking_missing_command(char *input)
 {
@@ -148,6 +206,7 @@ int checking_missing_command(char *input)
 		}
 		i++;
 	}
+	free(str);
 	return (1);
 }
 
@@ -163,7 +222,7 @@ int parsing(t_data *data)
 	inputs = ms_split(data->input, '|');
 	if (!inputs)
 	{
-		ft_printf("Error: malloc error in parsing function\n");
+		ft_printf("Error: error in parsing function\n");
 		return (0);
 	}
 	data->nb_pipes = get_tablen(inputs) - 1;
@@ -174,7 +233,10 @@ int parsing(t_data *data)
 		return (0);
 	}
 	if(!alloc_cmd(data, inputs))
+	{
+		ft_printf("Error: unable to allocate command in parsing function\n");
 		return (0);
+	}
 	return (1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/24 14:55:57 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 00:12:12 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	handle_readline(t_data *data)
 				}
 			}
 			free(data->input);
-			free(prompt);
 		}
 		else
 			exit_minishell_edition(data, "exit");
+		free(prompt);
 	}
 }
 

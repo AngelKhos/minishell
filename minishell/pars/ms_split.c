@@ -6,13 +6,13 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:10:36 by authomas          #+#    #+#             */
-/*   Updated: 2025/07/02 14:29:28 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 00:29:42 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 
-static int skip_quote(char *str, int index)
+static int	skip_quote(char *str, int index)
 {
 	if (str[index] == '\'')
 	{
@@ -72,7 +72,8 @@ static size_t	token_len(char *input_str, char separator)
 	return (i);
 }
 
-static int	fill_token(char **token_lst, char *input_str, char separator, size_t nbr_token)
+static int	fill_token(char **token_lst, char *input_str,
+				char separator, size_t nbr_token)
 {
 	size_t	j;
 	size_t	k;
@@ -101,23 +102,6 @@ static int	fill_token(char **token_lst, char *input_str, char separator, size_t 
 	return (1);
 }
 
-static void	free_split(char **token)
-{
-	size_t	i;
-
-	i = 0;
-	while (token && token[i])
-	{
-		if (token[i])
-		{
-			free(token[i++]);
-			token[i - 1] = NULL;
-		}
-	}
-	if (token)
-		free(token);
-}
-
 char	**ms_split(char *input_str, char separator)
 {
 	char	**token_lst;
@@ -131,7 +115,7 @@ char	**ms_split(char *input_str, char separator)
 		return (NULL);
 	if (!fill_token(token_lst, input_str, separator, nbr_token))
 	{
-		free_split(token_lst);
+		free_array(token_lst);
 		return (NULL);
 	}
 	return (token_lst);

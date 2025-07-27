@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/24 15:04:10 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 00:31:42 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	exit_minishell_edition(t_data *dat, char *ms);
 int		ft_export(t_data *data, char *arg);
 int		env(t_data *data);
 int		echo(t_cmd cmd);
+int		unset(t_data *data, int cmd_index);
 
 //////////////// FREE ////////////////
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:44:57 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/21 12:53:46 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:42:25 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,10 @@ size_t	tree_get_len(t_env *root)
 void	get_str_key_va(size_t *i, char **envp, t_env *root)
 {
 	char	*str;
-	size_t	str_len;
-	size_t	str_i;
 
-	str_i = 0;
 	if (!root)
 		return ;
 	(*i)++;
-	str_len = ft_strlen(root->data.key) + ft_strlen(root->data.value) + 1;
 	str = ft_strdup(root->data.key);
 	if (!str)
 		return ;
