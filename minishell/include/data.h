@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 13:15:15 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 14:47:50 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ extern int	g_pid;
 
 int		pwd(t_data *data);
 int		cd(t_data *data, t_cmd cmd);
-void	exit_minishell_edition(t_data *dat, char *ms);
+int		exit_minishell_edition(t_data *data, t_cmd *cmd);
 int		ft_export(t_data *data, char *arg);
 int		env(t_data *data, int cmd_index);
 int		echo(t_cmd cmd);

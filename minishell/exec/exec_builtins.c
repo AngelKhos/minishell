@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 13:13:24 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 14:48:25 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	builtins_if(t_data *data, int cmd_index)
 	if (ft_strncmp(str, "env", -1) == 0)
 		code = env(data, cmd_index);
 	if (ft_strncmp(str, "exit", -1) == 0)
-		exit_minishell_edition(data, "exit");
+		code = exit_minishell_edition(data, &data->cmd[cmd_index]);
 	if (ft_strncmp(str, "echo", -1) == 0)
 		code = echo(data->cmd[cmd_index]);
 	if (ft_strncmp(str, "export", -1) == 0)
