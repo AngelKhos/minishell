@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:58:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/24 13:13:37 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:12:33 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void    prompt_if(char *prompt, t_env *path, t_env *home)
 {
     if (path)
 	{
-		if (home)
+		if (home && ft_strlen(path->data.value) >= ft_strlen(home->data.value))
 			ft_memcpy(prompt, "╔\e[0;105m ~", ft_strlen("╔\e[0;105m ~"));
-		if (!home)
+		if (!home || ft_strlen(path->data.value) < ft_strlen(home->data.value))
 			ft_memcpy(prompt, "╔\e[0;105m ", ft_strlen("╔\e[0;105m "));
-		if (home)
+		if (home && ft_strlen(path->data.value) >= ft_strlen(home->data.value))
 			ft_memcpy(prompt+ft_strlen("╔\e[0;105m ~"), path->data.value + ft_strlen(home->data.value), ft_strlen(path->data.value) - ft_strlen(home->data.value));
-		if (!home)
+		if (!home || ft_strlen(path->data.value) < ft_strlen(home->data.value))
 			ft_memcpy(prompt+ft_strlen("╔\e[0;105m "), path->data.value, ft_strlen(path->data.value));
 	}
 }

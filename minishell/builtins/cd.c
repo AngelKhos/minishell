@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/26 13:09:48 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:07:31 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ int	cd(t_data *data, t_cmd cmd)
 {
 	int		code;
 
+	code = 0;
 	if (cmd.len > 2)
 	{
 		ft_printf("cd: too many arguments\n");
-		return (0);
+		return (1);
 	}
 	cd_body(data, cmd, &code);
 	return (code);

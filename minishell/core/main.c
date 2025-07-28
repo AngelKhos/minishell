@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 09:39:52 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 14:14:09 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	handle_readline(t_data *data)
 	prompt = NULL;
 	while (data->run)
 	{
+		data->exit_code = 0;
 		prompt = get_prompt(data);
 		data->input = readline(prompt);
 		if (data->input)
@@ -39,6 +40,7 @@ void	handle_readline(t_data *data)
 					free_cmd(data);
 				}
 			}
+			//ft_printf("%d\n", data->exit_code);
 			free(data->input);
 		}
 		else
@@ -70,8 +72,6 @@ void	increase_shlvl(t_data *data)
 
 void	init_data(t_data *data, char **envp)
 {
-	data->curent_path = malloc(sizeof(char) * PATH_MAX);
-	getcwd(data->curent_path, PATH_MAX);
 	data->run = 1;
 	data->env = envp_to_tree(envp);
 	increase_shlvl(data);

@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 10:30:56 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:34:53 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	{
 		if (child_porc(data, prev_pipe, curr_pipe, cmd_index) == 0)
 			ft_printf("error in child\n");
-		exit(0);
+		exit(127);
 	}
 	else if (g_pid > 0)
 		pids[cmd_index] = g_pid;

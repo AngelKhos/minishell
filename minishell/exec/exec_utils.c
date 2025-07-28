@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 09:56:14 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 10:52:02 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	execute(char *cmd_arg, char **envp)
 	if (!path)
 	{
 		ft_printf("\e[1;37m%s\e[0m : Command not found\n", cmd[0]);
-		return (free_array(cmd), 0);
+		return (free_array(cmd), -1);
 	}
 	if (execve(path, cmd, envp) == -1)
 	{

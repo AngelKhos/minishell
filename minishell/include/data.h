@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 10:30:21 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:15:15 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		pwd(t_data *data);
 int		cd(t_data *data, t_cmd cmd);
 void	exit_minishell_edition(t_data *dat, char *ms);
 int		ft_export(t_data *data, char *arg);
-int		env(t_data *data);
+int		env(t_data *data, int cmd_index);
 int		echo(t_cmd cmd);
 int		unset(t_data *data, int cmd_index);
 
@@ -79,8 +79,8 @@ void	init_data(t_data *data, char **envp);
 //////////////// EXEC ////////////////
 
 int		exec_builtins(t_data *data, int prevpipe[2], int *pids, int cmd_index);
-void    builtins_if(t_data *data, int cmd_index);
-int     is_exit_or_cd(t_data *data, int cmd_index);
+int		builtins_if(t_data *data, int cmd_index);
+int		is_exit_or_cd(t_data *data, int cmd_index);
 void	read_cmd_end_close(t_data *data, int prev_pipe[2]);
 void	close_child_pipe(int prev_pipe[2], int curr_pipe[2]);
 void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);

@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 10:24:15 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:14:27 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	read_cmd_if(t_data *data, int cmd_index, int prev_pipes[2], int *pids)
 	{
 		if (is_exit_or_cd(data, cmd_index) == 1 && data->nb_pipes < 1)
 		{
-			builtins_if(data, cmd_index);//same here
+			data->exit_code = builtins_if(data, cmd_index);//same here
 		}
 		else
 		{
@@ -74,6 +74,7 @@ void	wait_all(t_data *data, int *pids)
 		}
 		cmd_index++;
 	}
+	g_pid = 0;
 }
 
 int	child_porc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)
