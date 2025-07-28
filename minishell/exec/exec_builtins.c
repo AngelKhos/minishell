@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/24 15:18:49 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 10:34:05 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,16 @@ int	is_exit_or_cd(t_data *data, int cmd_index)
 	return (0);
 }
 
-void	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
+int	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 {
 	int	curr_pipe[2];
 
 	curr_pipe[0] = -1;
 	curr_pipe[1] = -1;
 	if (data->nb_pipes > 0)
-		pipe(curr_pipe);
-	pids[cmd_index] = fork();
+		if (pipe(curr_pipe) == -1)
+			return (0);
+	g_pid = fork();
 	if (pids[cmd_index] == 0)
 	{
 		redir_pipe(data, prev_pipe, curr_pipe, cmd_index);
@@ -66,6 +67,8 @@ void	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 		builtins_if(data, cmd_index);
 		exit(0);
 	}
+	else if (g_pid > 0)
+		pids[cmd_index] = g_pid;
 	if (data->nb_pipes > 0)
 	{
 		close(prev_pipe[0]);
@@ -73,4 +76,5 @@ void	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 		prev_pipe[0] = curr_pipe[0];
 		prev_pipe[1] = curr_pipe[1];
 	}
+	return (1);
 }

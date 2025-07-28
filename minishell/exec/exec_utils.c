@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/24 13:30:10 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 09:56:14 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	execute(char *cmd_arg, char **envp)
 	char	**cmd;
 
 	cmd = NULL;
+	if (!cmd_arg)
+		return (0);
 	cmd = ft_split(cmd_arg, ' ');
 	if (!cmd)
 		return (0);
@@ -75,7 +77,7 @@ int	execute(char *cmd_arg, char **envp)
 	{
 		free_array(cmd);
 		free(path);
-		exit(EXIT_FAILURE);
+		return (0);
 	}
-	return (0);
+	return (1);
 }
