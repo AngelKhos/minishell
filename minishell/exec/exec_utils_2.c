@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 16:30:07 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/29 14:55:56 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	wait_all(t_data *data, int *pids)
 		if (pids[cmd_index] > 0)
 		{
 			waitpid(pids[cmd_index], &code, 0);
-			data->exit_code = WEXITSTATUS(code);
+			data->exit_code = code >> 8;
 		}
 		cmd_index++;
 	}
