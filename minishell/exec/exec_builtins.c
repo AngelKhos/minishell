@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 14:48:25 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:15:35 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	builtins_if(t_data *data, int cmd_index)
 	if (ft_strncmp(str, "echo", -1) == 0)
 		code = echo(data->cmd[cmd_index]);
 	if (ft_strncmp(str, "export", -1) == 0)
-		code = ft_export(data, data->cmd[cmd_index].parts[1].str);
+		code = ft_export(data, &data->cmd[cmd_index]);
 	if (ft_strncmp(str, "unset", -1) == 0)
 		code = unset(data, cmd_index);
 	return (code);

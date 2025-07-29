@@ -6,11 +6,12 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 14:14:09 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/29 14:46:08 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
+#include <readline/readline.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -24,7 +25,6 @@ void	handle_readline(t_data *data)
 	prompt = NULL;
 	while (data->run)
 	{
-		data->exit_code = 0;
 		prompt = get_prompt(data);
 		data->input = readline(prompt);
 		if (data->input)
@@ -40,11 +40,13 @@ void	handle_readline(t_data *data)
 					free_cmd(data);
 				}
 			}
+			else
+				data->exit_code = 0;
 			//ft_printf("%d\n", data->exit_code);
 			free(data->input);
 		}
 		else
-			exit_minishell_edition(data, "exit");
+			exit_minishell_edition(data, NULL);
 		free(prompt);
 	}
 }
@@ -66,7 +68,6 @@ void	increase_shlvl(t_data *data)
 			free(var_shlvl->data.value);
 			var_shlvl->data.value = val;
 		}
-		
 	}
 }
 
@@ -89,5 +90,6 @@ int main(int argc, char **argv, char **envp)
 	//print_char_array(tree_to_envp(data->env));
 	handle_readline(data);
 	free_data(data);
-	return (EXIT_SUCCESS);
+	rl_clear_history();
+	return (data->exit_code);
 }

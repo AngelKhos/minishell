@@ -6,14 +6,14 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 13:07:31 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/29 12:50:00 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 #include <linux/limits.h>
 
-int	changer_dir(t_data *data, t_cmd cmd)
+int	change_dir(t_data *data, t_cmd cmd)
 {
 	t_env	*home;
 
@@ -52,7 +52,7 @@ void	cd_body(t_data *data, t_cmd cmd, int *code)
 		getcwd(pwd, PATH_MAX);
 		env_oldpwd->data.value = ft_strdup(pwd);
 	}
-	*code = changer_dir(data, cmd);
+	*code = change_dir(data, cmd);
 	env_pwd = tree_search(data->env, "PWD");
 	if (env_pwd)
 	{
@@ -70,7 +70,7 @@ int	cd(t_data *data, t_cmd cmd)
 	code = 0;
 	if (cmd.len > 2)
 	{
-		ft_printf("cd: too many arguments\n");
+		ft_printf("\e[1;37mcd: too many arguments\n");
 		return (1);
 	}
 	cd_body(data, cmd, &code);
