@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/29 14:55:56 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/07/31 13:46:37 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,17 @@ void	wait_all(t_data *data, int *pids)
 	int		code;
 
 	code = 0;
-	cmd_index = 0;
-	while (cmd_index <= data->nb_pipes)
+	cmd_index = data->nb_pipes;
+	while (cmd_index >= 0)
 	{
 		if (pids[cmd_index] > 0)
 		{
 			waitpid(pids[cmd_index], &code, 0);
 			data->exit_code = code >> 8;
+			if ((code >> 8) == 127)
+				ft_printf("\e[1;37m%s\e[0m : Command not found\n", data->cmd[cmd_index].parts->str);
 		}
-		cmd_index++;
+		cmd_index--;
 	}
 	g_pid = 0;
 }
@@ -85,9 +87,5 @@ int	child_porc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)
 	redir_file(data, prev_pipe, curr_pipe, cmd_i);
 	redir_pipe(data, prev_pipe, curr_pipe, cmd_i);
 	close_child_pipe(prev_pipe, curr_pipe);
-	if (execute(cmd_str, tree_to_envp(data->env)) == 0)
-	{
-		return (0);
-	}
-	return (1);
+	return (execute(cmd_str, tree_to_envp(data->env)));
 }
