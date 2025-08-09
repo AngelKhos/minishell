@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/31 13:33:44 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/09 19:11:21 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,26 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-char	*convert_part_to_arg(t_data *data, int index)
+char	**convert_part_to_arg(t_data *data, int index)
 {
 	int		i;
-	char	*cmd_plus_arg;
+	char	**cmd;
 
-	cmd_plus_arg = NULL;
+	cmd = ft_calloc(sizeof(char *), data->cmd[index].len);
+	if (!cmd)
+		return (NULL);
 	i = 0;
 	while (i < data->cmd[index].len)
 	{
-		cmd_plus_arg = ft_strjoin(cmd_plus_arg, " ");
-		if (!cmd_plus_arg)
+		cmd[i] = ft_strdup(data->cmd[index].parts[i].str);
+		if (!cmd[i])
+		{
+			free_array(cmd);
 			return (NULL);
-		cmd_plus_arg = ft_strjoin(cmd_plus_arg, data->cmd[index].parts[i].str);
-		if (!cmd_plus_arg)
-			return (NULL);
+		}
 		i++;
 	}
-	return (cmd_plus_arg);
+	return (cmd);
 }
 
 int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)

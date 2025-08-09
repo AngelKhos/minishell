@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/30 13:15:24 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/09 18:58:49 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,21 @@ char	*find_path(char *cmd, char **envp)
 	return (find_loop(paths, path_no_cmd, cmd));
 }
 
-int	execute(char *cmd_arg, char **envp)
+int	execute(char **cmd, char **envp)
 {
 	char	*path;
-	char	**cmd;
 
-	cmd = NULL;
-	if (!cmd_arg)
-		return (0);
-	cmd = ft_split(cmd_arg, ' ');
 	if (!cmd)
 		return (0);
 	path = find_path(cmd[0], envp);
 	if (!path)
 	{
-		//ft_printf("\e[1;37m%s\e[0m : Command not found\n", cmd[0]);
+		ft_printf("\e[1;37m%s\e[0m : Command not found\n", cmd[0]);
 		return (free_array(cmd), 127);
 	}
 	if (execve(path, cmd, envp) == -1)
 	{
+		ft_printf("\e[1;37m%s\e[0m : Command not found\n", cmd[0]);
 		free_array(cmd);
 		free(path);
 		return (0);

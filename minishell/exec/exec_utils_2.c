@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/31 13:46:37 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/09 19:11:26 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,16 @@ void	wait_all(t_data *data, int *pids)
 		cmd_index--;
 	}
 	g_pid = 0;
+	
 }
 
 int	child_porc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)
 {
-	char	*cmd_str;
+	char	**cmd;
 
-	cmd_str = convert_part_to_arg(data, cmd_i);
+	cmd = convert_part_to_arg(data, cmd_i);
 	redir_file(data, prev_pipe, curr_pipe, cmd_i);
 	redir_pipe(data, prev_pipe, curr_pipe, cmd_i);
 	close_child_pipe(prev_pipe, curr_pipe);
-	return (execute(cmd_str, tree_to_envp(data->env)));
+	return (execute(cmd, tree_to_envp(data->env)));
 }

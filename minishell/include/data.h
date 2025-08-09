@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 15:32:02 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/09 18:53:13 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ void	close_child_pipe(int prev_pipe[2], int curr_pipe[2]);
 void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
 int		read_cmd_if(t_data *data, int cmd_index, int prev_pipes[2], int *pids);
 int		exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index);
-int		execute(char *cmd_arg, char **envp);
+int		execute(char **cmd, char **envp);
 void	wait_all(t_data *data, int *pids);
 void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
-char	*convert_part_to_arg(t_data *data, int index);
+char	**convert_part_to_arg(t_data *data, int index);
 void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
 int		child_porc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_index);
 int		read_cmd(t_data *data);
