@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:08:14 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/29 11:13:32 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/16 11:32:57 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ void	exit_body(t_data *data, t_cmd *cmd, int *code)
 	{
 		if (cmd && cmd->len > 2)
 		{
-			ft_printf("\e[1;37mexit\e[0m: too many arguments\n", cmd->parts[1].str);
+			ft_dprintf(2, "\e[1;37mexit\e[0m: too many arguments\n", cmd->parts[1].str);
 			*code = 1;
 			data->run = 1;
 		}
 	}
 	else
-		ft_printf("\e[1;37mexit\e[0m: \e[1;37m%s\e[0m: numeric argument required\n", cmd->parts[1].str);
+		ft_dprintf(2, "\e[1;37mexit\e[0m: \e[1;37m%s\e[0m: numeric argument required\n", cmd->parts[1].str);
 }
 
 int		exit_minishell_edition(t_data *data, t_cmd *cmd)

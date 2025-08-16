@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:38:19 by authomas          #+#    #+#             */
-/*   Updated: 2025/03/13 18:00:27 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 11:09:18 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,13 @@ void	ft_bzero_gnl(char *s);
 size_t	ft_strlen_gnl(char *s);
 
 int		ft_printf(const char *s, ...);
-int		ft_printnbr(int n);
-int		ft_printunbr(unsigned int n);
-int		ft_printnbr_base(unsigned int n, char *base);
-int		ft_printptr(unsigned long long int n, char *base, int b);
-int		ft_printchar(char c);
-int		ft_printstr(char *s);
+int		ft_dprintf(int fd, const char *s, ...);
+int		ft_dprintnbr(int fd, int n);
+int		ft_dprintunbr(int fd, unsigned int n);
+int		ft_dprintnbr_base(int fd, unsigned int n, char *base);
+int		ft_dprintptr(int fd, unsigned long long int n, char *base, int b);
+int		ft_dprintchar(int fd, char c);
+int		ft_dprintstr(int fd, char *s);
 int		ft_strlen_pf(char *s);
 int		ft_strchr_pf(const char *s, int c);
 int		ft_isalpha(int c);

@@ -6,20 +6,20 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 21:38:51 by authomas          #+#    #+#             */
-/*   Updated: 2025/01/27 17:10:35 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 11:03:34 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_printchar(char c)
+int	ft_dprintchar(int fd, char c)
 {
-	return (write(1, &c, 1));
+	return (write(fd, &c, 1));
 }
 
-int	ft_printstr(char *s)
+int	ft_dprintstr(int fd, char *s)
 {
 	if (!s)
-		return (write(1, "(null)", 6));
-	return (write(1, s, ft_strlen_pf(s)));
+		return (write(fd, "(null)", 6));
+	return (write(fd, s, ft_strlen_pf(s)));
 }

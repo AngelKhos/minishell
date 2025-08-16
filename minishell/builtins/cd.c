@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/30 10:52:39 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/16 11:32:03 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	change_dir(t_data *data, t_cmd cmd)
 		home = tree_search(data->env, "HOME");
 		if (!home)
 		{
-			ft_printf("\e[1;37mcd\e[0m: HOME not set\n");
+			ft_dprintf(2, "\e[1;37mcd\e[0m: HOME not set\n");
 			return (1);
 		}
 		chdir(home->data.value);
@@ -31,7 +31,7 @@ int	change_dir(t_data *data, t_cmd cmd)
 	{
 		if (chdir(cmd.parts[1].str) != 0)
 		{
-			ft_printf("\e[1;37mcd\e[0m: %s\e[0m: No such file or directory\n", cmd.parts[1].str);
+			ft_dprintf(2, "\e[1;37mcd\e[0m: %s\e[0m: No such file or directory\n", cmd.parts[1].str);
 			return (1);
 		}
 	}
@@ -70,7 +70,7 @@ int	cd(t_data *data, t_cmd cmd)
 	code = 0;
 	if (cmd.len > 2)
 	{
-		ft_printf("\e[1;37mcd\e[0m: too many arguments\n");
+		ft_dprintf(2, "\e[1;37mcd\e[0m: too many arguments\n");
 		return (1);
 	}
 	cd_body(data, cmd, &code);

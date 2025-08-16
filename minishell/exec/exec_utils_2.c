@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/09 19:11:26 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 11:31:11 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	wait_all(t_data *data, int *pids)
 			waitpid(pids[cmd_index], &code, 0);
 			data->exit_code = code >> 8;
 			if ((code >> 8) == 127)
-				ft_printf("\e[1;37m%s\e[0m : Command not found\n", data->cmd[cmd_index].parts->str);
+				ft_dprintf(2, "\e[1;37m%s\e[0m : Command not found\n", data->cmd[cmd_index].parts->str);
 		}
 		cmd_index--;
 	}

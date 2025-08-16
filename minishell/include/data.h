@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/09 18:53:13 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 11:24:58 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	display_cmd(t_data *data);
 /////////////// PARSING /////////////
 
 char	**ms_split(char *input_str, char separator);
+char	*strdup_wquotes(char *s);
 int		parsing(t_data *data);
 
 /////////////// SIGNALE /////////////

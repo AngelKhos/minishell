@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/09 19:11:21 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 11:30:21 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	{
 		child_return = child_porc(data, prev_pipe, curr_pipe, cmd_index);
 		if (child_return == 0)
-			ft_printf("error in child\n");
+			ft_dprintf(2, "Error in child\n");
 		exit(127);
 	}
 	else if (g_pid > 0)
@@ -87,7 +87,7 @@ int	read_cmd(t_data *data)
 	while (cmd_index <= data->nb_pipes)
 	{
 		if (read_cmd_if(data, cmd_index, prev_pipe, pids) == 0)
-			ft_printf("exec error\n");
+			ft_dprintf(2, "Exec error\n");
 		cmd_index++;
 	}
 	wait_all(data, pids);

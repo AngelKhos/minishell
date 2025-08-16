@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/09 18:26:25 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 11:33:36 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int g_pid = 0;
 
 void	handle_readline(t_data *data)
 {
-	char *prompt;
+	//char *prompt;
 
-	prompt = NULL;
+	//prompt = NULL;
 	while (data->run)
 	{
-		prompt = get_prompt(data);
-		data->input = readline(prompt);
+		//prompt = get_prompt(data);
+		data->input = readline("\e[0;35m(つ ╹╹)つ\e[0;91m──\e[0;33m☆*:・ﾟ\e[0m$");
 		if (data->input)
 		{
 			if (ft_strlen(data->input) >= 1)
@@ -35,18 +35,17 @@ void	handle_readline(t_data *data)
 				if (parsing(data))
 				{
 					if (!read_cmd(data))
-						ft_printf("exec error\n");
+						ft_dprintf(2, "Error: exec error\n");
 					free_cmd(data);
 				}
 			}
 			else
 				data->exit_code = 0;
-			//ft_printf("%d\n", data->exit_code);
 			free(data->input);
 		}
 		else
 			exit_minishell_edition(data, NULL);
-		free(prompt);
+		//free(prompt);
 	}
 }
 
@@ -86,7 +85,6 @@ int main(int argc, char **argv, char **envp)
 	data = ft_calloc(sizeof(t_data), 1);
 	init_data(data, envp);
 	handle_signal();
-	//print_char_array(tree_to_envp(data->env));
 	handle_readline(data);
 	free_data(data);
 	rl_clear_history();

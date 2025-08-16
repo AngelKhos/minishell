@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/09 18:58:49 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 11:30:52 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ int	execute(char **cmd, char **envp)
 	path = find_path(cmd[0], envp);
 	if (!path)
 	{
-		ft_printf("\e[1;37m%s\e[0m : Command not found\n", cmd[0]);
+		ft_dprintf(2, "\e[1;37m%s\e[0m : Command not found\n", cmd[0]);
 		return (free_array(cmd), 127);
 	}
 	if (execve(path, cmd, envp) == -1)
 	{
-		ft_printf("\e[1;37m%s\e[0m : Command not found\n", cmd[0]);
+		ft_dprintf(2, "\e[1;37m%s\e[0m : Command not found\n", cmd[0]);
 		free_array(cmd);
 		free(path);
 		return (0);

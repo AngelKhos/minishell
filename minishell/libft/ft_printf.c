@@ -6,40 +6,40 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:35:07 by authomas          #+#    #+#             */
-/*   Updated: 2025/01/27 17:09:22 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 11:17:03 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_sort(const char param, va_list *ap)
+static int	format_handle(int fd, const char param, va_list *ap)
 {
 	int	i;
 
 	i = 0;
 	if (param == 'c')
-		i += ft_printchar(va_arg(*ap, int));
+		i += ft_dprintchar(fd, va_arg(*ap, int));
 	if (param == 's')
-		i += ft_printstr(va_arg(*ap, char *));
+		i += ft_dprintstr(fd, va_arg(*ap, char *));
 	if (param == 'd' || param == 'i')
-		i += ft_printnbr(va_arg(*ap, int));
+		i += ft_dprintnbr(fd, va_arg(*ap, int));
 	if (param == 'u')
-		i += ft_printunbr(va_arg(*ap, unsigned int));
+		i += ft_dprintunbr(fd, va_arg(*ap, unsigned int));
 	if (param == '%')
-		i += ft_printchar('%');
+		i += ft_dprintchar(fd, '%');
 	if (param == 'x')
-		i += ft_printnbr_base(va_arg(*ap, unsigned int), "0123456789abcdef");
+		i += ft_dprintnbr_base(fd, va_arg(*ap, unsigned int), "0123456789abcdef");
 	if (param == 'X')
-		i += ft_printnbr_base(va_arg(*ap, unsigned int), "0123456789ABCDEF");
+		i += ft_dprintnbr_base(fd, va_arg(*ap, unsigned int), "0123456789ABCDEF");
 	if (param == 'p')
 	{
-		i += ft_printptr(va_arg(*ap,
+		i += ft_dprintptr(fd, va_arg(*ap,
 					unsigned long long int), "0123456789abcdef", 1);
 	}
 	return (i);
 }
 
-static int	ft_act(const char *s, va_list *ap)
+static int	printf_core(int fd, const char *s, va_list *ap)
 {
 	size_t	i;
 	int		len;
@@ -49,18 +49,18 @@ static int	ft_act(const char *s, va_list *ap)
 	while (s[i])
 	{
 		if (s[i++] != '%')
-			len += ft_printchar(s[i - 1]);
+			len += ft_dprintchar(fd, s[i - 1]);
 		else
 		{
 			i++;
 			if (ft_strchr_pf("csdiuxXp%", s[i - 1]))
-				len += ft_sort(s[i - 1], ap);
+				len += format_handle(fd, s[i - 1], ap);
 			else if (!ft_isalpha(s[i - 1]))
 				return (-1);
 			else
 			{
-				len += ft_printchar('%');
-				len += ft_printchar(s[i - 1]);
+				len += ft_dprintchar(fd, '%');
+				len += ft_dprintchar(fd, s[i - 1]);
 			}
 		}
 	}
@@ -76,7 +76,21 @@ int	ft_printf(const char *s, ...)
 	if (!s || write(1, 0, 0) == -1)
 		return (-1);
 	va_start(ap, s);
-	len += ft_act(s, &ap);
+	len += printf_core(1, s, &ap);
+	va_end(ap);
+	return (len);
+}
+
+int ft_dprintf(int fd, const char *s, ...)
+{
+	va_list	ap;
+	int		len;
+
+	len = 0;
+	if (!s || write(1, 0, 0) == -1)
+		return (-1);
+	va_start(ap, s);
+	len += printf_core(fd, s, &ap);
 	va_end(ap);
 	return (len);
 }
