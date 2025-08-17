@@ -2,7 +2,7 @@ NAME=minishell
 # /////////////////////////
 
 CC=cc
-CC_FLAGS=-Wall -Wextra -Werror -g3
+CC_FLAGS=-Wall -Wextra -Werror -g3 -fsanitize=address,leak
 
 # /////////////////////////
 
@@ -13,7 +13,8 @@ DIR_DEPS=.deps
 
 SRCS=core/debug_tmp.c core/main.c core/free.c core/signal.c \
 	builtins/export.c builtins/env.c builtins/cd.c builtins/pwd.c builtins/echo.c builtins/exit.c builtins/unset.c \
-	pars/ms_split.c pars/pars.c pars/tree_handle.c pars/tree_utils.c pars/tree_utils_2.c pars/here_doc.c \
+	pars/ms_split.c pars/pars.c  pars/pars_utils.c pars/redir.c pars/here_doc.c\
+	env/tree_utils.c env/tree_utils_2.c  env/tree_handle.c \
 	exec/exec.c exec/exec_builtins.c exec/exec_utils.c exec/redir_utils.c exec/exec_utils_2.c 
 
 LIB= libft/libft.a

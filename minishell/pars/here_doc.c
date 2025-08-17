@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:34:36 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/06/23 15:19:29 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/17 19:48:50 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 #include <readline/readline.h>
 #include <unistd.h>
 
-int		here_doc(t_data *data, char *word)
+int		here_doc(char *word)
 {
-	(void)data;
 	int		hd_fd;
 	char	*here_doc_input;
 

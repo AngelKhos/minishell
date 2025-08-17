@@ -6,13 +6,13 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:10:36 by authomas          #+#    #+#             */
-/*   Updated: 2025/07/28 00:29:42 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/17 17:48:40 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 
-static int	skip_quote(char *str, int index)
+int	skip_quote(char *str, int index)
 {
 	if (str[index] == '\'')
 	{

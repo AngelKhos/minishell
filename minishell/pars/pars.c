@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/08/16 11:24:35 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/17 19:40:49 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,51 +21,6 @@ int	get_tablen(char **inputs)
 		while (inputs[i])
 			i++;
 	return (i);
-}
-
-void pars_redir(char *input, t_cmd *cmd)
-{
-	//int i;
-	//int j;
-	char *file;
-
-	//i = 0;
-	file = NULL;
-	cmd->infile = -1;
-	cmd->outfile = -1;
-	(void)input;
-	// while(input[i])
-	// {
-	// 	if (input[i] == '<')
-	// 	{
-	// 		i++;
-	// 		while(input[i] == ' ')
-	// 			i++;
-	// 		j = i;
-	// 		while(ft_isalnum(input[j]))
-	// 			j++;
-	// 		file = ft_substr(input, i, j - i);
-	// 		cmd->infile = open(file, O_RDONLY);
-	// 		if (cmd->infile == -1)
-	// 			ft_printf("pa conten");
-	// 	}
-	// 	else if (input[i] == '>')
-	// 	{
-	// 		i++;
-	// 		while(input[i] == ' ')
-	// 			i++;
-	// 		j = i;
-	// 		while(ft_isalnum(input[j]))
-	// 			j++;
-	// 		file = ft_substr(input, i, j - i);
-	// 		cmd->outfile = open(file, O_CREAT | O_WRONLY);
-	// 		if (cmd->outfile == -1)
-	// 			ft_printf("pa conten");
-	// 	}
-	// 	i++;
-	// }
-	if (file)
-		free(file);
 }
 
 void rm_quotes(char **split)
@@ -86,6 +41,7 @@ void rm_quotes(char **split)
 int alloc_cmd(t_data *data, char **inputs)
 {
 	char **raw_cmd;
+	char *parsed_input;
 	size_t i;
 	size_t part_i;
 	int is_cmd;
@@ -95,12 +51,18 @@ int alloc_cmd(t_data *data, char **inputs)
 	{
 		part_i = 0;
 		is_cmd = 0;
-		pars_redir(inputs[i], &data->cmd[i]);
-		raw_cmd = ms_split(inputs[i], ' ');
+		ft_printf("input: %s\n", inputs[i]);
+		parsed_input = pars_redir(inputs[i], &data->cmd[i]);
+		if(!parsed_input)
+		{
+			ft_dprintf(2, "Error: unexpected token\n");
+			return (0);
+		}
+		ft_printf("parsed_input: %s\n", parsed_input);
+		raw_cmd = ms_split(parsed_input, ' ');
 		if (!raw_cmd)
 			return (0);
 		rm_quotes(raw_cmd);
-		print_split(raw_cmd);
 		data->cmd[i].len = get_tablen(raw_cmd);
 		data->cmd[i].parts = ft_calloc(sizeof(t_part), get_tablen(raw_cmd));
 		while(raw_cmd[part_i])
@@ -178,7 +140,7 @@ int parsing(t_data *data)
 	data->cmd = ft_calloc(sizeof(t_cmd), (data->nb_pipes + 1));
 	if (!data->cmd)
 	{
-		ft_dprintf(2, "Error: malloc error in parsing function\n");
+		ft_dprintf(2, "Error: error in parsing function\n");
 		return (0);
 	}
 	if(!alloc_cmd(data, inputs))
@@ -189,6 +151,5 @@ int parsing(t_data *data)
 	return (1);
 }
 
-// quotes faire gaffe a pas faire des bails chelou genre un pipe dans un quote
 // simple quote traduit pas, double quote traduit les $var
 // les $ peuvent etre n'importe ou

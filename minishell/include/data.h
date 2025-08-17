@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/16 11:24:58 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/17 20:05:58 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	**convert_part_to_arg(t_data *data, int index);
 void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
 int		child_porc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_index);
 int		read_cmd(t_data *data);
-int		here_doc(t_data *data, char *word);
+
 void	close_redir(t_data *data);
 
 //////////////// DEBUG ///////////////
@@ -105,7 +105,11 @@ void	display_cmd(t_data *data);
 
 char	**ms_split(char *input_str, char separator);
 char	*strdup_wquotes(char *s);
+char	*pars_redir(char *input, t_cmd *cmd);
+int		skip_quote(char *str, int index);
+char	*ft_strndup(const char *s, size_t n);
 int		parsing(t_data *data);
+int		here_doc(char *word);
 
 /////////////// SIGNALE /////////////
 
