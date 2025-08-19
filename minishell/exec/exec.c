@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/16 11:30:21 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/19 15:19:32 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**convert_part_to_arg(t_data *data, int index)
 	int		i;
 	char	**cmd;
 
-	cmd = ft_calloc(sizeof(char *), data->cmd[index].len);
+	cmd = ft_calloc(sizeof(char *), data->cmd[index].len + 1);
 	if (!cmd)
 		return (NULL);
 	i = 0;
@@ -34,6 +34,7 @@ char	**convert_part_to_arg(t_data *data, int index)
 		}
 		i++;
 	}
+	cmd[i] = NULL;
 	return (cmd);
 }
 
