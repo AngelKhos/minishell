@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/08/17 19:40:49 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/20 15:36:21 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,12 @@ int alloc_cmd(t_data *data, char **inputs)
 	{
 		part_i = 0;
 		is_cmd = 0;
-		ft_printf("input: %s\n", inputs[i]);
 		parsed_input = pars_redir(inputs[i], &data->cmd[i]);
 		if(!parsed_input)
 		{
 			ft_dprintf(2, "Error: unexpected token\n");
 			return (0);
 		}
-		ft_printf("parsed_input: %s\n", parsed_input);
 		raw_cmd = ms_split(parsed_input, ' ');
 		if (!raw_cmd)
 			return (0);
@@ -84,13 +82,6 @@ int alloc_cmd(t_data *data, char **inputs)
 	}//:)
 	return (1);
 }
-
-// if ("<<")
-// 	data->cmd[i].infile = heredoc(data, delimiter);
-// if (">")
-// 	change le outfile a un open du fichier qui est donné apres
-// if ("<")
-// 	change le infile a un open du fichier qui est donné avant
 
 int checking_missing_command(char *input)
 {
@@ -148,6 +139,7 @@ int parsing(t_data *data)
 		ft_dprintf(2, "Error: unable to allocate command in parsing function\n");
 		return (0);
 	}
+	free(inputs);
 	return (1);
 }
 
