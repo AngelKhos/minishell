@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/17 20:05:58 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/20 13:33:18 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	wait_all(t_data *data, int *pids);
 void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
 char	**convert_part_to_arg(t_data *data, int index);
 void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
-int		child_porc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_index);
+int		child_proc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_index);
 int		read_cmd(t_data *data);
 
 void	close_redir(t_data *data);

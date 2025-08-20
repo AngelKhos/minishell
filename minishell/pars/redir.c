@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/08/19 15:22:40 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/20 13:35:50 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int handle_heredoc(char *input, t_cmd *cmd)
     name = ft_strndup(input + j, i - j);
     if (cmd->infile != -1)
         close(cmd->infile);
-    cmd->infile = -1;
-    cmd->here_doc = here_doc(name);
+    cmd->infile = here_doc(name);
+    cmd->here_doc = 1;
     free(name);
     return (i);
 }
@@ -65,7 +65,7 @@ int handle_infile(char *input, t_cmd *cmd)
     if (!input[i])
         return (0);
     if (input[i] == '<')
-       i = handle_heredoc(input + i, cmd);
+       i += handle_heredoc(input + i, cmd);
     else
     {   
          while (input[i] == ' ')
@@ -78,7 +78,7 @@ int handle_infile(char *input, t_cmd *cmd)
         name = ft_strndup(input + j, i - j);
         if (cmd->infile != -1)
             close(cmd->infile);
-        cmd->infile = open(name, O_WRONLY);
+        cmd->infile = open(name, O_RDONLY);
         free(name);
     }
     return (i);
