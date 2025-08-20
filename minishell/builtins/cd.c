@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/16 11:32:03 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/20 11:05:51 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ int	change_dir(t_data *data, t_cmd cmd)
 	{
 		if (chdir(cmd.parts[1].str) != 0)
 		{
-			ft_dprintf(2, "\e[1;37mcd\e[0m: %s\e[0m: No such file or directory\n", cmd.parts[1].str);
+			ft_dprintf(2,
+				"\e[1;37mcd\e[0m: %s\e[0m: No such file or directory\n",
+				cmd.parts[1].str);
 			return (1);
 		}
 	}

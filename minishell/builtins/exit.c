@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:08:14 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/16 11:32:57 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/20 11:07:45 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_exit_atoi(char *s)
 	return (res * sign);
 }
 
-int		is_num(char *str)
+int	is_num(char *str)
 {
 	size_t	i;
 
@@ -72,16 +72,20 @@ void	exit_body(t_data *data, t_cmd *cmd, int *code)
 	{
 		if (cmd && cmd->len > 2)
 		{
-			ft_dprintf(2, "\e[1;37mexit\e[0m: too many arguments\n", cmd->parts[1].str);
+			ft_dprintf(2,
+				"\e[1;37mexit\e[0m: too many arguments\n",
+				cmd->parts[1].str);
 			*code = 1;
 			data->run = 1;
 		}
 	}
 	else
-		ft_dprintf(2, "\e[1;37mexit\e[0m: \e[1;37m%s\e[0m: numeric argument required\n", cmd->parts[1].str);
+		ft_dprintf(2,
+			"\e[1;37mexit\e[0m: \e[1;37m%s\e[0m: numeric argument required\n",
+			cmd->parts[1].str);
 }
 
-int		exit_minishell_edition(t_data *data, t_cmd *cmd)
+int	exit_minishell_edition(t_data *data, t_cmd *cmd)
 {
 	int	code;
 
