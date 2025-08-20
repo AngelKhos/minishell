@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/16 11:31:11 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/20 11:10:54 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	read_cmd_if(t_data *data, int cmd_index, int prev_pipes[2], int *pids)
 	{
 		if (is_exit_or_cd(data, cmd_index) == 1 && data->nb_pipes < 1)
 		{
-			data->exit_code = builtins_if(data, cmd_index);//same here
+			data->exit_code = builtins_if(data, cmd_index);
 		}
 		else
 		{
-			exec_builtins(data, prev_pipes, pids, cmd_index);//same here
+			exec_builtins(data, prev_pipes, pids, cmd_index);
 		}
 	}
 	return (1);
@@ -72,15 +72,16 @@ void	wait_all(t_data *data, int *pids)
 			waitpid(pids[cmd_index], &code, 0);
 			data->exit_code = code >> 8;
 			if ((code >> 8) == 127)
-				ft_dprintf(2, "\e[1;37m%s\e[0m : Command not found\n", data->cmd[cmd_index].parts->str);
+				ft_dprintf(2,
+					"\e[1;37m%s\e[0m : Command not found\n",
+					data->cmd[cmd_index].parts->str);
 		}
 		cmd_index--;
 	}
 	g_pid = 0;
-	
 }
 
-int	child_porc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)
+int	child_proc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)
 {
 	char	**cmd;
 

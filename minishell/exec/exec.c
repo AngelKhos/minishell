@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/19 15:19:32 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/20 11:17:30 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ char	**convert_part_to_arg(t_data *data, int index)
 	return (cmd);
 }
 
+void	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2])
+{
+	close(prev_pipe[0]);
+	close(prev_pipe[1]);
+	prev_pipe[0] = curr_pipe[0];
+	prev_pipe[1] = curr_pipe[1];
+}
+
 int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 {
 	int		curr_pipe[2];
@@ -51,7 +59,7 @@ int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	g_pid = fork();
 	if (g_pid == 0)
 	{
-		child_return = child_porc(data, prev_pipe, curr_pipe, cmd_index);
+		child_return = child_proc(data, prev_pipe, curr_pipe, cmd_index);
 		if (child_return == 0)
 			ft_dprintf(2, "Error in child\n");
 		exit(127);
@@ -59,12 +67,7 @@ int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	else if (g_pid > 0)
 		pids[cmd_index] = g_pid;
 	if (data->nb_pipes > 0)
-	{
-		close(prev_pipe[0]);
-		close(prev_pipe[1]);
-		prev_pipe[0] = curr_pipe[0];
-		prev_pipe[1] = curr_pipe[1];
-	}
+		close_pipe_in_exec_cmd(prev_pipe, curr_pipe);
 	return (1);
 }
 

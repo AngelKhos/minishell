@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:07:03 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/24 15:10:39 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:10:09 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ void	close_redir(t_data *data)
 		if (data->cmd[cmd_index].infile != -1)
 			close(data->cmd[cmd_index].infile);
 		if (data->cmd[cmd_index].outfile != -1)
-		{
 			close(data->cmd[cmd_index].outfile);
-			if (data->cmd[cmd_index].here_doc == 1)
-				unlink(".here_doc.tmp");
-		}
+		if (data->cmd[cmd_index].here_doc == 1)
+			unlink(".here_doc.tmp");
 		cmd_index++;
 	}
 }
@@ -38,12 +36,14 @@ void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index)
 		dup2(data->cmd[cmd_index].infile, STDIN_FILENO);
 		close(pr_pip[0]);
 		close(pr_pip[1]);
+		close(data->cmd[cmd_index].infile);
 	}
 	if (cmd_index == data->nb_pipes && data->cmd[cmd_index].outfile != -1)
 	{
 		dup2(data->cmd[cmd_index].outfile, STDOUT_FILENO);
 		close(cur_pip[0]);
 		close(cur_pip[1]);
+		close(data->cmd[cmd_index].outfile);
 	}
 }
 
