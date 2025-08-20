@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:40:46 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/17 15:46:48 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/20 11:21:54 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	free_cmd(t_data *data)
 	free(data->cmd);
 }
 
-void free_data(t_data *data)
+void	free_data(t_data *data)
 {
 	if (data->curent_path)
 		free(data->curent_path);

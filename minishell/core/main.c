@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/16 11:33:36 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/20 11:39:45 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,12 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-int g_pid = 0;
+int	g_pid = 0;
 
 void	handle_readline(t_data *data)
 {
-	//char *prompt;
-
-	//prompt = NULL;
 	while (data->run)
 	{
-		//prompt = get_prompt(data);
 		data->input = readline("\e[0;35m(つ ╹╹)つ\e[0;91m──\e[0;33m☆*:・ﾟ\e[0m$");
 		if (data->input)
 		{
@@ -34,6 +30,7 @@ void	handle_readline(t_data *data)
 				add_history(data->input);
 				if (parsing(data))
 				{
+					display_cmd(data);
 					if (!read_cmd(data))
 						ft_dprintf(2, "Error: exec error\n");
 					free_cmd(data);
@@ -45,13 +42,12 @@ void	handle_readline(t_data *data)
 		}
 		else
 			exit_minishell_edition(data, NULL);
-		//free(prompt);
 	}
 }
 
 void	increase_shlvl(t_data *data)
 {
-	int	shlvl;
+	int		shlvl;
 	t_env	*var_shlvl;
 	char	*val;
 
@@ -76,7 +72,7 @@ void	init_data(t_data *data, char **envp)
 	increase_shlvl(data);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
 
