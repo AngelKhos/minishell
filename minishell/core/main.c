@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/20 11:39:45 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:02:12 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	init_data(t_data *data, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
+	int		code;
 
 	(void)argc;
 	(void)argv;
@@ -82,7 +83,8 @@ int	main(int argc, char **argv, char **envp)
 	init_data(data, envp);
 	handle_signal();
 	handle_readline(data);
+	code = data->exit_code;
 	free_data(data);
 	rl_clear_history();
-	return (data->exit_code);
+	return (code);
 }
