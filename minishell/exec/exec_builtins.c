@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/28 16:15:35 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/25 12:24:25 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 		if (pipe(curr_pipe) == -1)
 			return (0);
 	g_pid = fork();
+	if (g_pid == -1)
+		return (close_pipe_in_exec_cmd(prev_pipe, curr_pipe), 0);
 	if (g_pid == 0)
 	{
 		redir_pipe(data, prev_pipe, curr_pipe, cmd_index);
@@ -72,11 +74,6 @@ int	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	else if (g_pid > 0)
 		pids[cmd_index] = g_pid;
 	if (data->nb_pipes > 0)
-	{
-		close(prev_pipe[0]);
-		close(prev_pipe[1]);
-		prev_pipe[0] = curr_pipe[0];
-		prev_pipe[1] = curr_pipe[1];
-	}
+		close_pipe_in_exec_cmd(prev_pipe, curr_pipe);
 	return (1);
 }

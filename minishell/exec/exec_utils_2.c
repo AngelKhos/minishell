@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/20 11:10:54 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:42:20 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,18 @@ void	wait_all(t_data *data, int *pids)
 int	child_proc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)
 {
 	char	**cmd;
+	char	**envp;
+	int		code;
 
+	envp = tree_to_envp(data->env);
+	if (!envp)
+		return (0);
 	cmd = convert_part_to_arg(data, cmd_i);
+	if (!cmd)
+		return (free_array(envp), 0);
 	redir_file(data, prev_pipe, curr_pipe, cmd_i);
 	redir_pipe(data, prev_pipe, curr_pipe, cmd_i);
 	close_child_pipe(prev_pipe, curr_pipe);
-	return (execute(cmd, tree_to_envp(data->env)));
+	code = execute(cmd, envp);
+	return (code);
 }
