@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:44:57 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/23 13:42:25 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/21 14:55:14 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,21 @@ size_t	tree_get_len(t_env *root)
 void	get_str_key_va(size_t *i, char **envp, t_env *root)
 {
 	char	*str;
+	char	*key;
+	char	*keyplus;
 
 	if (!root)
 		return ;
 	(*i)++;
-	str = ft_strdup(root->data.key);
-	if (!str)
+	key = ft_strdup(root->data.key);
+	if (!key)
 		return ;
-	str = ft_strjoin(str, "=");
-	if (!str)
+	keyplus = ft_strjoin(key, "=");
+	free(key);
+	if (!keyplus)
 		return ;
-	str = ft_strjoin(str, root->data.value);
+	str = ft_strjoin(keyplus, root->data.value);
+	free(keyplus);
 	if (!str)
 		return ;
 	envp[(*i)] = str;
@@ -78,6 +82,8 @@ char	**tree_to_envp(t_env *root)
 	i = -1;
 	len = tree_get_len(root);
 	envp = ft_calloc(sizeof(char *), len + 1);
+	if (!envp)
+		return (NULL);
 	get_str_key_va(&i, envp, root);
 	return (envp);
 }
