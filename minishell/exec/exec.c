@@ -6,12 +6,13 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/25 11:39:41 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/26 14:15:15 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 #include <fcntl.h>
+#include <signal.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -61,6 +62,7 @@ int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 		return (close_pipe_in_exec_cmd(prev_pipe, curr_pipe), 0);
 	if (g_pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		child_return = child_proc(data, prev_pipe, curr_pipe, cmd_index);
 		if (child_return == 0)
 			ft_dprintf(2, "Error in child\n");
