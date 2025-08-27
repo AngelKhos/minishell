@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:44:57 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/26 16:44:37 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/27 13:04:39 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,24 @@ char	**tree_to_envp(t_env *root)
 	return (envp);
 }
 
-void	print_tree(t_env *root)
+void	print_tree(t_env *root, int ex)
 {
 	if (root == NULL)
 		return ;
-	if (root->data.value)
+	if (ex == 0)
 	{
-		ft_printf("%s=%s\n", root->data.key, root->data.value);
+		if (root->data.value && root->data.value[0] != '\0')
+			ft_printf("%s=%s\n", root->data.key, root->data.value);
 	}
 	else
-		ft_printf("%s=\n", root->data.key);
-	print_tree(root->right);
-	print_tree(root->left);
+	{
+		if (root->data.value)
+		{
+			ft_printf("export %s=\"%s\"\n", root->data.key, root->data.value);
+		}
+		else
+			ft_printf("export %s\n", root->data.key);
+	}
+	print_tree(root->right, ex);
+	print_tree(root->left, ex);
 }

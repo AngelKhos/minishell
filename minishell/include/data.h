@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/20 13:33:18 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/26 16:14:57 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ char	**convert_part_to_arg(t_data *data, int index);
 void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
 int		child_proc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_index);
 int		read_cmd(t_data *data);
+void	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2]);
 
 void	close_redir(t_data *data);
 
@@ -114,7 +115,7 @@ int		here_doc(char *word);
 /////////////// SIGNALE /////////////
 
 void	handle_signal();
-void	sigint_handle();
+void	sigint_handle(int code);
 void	sigabrt_handle();
 
 /////////////// RANDOM //////////////
