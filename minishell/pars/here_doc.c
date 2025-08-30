@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:34:36 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/30 16:10:13 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:38:31 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		here_doc(char *word, t_data *data)
 	char	*here_doc_input;
 	int		code;
 
-	hd_fd = open(".here_doc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	hd_fd = open(word, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	here_doc_input = NULL;
 	g_pid = fork();
 	if (g_pid == 0)
@@ -50,6 +50,6 @@ int		here_doc(char *word, t_data *data)
 	waitpid(g_pid, &code, 0);
 	data->exit_code = code >> 8;
 	close(hd_fd);
-	hd_fd = open(".here_doc.tmp", O_RDONLY);
+	hd_fd = open(word, O_RDONLY);
 	return (hd_fd);
 }

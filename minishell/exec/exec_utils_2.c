@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/25 11:42:20 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/30 15:57:14 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,11 @@ int	child_proc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)
 	cmd = convert_part_to_arg(data, cmd_i);
 	if (!cmd)
 		return (free_array(envp), 0);
-	redir_file(data, prev_pipe, curr_pipe, cmd_i);
 	redir_pipe(data, prev_pipe, curr_pipe, cmd_i);
+	redir_file(data, prev_pipe, curr_pipe, cmd_i);
 	close_child_pipe(prev_pipe, curr_pipe);
+	close_redir(data);
+	//close_redir_one_cmd(data->cmd[cmd_i]);
 	code = execute(cmd, envp);
 	return (code);
 }
