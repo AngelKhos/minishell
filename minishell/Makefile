@@ -2,7 +2,7 @@ NAME=minishell
 # /////////////////////////
 
 CC=cc
-CC_FLAGS=-Wall -Wextra -Werror -g3 -fsanitize=address,leak
+CC_FLAGS=-Wall -Wextra -Werror -g3 #-fsanitize=address,leak
 
 # /////////////////////////
 

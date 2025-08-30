@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:34:36 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/20 10:58:10 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/30 10:14:11 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <readline/readline.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 void	sigint_handle_hd()
 {

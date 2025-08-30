@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/08/20 15:36:36 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/30 10:13:06 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int is_exp(char *input)
 	i = 0;
 	while(input[i])
 	{
+		if (input[i] == '\'')
+			i = skip_quote(input, i);
 		if (input[i] == '$')
 			return (i);
 		i++;
@@ -39,7 +41,7 @@ int exp_var_len(t_data *data, char *input)
 	{
 		if(input[i] == '$')
 		{
-			i = tmp;
+			tmp = i;
 			while(input[i] && input[i] != ' ')
 				i++;
 			var_key = ft_strndup(input + tmp, i - tmp);
@@ -53,20 +55,20 @@ int exp_var_len(t_data *data, char *input)
 	return (len);
 }
 
-// char *exp_var(t_data *data, char* input)
-// {
-// 	int i;
-// 	char *new;
+char *exp_var(t_data *data, char* input)
+{
+	int i;
+	char *new;
 
-// 	i = 0;
-// 	while (input[i])
-// 	{
-// 		if ()
-// 	}
-// 	return (new);
-// }
+	i = 0;
+	// while (input[i])
+	// {
+	// 	if ()
+	// }
+	return (new);
+}
 
-int expand(t_data *data, char** inputs)
+void expand(t_data *data, char** inputs)
 {
 	/* prenne mes string
 		j'insere mes $var
@@ -87,14 +89,18 @@ int expand(t_data *data, char** inputs)
 		echo '$meo' -> ecris $meo
 		
 	*/
-
 	int i;
+	int exp_i;
 
 	i = 0;
 	while(inputs[i])
 	{
-		if(is_exp(inputs[i]))
-			inputs[i] = exp_var(data, inputs[i]);
-		i++;
+		exp_i = is_exp(inputs[i]);
+		if (!exp_i)
+			i++;
+		// else 
+		// {
+		// 	exp
+		// }
 	}
 }

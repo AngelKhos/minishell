@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/08/20 15:36:21 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/24 17:06:58 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int alloc_cmd(t_data *data, char **inputs)
 			return (0);
 		}
 		raw_cmd = ms_split(parsed_input, ' ');
+		//expand(data, raw_cmd);
 		if (!raw_cmd)
 			return (0);
 		rm_quotes(raw_cmd);
