@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/08/30 16:09:49 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/30 16:41:10 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@ int handle_heredoc(char *input, t_cmd *cmd, t_data *data)
     i = 1;
     if (!input[i])
         return (0);
-    while (input[i] == ' ')
+    while (input[i] && ft_isspace(input[i]))
             i++;
     j = i;
     if (!input[i] || input[i] == '<' || input[i] == '>')
         return (0);
-    while (!ft_isspace(input[i]))
+    while (input[i] && !ft_isspace(input[i]))
         i++;
     name = ft_strndup(input + j, i - j);
     if (cmd->infile != -1)
         close(cmd->infile);
     cmd->infile = here_doc(name, data);
     cmd->here_doc = 1;
-    free(name);
+    cmd->hd_name = name;
     return (i);
 }
 
@@ -64,8 +64,8 @@ int handle_infile(char *input, t_cmd *cmd, t_data *data)
     i = 1;
     if (!input[i])
         return (0);
-    if (input[i] == '<')
-       i += handle_heredoc(input + i, cmd, data);
+    if (input[i++] == '<')
+        i += handle_heredoc(input + i, cmd, data);
     else
     {   
          while (input[i] && ft_isspace(input[i]))

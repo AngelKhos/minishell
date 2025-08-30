@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/30 16:17:02 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/30 16:40:27 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct	s_cmd
 	int		infile;
 	int		outfile;
 	int		here_doc;
+	char	*hd_name;
 }	t_cmd;
 
 typedef struct s_data
