@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:34:36 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/30 10:14:11 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/30 16:10:13 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ void	sigint_handle_hd()
 	exit(130);
 }
 
-int		here_doc(char *word)
+int		here_doc(char *word, t_data *data)
 {
 	int		hd_fd;
 	char	*here_doc_input;
+	int		code;
 
 	hd_fd = open(".here_doc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	here_doc_input = NULL;
@@ -46,7 +47,8 @@ int		here_doc(char *word)
 		close(hd_fd);
 		exit(0);
 	}
-	waitpid(g_pid, NULL, 0);
+	waitpid(g_pid, &code, 0);
+	data->exit_code = code >> 8;
 	close(hd_fd);
 	hd_fd = open(".here_doc.tmp", O_RDONLY);
 	return (hd_fd);

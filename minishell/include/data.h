@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/26 16:14:57 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:10:24 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
 int		child_proc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_index);
 int		read_cmd(t_data *data);
 void	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2]);
-
 void	close_redir(t_data *data);
+void	close_redir_one_cmd(t_cmd cmd);
 
 //////////////// DEBUG ///////////////
 
@@ -110,7 +110,7 @@ char	*pars_redir(char *input, t_cmd *cmd);
 int		skip_quote(char *str, int index);
 char	*ft_strndup(const char *s, size_t n);
 int		parsing(t_data *data);
-int		here_doc(char *word);
+int		here_doc(char *word, t_data *data);
 
 /////////////// SIGNALE /////////////
 
