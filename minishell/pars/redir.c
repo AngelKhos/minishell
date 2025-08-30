@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/08/30 14:41:47 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/30 16:09:49 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int is_redir(char *input)
     return(0);
 }
 
-int handle_heredoc(char *input, t_cmd *cmd)
+int handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 {
     int i;
     int j;
@@ -49,13 +49,13 @@ int handle_heredoc(char *input, t_cmd *cmd)
     name = ft_strndup(input + j, i - j);
     if (cmd->infile != -1)
         close(cmd->infile);
-    cmd->infile = here_doc(name);
+    cmd->infile = here_doc(name, data);
     cmd->here_doc = 1;
     free(name);
     return (i);
 }
 
-int handle_infile(char *input, t_cmd *cmd)
+int handle_infile(char *input, t_cmd *cmd, t_data *data)
 {
     int i;
     int j;
@@ -65,7 +65,7 @@ int handle_infile(char *input, t_cmd *cmd)
     if (!input[i])
         return (0);
     if (input[i] == '<')
-       i += handle_heredoc(input + i, cmd);
+       i += handle_heredoc(input + i, cmd, data);
     else
     {   
          while (input[i] && ft_isspace(input[i]))
@@ -126,7 +126,7 @@ int handle_outfile(char *input, t_cmd *cmd)
     return (i);
 }
 
-char *pars_redir(char *input, t_cmd *cmd)
+char *pars_redir(char *input, t_cmd *cmd, t_data *data)
 {
 	int i;
     int j;
@@ -164,7 +164,7 @@ char *pars_redir(char *input, t_cmd *cmd)
             }
             else
             {
-                tmp = handle_infile(input + i, cmd);
+                tmp = handle_infile(input + i, cmd, data);
                 if (!tmp)
                     return (NULL);
 			    i += tmp;

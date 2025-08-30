@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/30 16:10:24 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:17:02 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	display_cmd(t_data *data);
 
 char	**ms_split(char *input_str, char separator);
 char	*strdup_wquotes(char *s);
-char	*pars_redir(char *input, t_cmd *cmd);
+char	*pars_redir(char *input, t_cmd *cmd, t_data *data);
 int		skip_quote(char *str, int index);
 char	*ft_strndup(const char *s, size_t n);
 int		parsing(t_data *data);
