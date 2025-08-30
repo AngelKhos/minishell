@@ -24,6 +24,7 @@ SRCS=ft_atoi.c\
 	ft_strchr.c\
 	ft_strrchr.c\
 	ft_isprint.c\
+	ft_isspace.c\
 	ft_memset.c\
 	ft_strlcpy.c\
 	ft_toupper.c\
