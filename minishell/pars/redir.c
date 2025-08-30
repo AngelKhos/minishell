@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/08/30 10:16:13 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/30 14:41:47 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int handle_heredoc(char *input, t_cmd *cmd)
     j = i;
     if (!input[i] || input[i] == '<' || input[i] == '>')
         return (0);
-    while (ft_isalnum(input[i]) || input[i] == '.')
+    while (!ft_isspace(input[i]))
         i++;
     name = ft_strndup(input + j, i - j);
     if (cmd->infile != -1)
@@ -68,12 +68,12 @@ int handle_infile(char *input, t_cmd *cmd)
        i += handle_heredoc(input + i, cmd);
     else
     {   
-         while (input[i] == ' ')
+         while (input[i] && ft_isspace(input[i]))
             i++;
         j = i;
         if (!input[i] || input[i] == '<' || input[i] == '>')
             return (0);
-        while (ft_isalnum(input[i]) || input[i] == '.')
+        while (input[i] && !ft_isspace(input[i]))
             i++;
         name = ft_strndup(input + j, i - j);
         if (cmd->infile != -1)
@@ -95,31 +95,32 @@ int handle_outfile(char *input, t_cmd *cmd)
         return (0);
     if (input[i] == '>')
     {
-        while (input[i] == ' ')
+        i++;
+        while (input[i] && ft_isspace(input[i]))
             i++;
         j = i;
         if (!input[i] || input[i] == '<')
             return (0);
-        while (ft_isalnum(input[i]) || input[i] == '.')
+        while (input[i] && !ft_isspace(input[i]))
             i++;
         name = ft_strndup(input + j, i - j);
         if (cmd->outfile != -1)
             close(cmd->outfile);
-        cmd->outfile = open(name, O_CREAT | O_APPEND | O_WRONLY);
+        cmd->outfile = open(name, O_CREAT | O_APPEND | O_WRONLY, 0644);
     }
     else
     {
-        while (input[i] == ' ')
+        while (input[i] && ft_isspace(input[i]))
             i++;
         j = i;
         if (!input[i] || input[i] == '<' || input[i] == '>')
             return (0);
-        while (ft_isalnum(input[i]) || input[i] == '.')
+        while (input[i] && !ft_isspace(input[i]))
             i++;
         name = ft_strndup(input + j, i - j);
         if (cmd->outfile != -1)
             close(cmd->outfile);
-        cmd->outfile = open(name, O_CREAT | O_TRUNC | O_WRONLY);
+        cmd->outfile = open(name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
     }
     free(name);
     return (i);
