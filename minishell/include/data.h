@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/30 16:40:27 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/01 13:21:55 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int		unset(t_data *data, int cmd_index);
 void	free_array(char **array);
 void	free_data(t_data *data);
 void	free_cmd(t_data *data);
+void	close_file(t_data *data);
+void	close_here_doc(t_cmd *cmd);
 
 //////////////// INIT ////////////////
 

@@ -6,14 +6,14 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 13:14:18 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/27 13:43:16 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/01 15:14:47 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 #include "../libft/libft.h"
 
-int	export_part_2(t_cmd *cmd, t_env *leaf, char **val)
+int	export_part_3(t_cmd *cmd, t_env *leaf, char **val)
 {
 	if (val[1])
 	{
@@ -30,10 +30,50 @@ int	export_part_2(t_cmd *cmd, t_env *leaf, char **val)
 	return (0);
 }
 
+int	ft_isok(char *str)
+{
+	char		c;
+	size_t		i;
+
+	i = 0;
+	if (str[i] && ft_isdigit(str[i]) == 1)
+	{
+		ft_dprintf(2, "export: '%s': not a valid identifier\n", str);
+		return (0);
+	}
+	while (str[i])
+	{
+		c = str[i];
+		if (c != '_')
+		{
+			if (ft_isalnum(c) == 0)
+			{
+				ft_dprintf(2, "export: '%s': not a valid identifier\n", str);
+				return (0);
+			}
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	export_part_2(t_env *leaf, char **val, t_cmd *cmd)
+{
+	if (!leaf->data.key)
+		return (free(leaf), 1);
+	if (ft_isok(val[0]) == 0)
+		return (free(leaf), free_array(val), 1);
+	leaf->data.value = NULL;
+	if (export_part_3(cmd, leaf, val) == 1)
+		return (1);
+	return (0);
+}
+
 int	ft_export(t_data *data, t_cmd *cmd)
 {
 	t_env	*leaf;
 	char	**val;
+	int		code;
 
 	leaf = NULL;
 	val = NULL;
@@ -46,11 +86,9 @@ int	ft_export(t_data *data, t_cmd *cmd)
 		if (!val)
 			return (free(leaf), 1);
 		leaf->data.key = ft_strdup(val[0]);
-		if (!leaf->data.key)
-			return (free(leaf), 1);
-		leaf->data.value = NULL;
-		if (export_part_2(cmd, leaf, val) == 1)
-			return (1);
+		code = export_part_2(leaf, val, cmd);
+		if (code == 1)
+			return (code);
 		tree_insert(data->env, leaf);
 		free_array(val);
 	}
