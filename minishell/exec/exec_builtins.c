@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/01 11:09:28 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:18:07 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,18 @@ int	is_exit_or_cd(t_data *data, int cmd_index)
 	return (0);
 }
 
+void	builtins_child(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_index)
+{
+	redir_pipe(data, prev_pipe, curr_pipe, cmd_index);
+	redir_file(data, prev_pipe, curr_pipe, cmd_index);
+	close_child_pipe(prev_pipe, curr_pipe);
+	close_redir(data);
+}
+
 int	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 {
 	int	curr_pipe[2];
+	int	code;
 
 	curr_pipe[0] = -1;
 	curr_pipe[1] = -1;
@@ -67,11 +76,12 @@ int	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 		return (close_pipe_in_exec_cmd(prev_pipe, curr_pipe), 0);
 	if (g_pid == 0)
 	{
-		redir_pipe(data, prev_pipe, curr_pipe, cmd_index);
-		redir_file(data, prev_pipe, curr_pipe, cmd_index);
-		close_child_pipe(prev_pipe, curr_pipe);
-		close_redir(data);
-		exit(builtins_if(data, cmd_index));
+		free(pids);
+		builtins_child(data, prev_pipe, curr_pipe, cmd_index);
+		code = builtins_if(data, cmd_index);
+		free_cmd(data);
+		free_data(data);
+		exit(code);
 	}
 	else if (g_pid > 0)
 		pids[cmd_index] = g_pid;

@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/27 15:32:26 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:05:52 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 		return (close_pipe_in_exec_cmd(prev_pipe, curr_pipe), 0);
 	if (g_pid == 0)
 	{
+		free(pids);
 		signal(SIGQUIT, SIG_DFL);
 		child_return = child_proc(data, prev_pipe, curr_pipe, cmd_index);
 		if (child_return == 0)
