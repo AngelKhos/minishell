@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/20 14:02:12 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/01 13:03:33 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	handle_readline(t_data *data)
 {
 	while (data->run)
 	{
-		data->input = readline("\e[0;35m(つ ╹╹)つ\e[0;91m──\e[0;33m☆*:・ﾟ\e[0m$");
+		handle_signal();
+		data->input = readline("\e[0;35m(つ ╹╹)つ\e[0;91m──\e[0;33m☆*:\e[0m");
 		if (data->input)
 		{
 			if (ft_strlen(data->input) >= 1)
@@ -30,9 +31,10 @@ void	handle_readline(t_data *data)
 				add_history(data->input);
 				if (parsing(data))
 				{
-					display_cmd(data);
+					//display_cmd(data);
 					if (!read_cmd(data))
 						ft_dprintf(2, "Error: exec error\n");
+					close_file(data);
 					free_cmd(data);
 				}
 			}
@@ -80,8 +82,9 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	data = ft_calloc(sizeof(t_data), 1);
+	if (!data)
+		return (EXIT_FAILURE);
 	init_data(data, envp);
-	handle_signal();
 	handle_readline(data);
 	code = data->exit_code;
 	free_data(data);
