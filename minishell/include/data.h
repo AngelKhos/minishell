@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/02 13:49:02 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/02 19:36:57 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	free_array(char **array);
 void	free_data(t_data *data);
 void	free_cmd(t_data *data);
 void	close_file(t_data *data);
+void	close_here_doc(t_cmd *cmd);
+void	free_2(void *ptr1, void *ptr2);
 
 //////////////// INIT ////////////////
 
@@ -114,15 +116,17 @@ char	*ft_strndup(const char *s, size_t n);
 int		parsing(t_data *data);
 int		here_doc(char *word, t_data *data);
 char	*expand(char *key_src, int key_size, t_data *data);
+int		get_tablen(char **inputs);
+int		is_redir(char *input);
+int		handle_heredoc(char *input, t_cmd *cmd, t_data *data);
+int		handle_infile(char *input, t_cmd *cmd, t_data *data);
+int		handle_outfile(char *input, t_cmd *cmd);
+char	*pars_redir(char *input, t_cmd *cmd, t_data *data);
 
 /////////////// SIGNALS /////////////
 
 void	handle_signal();
 void	sigint_handle(int code);
 void	sigabrt_handle();
-
-/////////////// RANDOM //////////////
-
-char	*get_prompt(t_data *data);
 
 #endif
