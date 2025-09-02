@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/08/30 16:08:22 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/08/30 18:10:26 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ int alloc_cmd(t_data *data, char **inputs)
 		{
 			ft_dprintf(2, "Error: unexpected token\n");
 			return (0);
+		}
+		if(data->cmd[i].hd_name)
+		{
+			close_redir(data);
+			return(0);
 		}
 		raw_cmd = ms_split(parsed_input, ' ');
 		if (!raw_cmd)

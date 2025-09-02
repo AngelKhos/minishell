@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/30 16:40:27 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/02 13:49:02 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int		unset(t_data *data, int cmd_index);
 void	free_array(char **array);
 void	free_data(t_data *data);
 void	free_cmd(t_data *data);
+void	close_file(t_data *data);
 
 //////////////// INIT ////////////////
 
@@ -112,8 +113,9 @@ int		skip_quote(char *str, int index);
 char	*ft_strndup(const char *s, size_t n);
 int		parsing(t_data *data);
 int		here_doc(char *word, t_data *data);
+char	*expand(char *key_src, int key_size, t_data *data);
 
-/////////////// SIGNALE /////////////
+/////////////// SIGNALS /////////////
 
 void	handle_signal();
 void	sigint_handle(int code);
