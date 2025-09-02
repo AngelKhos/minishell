@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/02 19:36:57 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/02 19:46:06 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int		get_tablen(char **inputs);
 int		is_redir(char *input);
 int		handle_heredoc(char *input, t_cmd *cmd, t_data *data);
 int		handle_infile(char *input, t_cmd *cmd, t_data *data);
-int		handle_outfile(char *input, t_cmd *cmd);
+int		handle_outfile(char *input, t_cmd *cmd, t_data *data);
 char	*pars_redir(char *input, t_cmd *cmd, t_data *data);
 
 /////////////// SIGNALS /////////////

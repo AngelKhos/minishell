@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 16:04:37 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/02 16:13:18 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/02 19:49:13 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 
-static int	handle_outfile_if_1(char *input, t_cmd *cmd, int i[2], char *name)
+static int	handle_outfile_if_1(char *input, t_cmd *cmd, int i[2], char *name, t_data *data)
 {
 	i[0]++;
 	while (input[i[0]] && ft_isspace(input[i[0]]))
@@ -22,7 +22,12 @@ static int	handle_outfile_if_1(char *input, t_cmd *cmd, int i[2], char *name)
 		return (0);
 	while (input[i[0]] && !ft_isspace(input[i[0]]))
 		i[0]++;
-	name = ft_strndup(input + i[1], i[0] - i[1]);
+	if (input[i[1]] == '$')
+        name = expand(input + i[1], i[0] - i[1], data);
+    else
+        name = ft_strndup(input + i[1], i[0] - i[1]);
+    if(!name)
+        return (0);
 	if (cmd->outfile != -1)
 		close(cmd->outfile);
 	cmd->outfile = open(name, O_CREAT | O_APPEND | O_WRONLY, 0644);
@@ -30,7 +35,7 @@ static int	handle_outfile_if_1(char *input, t_cmd *cmd, int i[2], char *name)
 	return (1);
 }
 
-static int	handle_outfile_if_2(char *input, t_cmd *cmd, int i[2], char *name)
+static int	handle_outfile_if_2(char *input, t_cmd *cmd, int i[2], char *name, t_data *data)
 {
 	while (input[i[0]] && ft_isspace(input[i[0]]))
 		i[0]++;
@@ -39,7 +44,12 @@ static int	handle_outfile_if_2(char *input, t_cmd *cmd, int i[2], char *name)
 		return (0);
 	while (input[i[0]] && !ft_isspace(input[i[0]]))
 		i[0]++;
-	name = ft_strndup(input + i[1], i[0] - i[1]);
+	if (input[i[1]] == '$')
+        name = expand(input + i[1], i[0] - i[1], data);
+    else
+        name = ft_strndup(input + i[1], i[0] - i[1]);
+    if(!name)
+        return (0);
 	if (cmd->outfile != -1)
 		close(cmd->outfile);
 	cmd->outfile = open(name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
@@ -47,7 +57,7 @@ static int	handle_outfile_if_2(char *input, t_cmd *cmd, int i[2], char *name)
 	return (1);
 }
 
-int	handle_outfile(char *input, t_cmd *cmd)
+int	handle_outfile(char *input, t_cmd *cmd, t_data *data)
 {
 	int		i[2];
 	char	*name;
@@ -59,12 +69,12 @@ int	handle_outfile(char *input, t_cmd *cmd)
 		return (0);
 	if (input[i[0]] == '>')
 	{
-		if (handle_outfile_if_1(input, cmd, i, name) == 0)
+		if (handle_outfile_if_1(input, cmd, i, name, data) == 0)
 			return (0);
 	}
 	else
 	{
-		if (handle_outfile_if_2(input, cmd, i, name) == 0)
+		if (handle_outfile_if_2(input, cmd, i, name, data) == 0)
 			return (0);
 	}
 	return (i[0]);

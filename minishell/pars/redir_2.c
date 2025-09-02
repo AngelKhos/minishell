@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:28:11 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/02 15:43:48 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/02 19:46:44 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	pars_redir_if_1(char *input, t_cmd *cmd, t_data *data, int i[3])
 {
 	if (input[i[0] + 1] == '>')
 	{
-		i[2] = handle_outfile(input + i[0] + 1, cmd);
+		i[2] = handle_outfile(input + i[0] + 1, cmd, data);
 		if (!i[2])
 			return (1);
 		i[0] += i[2];
@@ -45,11 +45,11 @@ static int	pars_redir_if_1(char *input, t_cmd *cmd, t_data *data, int i[3])
 	return (0);
 }
 
-static int	pars_redir_if_2(char *input, char *new_input, t_cmd *cmd, int i[3])
+static int	pars_redir_if_2(char *input, char *new_input, t_cmd *cmd, int i[3], t_data *data)
 {
 	if (input[i[0]] == '>')
 	{
-		i[2] = handle_outfile(input + i[0], cmd);
+		i[2] = handle_outfile(input + i[0], cmd, data);
 		if (!i[2])
 			return (1);
 		i[0] += i[2];
@@ -82,7 +82,7 @@ char	*pars_redir(char *input, t_cmd *cmd, t_data *data)
 		if (input[i[0]] == '<')
 			if (pars_redir_if_1(input, cmd, data, i))
 				return (NULL);
-		if (pars_redir_if_2(input, new_input, cmd, i))
+		if (pars_redir_if_2(input, new_input, cmd, i, data))
 			return (NULL);
 	}
 	return (new_input);
