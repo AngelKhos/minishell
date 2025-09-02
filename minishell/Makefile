@@ -11,7 +11,7 @@ DIR_DEPS=.deps
 
 # /////////////////////////
 
-SRCS=core/debug_tmp.c core/main.c core/free.c core/signal.c \
+SRCS=core/debug_tmp.c core/utils.c core/main.c core/free.c core/free_2.c core/signal.c \
 	builtins/export.c builtins/env.c builtins/cd.c builtins/pwd.c builtins/echo.c builtins/exit.c builtins/unset.c \
 	pars/ms_split.c pars/pars.c  pars/pars_utils.c pars/redir.c pars/here_doc.c\
 	env/tree_utils.c env/tree_utils_2.c  env/tree_handle.c \

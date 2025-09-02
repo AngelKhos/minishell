@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/01 13:21:55 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/02 11:45:02 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	free_data(t_data *data);
 void	free_cmd(t_data *data);
 void	close_file(t_data *data);
 void	close_here_doc(t_cmd *cmd);
+void	free_2(void *ptr1, void *ptr2);
 
 //////////////// INIT ////////////////
 
@@ -114,15 +115,12 @@ int		skip_quote(char *str, int index);
 char	*ft_strndup(const char *s, size_t n);
 int		parsing(t_data *data);
 int		here_doc(char *word, t_data *data);
+int		get_tablen(char **inputs);
 
 /////////////// SIGNALE /////////////
 
 void	handle_signal();
 void	sigint_handle(int code);
 void	sigabrt_handle();
-
-/////////////// RANDOM //////////////
-
-char	*get_prompt(t_data *data);
 
 #endif
