@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:10:36 by authomas          #+#    #+#             */
-/*   Updated: 2025/08/17 17:48:40 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/02 17:59:26 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,26 +76,26 @@ static int	fill_token(char **token_lst, char *input_str,
 				char separator, size_t nbr_token)
 {
 	size_t	j;
-	size_t	k;
+	size_t	i;
 	size_t	len_token;
 
 	j = 0;
 	while (j < nbr_token)
 	{
-		k = 0;
+		i = 0;
 		while (input_str && *input_str == separator)
 			input_str++;
 		len_token = token_len(input_str, separator);
-		token_lst[j] = malloc(sizeof(char) * (len_token + 1));
+		token_lst[j] = ft_calloc(sizeof(char), (len_token + 1));
 		if (!token_lst[j])
 			return (0);
-		while (k < len_token)
+		while (i < len_token)
 		{
-			token_lst[j][k] = *input_str;
+			token_lst[j][i] = (*input_str);
 			input_str++;
-			k++;
+			i++;
 		}
-		token_lst[j][k] = '\0';
+		token_lst[j][i] = '\0';
 		j++;
 	}
 	token_lst[j] = NULL;
@@ -110,7 +110,7 @@ char	**ms_split(char *input_str, char separator)
 	nbr_token = count_token(input_str, separator);
 	if (!nbr_token)
 		return (NULL);
-	token_lst = ft_calloc((nbr_token + 1), sizeof(char *));
+	token_lst = ft_calloc(sizeof(char *), (nbr_token + 1));
 	if (!token_lst)
 		return (NULL);
 	if (!fill_token(token_lst, input_str, separator, nbr_token))

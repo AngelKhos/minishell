@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:34:36 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/30 16:38:31 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:19:20 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-void	sigint_handle_hd()
+void	sigint_handle_hd(int code)
 {
+	(void)code;
 	exit(130);
 }
 
-int		here_doc(char *word, t_data *data)
+int	here_doc(char *word, t_data *data)
 {
 	int		hd_fd;
 	char	*here_doc_input;

@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/02 11:45:02 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:05:57 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,11 @@ char	*ft_strndup(const char *s, size_t n);
 int		parsing(t_data *data);
 int		here_doc(char *word, t_data *data);
 int		get_tablen(char **inputs);
+int		is_redir(char *input);
+int		handle_heredoc(char *input, t_cmd *cmd, t_data *data);
+int		handle_infile(char *input, t_cmd *cmd, t_data *data);
+int		handle_outfile(char *input, t_cmd *cmd);
+char	*pars_redir(char *input, t_cmd *cmd, t_data *data);
 
 /////////////// SIGNALE /////////////
 
