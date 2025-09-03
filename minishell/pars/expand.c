@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/03 18:16:34 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/03 18:52:23 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,18 @@ int	is_exp(char *input)
 	echo '$meo' -> ecris $meo
 */
 
-char	*make_expand(char *token, char *value, int key_len)
+int	is_code(char *token, char **value, int *key_len, t_data *data)
+{
+	if (token[1] == '?')
+	{
+		*value = ft_itoa(data->exit_code);
+		*key_len = 2;
+		return (1);
+	}
+	return (0);
+}
+
+char	*make_expand(char *token, char **value, int key_len, t_data *data)
 {
 	int		i;
 	int		j;
@@ -67,15 +78,17 @@ char	*make_expand(char *token, char *value, int key_len)
 	i = 0;
 	j = 0;
 	value_len = 0;
-	if (value)
-		value_len = ft_strlen(value);
+	if (*value)
+		value_len = ft_strlen(*value);
 	new_token = ft_calloc(sizeof(char), ft_strlen(token) + value_len);
 	if (!new_token)
 		return (NULL);
 	while (token[i] && token[i] != '$')
 		new_token[j++] = token[i++];
-	if (value)
-		ft_strlcat(new_token, value, ft_strlen(new_token) + value_len + 1);
+	if(is_code(&token[i], value, &key_len, data))
+		value_len = ft_strlen(*value);
+	if (*value)
+		ft_strlcat(new_token, *value, ft_strlen(new_token) + value_len + 1);
 	j += value_len;
 	i += key_len;
 	while (token[i])
@@ -102,7 +115,7 @@ int	pars_exp(t_data *data, char **raw_cmd)
 			while (raw_cmd[i[0]][i[2]] && (!ft_isspace(raw_cmd[i[0]][i[2]]) && raw_cmd[i[0]][i[2]] != '"'))
 				i[2]++;
 			value = get_expand(raw_cmd[i[0]] + i[1], i[2] - i[1], data);
-			new = make_expand(raw_cmd[i[0]], value, i[2] - i[1]);
+			new = make_expand(raw_cmd[i[0]], &value, i[2] - i[1], data);
 			if (!new)
 				return (0);
 			free(value);
