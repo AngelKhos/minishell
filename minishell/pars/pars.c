@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/03 15:42:45 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/03 16:07:15 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	alloc_cmd(t_data *data, char **inputs)
 		if (!parsed_input)
 			return ((void)ft_dprintf(2, "Error: unexpected token\n"), 0);
 		raw_cmd = ms_split(parsed_input, ' ');
-		free(parsed_input);
+		//free(parsed_input);
 		if (!raw_cmd)
 			return (free_array(inputs), 0);
 		//expand(data, raw_cmd);
@@ -133,7 +133,7 @@ int	parsing(t_data *data)
 	if (!alloc_cmd(data, inputs))
 		return (free(data->cmd), 0);
 	//ft_printf("%s\n", inputs[0]);//free selment quand il n'y a pas de redir
-	free(inputs);
+	free_array(inputs);
 	return (1);
 }
 
