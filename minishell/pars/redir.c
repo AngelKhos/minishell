@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/03 14:34:21 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:10:15 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int	is_redir(char *input)
 	i = 0;
 	while (input[i])
 	{
+		
 		if (input[i] == '\'' || input[i] == '\"')
-			i += skip_quote(input, i);
+			i = skip_quote(input, i);
 		if (input[i] && input[i] == '<')
 			return (1);
 		if (input[i] && input[i] == '>')
@@ -47,7 +48,7 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 	while (input[i] && !ft_isspace(input[i]))
 		i++;
 	if (input[j] == '$')
-		name = expand(input + j, i - j, data);
+		name = get_expand(input + j, i - j, data);
 	else
 		name = ft_strndup(input + j, i - j);
 	if(!name)
@@ -81,7 +82,7 @@ int	handle_infile(char *input, t_cmd *cmd, t_data *data)
 		while (input[i] && !ft_isspace(input[i]))
 			i++;
 		if (input[j] == '$')
-			name = expand(input + j, i - j, data);
+			name = get_expand(input + j, i - j, data);
 		else
 			name = ft_strndup(input + j, i - j);
 		if(!name)

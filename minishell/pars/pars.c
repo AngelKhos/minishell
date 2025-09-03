@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/03 16:07:15 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/03 16:59:36 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int	alloc_cmd(t_data *data, char **inputs)
 		//free(parsed_input);
 		if (!raw_cmd)
 			return (free_array(inputs), 0);
-		//expand(data, raw_cmd);
+		if (!pars_exp(data, raw_cmd))
+			return (free_array(inputs), free_array(raw_cmd), 0);
 		alloc_cmd_part_2(raw_cmd, data, i, is_cmd);
 		i++;
 	}
