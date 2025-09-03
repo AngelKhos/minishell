@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:28:11 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/02 19:46:44 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/03 15:43:44 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ char	*pars_redir(char *input, t_cmd *cmd, t_data *data)
 		if (pars_redir_if_2(input, new_input, cmd, i, data))
 			return (NULL);
 	}
+	free(input);
 	return (new_input);
 }
