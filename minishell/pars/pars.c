@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/03 16:59:36 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/03 18:32:08 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	alloc_cmd_part_2(char **raw_cmd, t_data *data, size_t i, int is_cmd)
 		data->cmd[i].parts[part_i].str = ft_strdup(raw_cmd[part_i]);
 		if (is_cmd == 0)
 		{
-			if (ft_strnstr("echocdenvexitpwdexportunset", raw_cmd[part_i], -1))
+			if (is_builtins(raw_cmd[part_i]))
 				data->cmd[i].parts[part_i].type = BUIL;
 			else
 				data->cmd[i].parts[part_i].type = CMD;

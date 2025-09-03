@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/03 18:10:44 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/03 18:32:32 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ char	*pars_redir(char *input, t_cmd *cmd, t_data *data);
 int		skip_quote(char *str, int index);
 char	*ft_strndup(const char *s, size_t n);
 int		parsing(t_data *data);
+int		is_builtins(char *input);
 int		here_doc(char *word, t_data *data);
 int		pars_exp(t_data *data, char **raw_cmd);
 char	*get_expand(char *key_src, int key_size, t_data *data);
