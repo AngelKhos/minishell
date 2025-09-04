@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:40:46 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/01 16:35:28 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/04 15:53:05 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ void	close_here_doc(t_cmd *cmd)
 {
 	if (cmd->here_doc == 1)
 	{
-		free(cmd->hd_name);
 		close(cmd->infile);
+		unlink(cmd->hd_name);
+		free(cmd->hd_name);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/03 18:32:08 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 15:49:03 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ int	alloc_cmd(t_data *data, char **inputs)
 		if (!parsed_input)
 			return ((void)ft_dprintf(2, "Error: unexpected token\n"), 0);
 		raw_cmd = ms_split(parsed_input, ' ');
-		//free(parsed_input);
+		free(parsed_input);
 		if (!raw_cmd)
-			return (free_array(inputs), 0);
+			return (0);
 		if (!pars_exp(data, raw_cmd))
-			return (free_array(inputs), free_array(raw_cmd), 0);
+			return (free_array(raw_cmd), 0);
 		alloc_cmd_part_2(raw_cmd, data, i, is_cmd);
 		i++;
 	}
@@ -101,7 +101,7 @@ int	checking_missing_command(char *input)
 					|| str[i] == '\r' || str[i] == '\f'))
 				i++;
 			if (!str[i] || str[i] == '|')
-				return (0);
+				return (free(str), 0);
 		}
 		i++;
 	}
@@ -132,9 +132,8 @@ int	parsing(t_data *data)
 		return (0);
 	}
 	if (!alloc_cmd(data, inputs))
-		return (free(data->cmd), 0);
-	//ft_printf("%s\n", inputs[0]);//free selment quand il n'y a pas de redir
-	free_array(inputs);
+		return (close_file(data), free(inputs), free(data->cmd), 0);
+	free(inputs);
 	return (1);
 }
 

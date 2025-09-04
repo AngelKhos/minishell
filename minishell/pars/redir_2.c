@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:28:11 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/03 18:09:44 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 15:46:24 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 
-static void	pars_redir_if_0(char *input, char *new_input, int i[3])
+static void	pars_redir_if_0(char *input, char *new_input, size_t i[3])
 {
 	if (input[i[0]] == '\'' || input[i[0]] == '\"')
 	{
@@ -26,7 +26,7 @@ static void	pars_redir_if_0(char *input, char *new_input, int i[3])
 	}
 }
 
-static int	pars_redir_if_1(char *input, t_cmd *cmd, t_data *data, int i[3])
+static int	pars_redir_if_1(char *input, t_cmd *cmd, t_data *data, size_t i[3])
 {
 	if (input[i[0] + 1] == '>')
 	{
@@ -45,7 +45,7 @@ static int	pars_redir_if_1(char *input, t_cmd *cmd, t_data *data, int i[3])
 	return (0);
 }
 
-static int	pars_redir_if_2(char *input, char *new_input, t_cmd *cmd, int i[3], t_data *data)
+static int	pars_redir_if_2(char *input, char *new_input, t_cmd *cmd, size_t i[3], t_data *data)
 {
 	if (input[i[0]] == '>')
 	{
@@ -68,23 +68,24 @@ static int	pars_redir_if_2(char *input, char *new_input, t_cmd *cmd, int i[3], t
 //i[2] = tmp
 char	*pars_redir(char *input, t_cmd *cmd, t_data *data)
 {
-	int		i[3];
-	char	*new_input;
+	size_t		i[3];
+	char		*new_input;
 
 	i[0] = 0;
 	if (!is_redir(input))
 		return (input);
 	new_input = ft_calloc(sizeof(char), ft_strlen(input) + 1);
 	i[1] = 0;
-	while (input[i[0]])
+	while (i[0] < ft_strlen(input))
 	{
 		pars_redir_if_0(input, new_input, i);
 		if (input[i[0]] == '<')
 			if (pars_redir_if_1(input, cmd, data, i))
-				return (NULL);
+				return (free(input), free(new_input), NULL);
 		if (pars_redir_if_2(input, new_input, cmd, i, data))
-			return (NULL);
+			return (free(input), free(new_input), NULL);
 	}
-	//free(input);
+	//ft_printf("input[n] : %s", input);
+	free(input);
 	return (new_input);
 }

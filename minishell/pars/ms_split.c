@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:10:36 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/03 18:09:19 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 15:31:03 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	**ms_split(char *input_str, char separator)
 	nbr_token = count_token(input_str, separator);
 	if (!nbr_token)
 		return (NULL);
-	token_lst = ft_calloc(sizeof(char *), (nbr_token + 1));
+	token_lst = ft_calloc(sizeof(char *), (nbr_token + 2));
 	if (!token_lst)
 		return (NULL);
 	if (!fill_token(token_lst, input_str, separator, nbr_token))
