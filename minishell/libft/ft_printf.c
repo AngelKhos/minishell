@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:35:07 by authomas          #+#    #+#             */
-/*   Updated: 2025/08/16 11:17:03 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 16:25:51 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ static int	format_handle(int fd, const char param, va_list *ap)
 	if (param == '%')
 		i += ft_dprintchar(fd, '%');
 	if (param == 'x')
-		i += ft_dprintnbr_base(fd, va_arg(*ap, unsigned int), "0123456789abcdef");
+		i += ft_dprintnbr_base(fd, va_arg(*ap, unsigned int),
+				"0123456789abcdef");
 	if (param == 'X')
-		i += ft_dprintnbr_base(fd, va_arg(*ap, unsigned int), "0123456789ABCDEF");
+		i += ft_dprintnbr_base(fd, va_arg(*ap, unsigned int),
+				"0123456789ABCDEF");
 	if (param == 'p')
 	{
 		i += ft_dprintptr(fd, va_arg(*ap,
@@ -81,7 +83,7 @@ int	ft_printf(const char *s, ...)
 	return (len);
 }
 
-int ft_dprintf(int fd, const char *s, ...)
+int	ft_dprintf(int fd, const char *s, ...)
 {
 	va_list	ap;
 	int		len;

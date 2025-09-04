@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/01 13:03:33 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/04 16:23:59 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	handle_readline(t_data *data)
 				add_history(data->input);
 				if (parsing(data))
 				{
-					//display_cmd(data);
 					if (!read_cmd(data))
 						ft_dprintf(2, "Error: exec error\n");
 					close_file(data);

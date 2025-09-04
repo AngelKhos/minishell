@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/03 18:32:32 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 16:34:30 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,24 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <linux/limits.h>
-#include <readline/chardefs.h>
-#include <limits.h>
+# include <linux/limits.h>
+# include <readline/chardefs.h>
+# include <limits.h>
 
-
-enum cmd_type {
+enum e_cmd_type
+{
 	CMD = 1, // cat echo ls pwd...
 	ARG, // -l "hello world"...
 	BUIL, // builtins
 };
 
-typedef struct	s_part
+typedef struct s_part
 {
 	char			*str;
-	enum cmd_type	type;
+	enum e_cmd_type	type;
 }	t_part;
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	t_part	*parts;
 	int		len;
@@ -49,7 +49,7 @@ typedef struct s_data
 	char	*curent_path;
 	char	*input;
 	t_env	*env;
-	t_cmd	*cmd; // the command to update in the parsing at each call of readline
+	t_cmd	*cmd;
 	int		run;
 	int		nb_pipes;
 	int		exit_code;
@@ -95,7 +95,8 @@ void	wait_all(t_data *data, int *pids);
 void	redir_pipe(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
 char	**convert_part_to_arg(t_data *data, int index);
 void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
-int		child_proc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_index);
+int		child_proc(t_data *data, int prev_pipe[2],
+			int curr_pipe[2], int cmd_index);
 int		read_cmd(t_data *data);
 void	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2]);
 void	close_redir(t_data *data);
@@ -127,8 +128,8 @@ char	*pars_redir(char *input, t_cmd *cmd, t_data *data);
 
 /////////////// SIGNALS /////////////
 
-void	handle_signal();
+void	handle_signal(void);
 void	sigint_handle(int code);
-void	sigabrt_handle();
+void	sigabrt_handle(void);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/03 18:10:15 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 17:12:47 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 	if (cmd->infile != -1)
 		close(cmd->infile);
 	cmd->infile = here_doc(name, data);
+	if (cmd->infile == -1)
+		return (unlink(name), free(name), i);
 	cmd->here_doc = 1;
 	cmd->hd_name = name;
 	return (i);

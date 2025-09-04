@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/02 11:03:11 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/04 16:26:37 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	is_exit_or_cd(t_data *data, int cmd_index)
 	return (0);
 }
 
-void	builtins_child(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_index)
+void	builtins_child(t_data *data, int prev_pipe[2],
+			int curr_pipe[2], int cmd_index)
 {
 	redir_pipe(data, prev_pipe, curr_pipe, cmd_index);
 	redir_file(data, prev_pipe, curr_pipe, cmd_index);

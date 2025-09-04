@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:41:26 by authomas          #+#    #+#             */
-/*   Updated: 2025/08/27 12:15:40 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/04 16:29:49 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 
 # include "../libft/libft.h"
 
-typedef struct s_pair t_pair;
+typedef struct s_pair	t_pair;
 
 struct s_pair
 {
-	char *key;
-	char *value;
+	char	*key;
+	char	*value;
 };
 
 typedef struct s_env
 {
-	t_pair data;
-	struct s_env *left;
-	struct s_env *right;
-} t_env;
+	t_pair			data;
+	struct s_env	*left;
+	struct s_env	*right;
+}	t_env;
 
 char	**tree_to_envp(t_env *root);
 

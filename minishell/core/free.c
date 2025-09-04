@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:40:46 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/04 15:53:05 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/04 16:23:35 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	close_here_doc(t_cmd *cmd)
 
 void	close_file(t_data *data)
 {
-	int	i_cmd;
+	int		i_cmd;
 	t_cmd	*cmd;
 
 	i_cmd = 0;
