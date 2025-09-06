@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/03 18:52:23 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/06 16:39:13 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,11 @@ int	pars_exp(t_data *data, char **raw_cmd)
 	while (raw_cmd[i[0]])
 	{
 		i[2] = is_exp(raw_cmd[i[0]]);
-		if (i[2] != -1)
+		while (i[2] != -1)
 		{
 			i[1] = i[2];
-			while (raw_cmd[i[0]][i[2]] && (!ft_isspace(raw_cmd[i[0]][i[2]]) && raw_cmd[i[0]][i[2]] != '"'))
+			i[2]++;
+			while (raw_cmd[i[0]][i[2]] && (!ft_isspace(raw_cmd[i[0]][i[2]]) && raw_cmd[i[0]][i[2]] != '\"' && raw_cmd[i[0]][i[2]] != '\'' && raw_cmd[i[0]][i[2]] != '$'))
 				i[2]++;
 			value = get_expand(raw_cmd[i[0]] + i[1], i[2] - i[1], data);
 			new = make_expand(raw_cmd[i[0]], &value, i[2] - i[1], data);
@@ -121,6 +122,7 @@ int	pars_exp(t_data *data, char **raw_cmd)
 			free(value);
 			free(raw_cmd[i[0]]);
 			raw_cmd[i[0]] = new;
+			i[2] = is_exp(raw_cmd[i[0]]);
 		}
 		i[0]++;
 	}
