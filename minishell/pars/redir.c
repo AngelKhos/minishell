@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/04 17:12:47 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:50:46 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	is_redir(char *input)
 	i = 0;
 	while (input[i])
 	{
-		
 		if (input[i] == '\'' || input[i] == '\"')
 			i = skip_quote(input, i);
 		if (input[i] && input[i] == '<')
@@ -41,7 +40,7 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 	if (!input[i])
 		return (0);
 	while (input[i] && ft_isspace(input[i]))
-			i++;
+		i++;
 	j = i;
 	if (!input[i] || input[i] == '<' || input[i] == '>')
 		return (0);
@@ -51,7 +50,7 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 		name = get_expand(input + j, i - j, data);
 	else
 		name = ft_strndup(input + j, i - j);
-	if(!name)
+	if (!name)
 		return (0);
 	if (cmd->infile != -1)
 		close(cmd->infile);
@@ -75,8 +74,8 @@ int	handle_infile(char *input, t_cmd *cmd, t_data *data)
 	if (input[i++] == '<')
 		i += handle_heredoc(input + i, cmd, data);
 	else
-	{   
-		 while (input[i] && ft_isspace(input[i]))
+	{
+		while (input[i] && ft_isspace(input[i]))
 			i++;
 		j = i;
 		if (!input[i] || input[i] == '<' || input[i] == '>')
@@ -87,7 +86,7 @@ int	handle_infile(char *input, t_cmd *cmd, t_data *data)
 			name = get_expand(input + j, i - j, data);
 		else
 			name = ft_strndup(input + j, i - j);
-		if(!name)
+		if (!name)
 			return (0);
 		if (cmd->infile != -1)
 			close(cmd->infile);

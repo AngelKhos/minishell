@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 11:20:01 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/03 18:32:35 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/06 17:02:58 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,19 @@ int	is_builtins(char *input)
 	if (ft_strncmp(str, "export", -1) == 0)
 		return (1);
 	if (ft_strncmp(str, "unset", -1) == 0)
+		return (1);
+	return (0);
+}
+
+int	is_expkey_end(char c)
+{
+	if (ft_isspace(c))
+		return (1);
+	if (c == '\"')
+		return (1);
+	if (c == '\'')
+		return (1);
+	if (c == '$')
 		return (1);
 	return (0);
 }

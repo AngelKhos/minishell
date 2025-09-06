@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/04 16:34:30 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:59:34 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int		is_builtins(char *input);
 int		here_doc(char *word, t_data *data);
 int		pars_exp(t_data *data, char **raw_cmd);
 char	*get_expand(char *key_src, int key_size, t_data *data);
+int		is_expkey_end(char c);
 int		get_tablen(char **inputs);
 int		is_redir(char *input);
 int		handle_heredoc(char *input, t_cmd *cmd, t_data *data);

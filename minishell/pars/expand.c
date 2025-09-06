@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/06 16:39:13 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/06 17:00:21 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,6 @@ int	is_exp(char *input)
 	return (-1);
 }
 
-/* 
-	cas a gerer:
-	export me=h
-	ec"$me"o -> renvois echo
-	ec"$meo"o -> renvois eco
-	ec$meo -> renvois ec
-	echo $me -> ecris h
-	echo $meo -> ecris rien
-	echo '$me' -> ecris $me
-	echo '$meo' -> ecris $meo
-*/
-
 int	is_code(char *token, char **value, int *key_len, t_data *data)
 {
 	if (token[1] == '?')
@@ -85,7 +73,7 @@ char	*make_expand(char *token, char **value, int key_len, t_data *data)
 		return (NULL);
 	while (token[i] && token[i] != '$')
 		new_token[j++] = token[i++];
-	if(is_code(&token[i], value, &key_len, data))
+	if (is_code(&token[i], value, &key_len, data))
 		value_len = ft_strlen(*value);
 	if (*value)
 		ft_strlcat(new_token, *value, ft_strlen(new_token) + value_len + 1);
@@ -93,6 +81,7 @@ char	*make_expand(char *token, char **value, int key_len, t_data *data)
 	i += key_len;
 	while (token[i])
 		new_token[j++] = token[i++];
+	free(token);
 	return (new_token);
 }
 
@@ -113,14 +102,13 @@ int	pars_exp(t_data *data, char **raw_cmd)
 		{
 			i[1] = i[2];
 			i[2]++;
-			while (raw_cmd[i[0]][i[2]] && (!ft_isspace(raw_cmd[i[0]][i[2]]) && raw_cmd[i[0]][i[2]] != '\"' && raw_cmd[i[0]][i[2]] != '\'' && raw_cmd[i[0]][i[2]] != '$'))
+			while (raw_cmd[i[0]][i[2]] && !is_expkey_end(raw_cmd[i[0]][i[2]]))
 				i[2]++;
 			value = get_expand(raw_cmd[i[0]] + i[1], i[2] - i[1], data);
 			new = make_expand(raw_cmd[i[0]], &value, i[2] - i[1], data);
 			if (!new)
 				return (0);
 			free(value);
-			free(raw_cmd[i[0]]);
 			raw_cmd[i[0]] = new;
 			i[2] = is_exp(raw_cmd[i[0]]);
 		}

@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 16:04:37 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/03 18:09:52 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/06 16:51:11 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	handle_outfile_if_1(char *input, t_cmd *cmd, int i[2], char *name, t_
 	while (input[i[0]] && !ft_isspace(input[i[0]]))
 		i[0]++;
 	if (input[i[1]] == '$')
-        name = get_expand(input + i[1], i[0] - i[1], data);
+		name = get_expand(input + i[1], i[0] - i[1], data);
 	else
 		name = ft_strndup(input + i[1], i[0] - i[1]);
 	if (!name)
