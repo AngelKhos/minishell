@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redir.c                                            :+:      :+:    :+:   */
+/*   redir_infile.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/06 16:50:46 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/07 20:25:33 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,17 @@ int	is_redir(char *input)
 	return (0);
 }
 
+char	*get_name(char *input, int i, int j, t_data *data)
+{
+	char	*name;
+
+	if (input[j] == '$')
+		name = get_expand(input + j, i - j, data);
+	else
+		name = ft_strndup(input + j, i - j);
+	return (name);
+}
+
 int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 {
 	size_t	i;
@@ -46,10 +57,7 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 		return (0);
 	while (input[i] && !ft_isspace(input[i]))
 		i++;
-	if (input[j] == '$')
-		name = get_expand(input + j, i - j, data);
-	else
-		name = ft_strndup(input + j, i - j);
+	name = get_name(input, i, j, data);
 	if (!name)
 		return (0);
 	if (cmd->infile != -1)
@@ -62,11 +70,33 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 	return (i);
 }
 
+int	handle_infile_loop(char *input, t_cmd *cmd, t_data *data)
+{
+	int		i;
+	int		j;
+	char	*name;
+
+	i = 1;
+	while (input[i] && ft_isspace(input[i]))
+		i++;
+	j = i;
+	if (!input[i] || input[i] == '<' || input[i] == '>')
+		return (0);
+	while (input[i] && !ft_isspace(input[i]))
+		i++;
+	name = get_name(input, i, j, data);
+	if (!name)
+		return (0);
+	if (cmd->infile != -1)
+		close(cmd->infile);
+	cmd->infile = open(name, O_RDONLY);
+	free(name);
+	return (i);
+}
+
 int	handle_infile(char *input, t_cmd *cmd, t_data *data)
 {
 	size_t	i;
-	size_t	j;
-	char	*name;
 
 	i = 1;
 	if (!input[i])
@@ -75,23 +105,8 @@ int	handle_infile(char *input, t_cmd *cmd, t_data *data)
 		i += handle_heredoc(input + i, cmd, data);
 	else
 	{
-		while (input[i] && ft_isspace(input[i]))
-			i++;
-		j = i;
-		if (!input[i] || input[i] == '<' || input[i] == '>')
-			return (0);
-		while (input[i] && !ft_isspace(input[i]))
-			i++;
-		if (input[j] == '$')
-			name = get_expand(input + j, i - j, data);
-		else
-			name = ft_strndup(input + j, i - j);
-		if (!name)
-			return (0);
-		if (cmd->infile != -1)
-			close(cmd->infile);
-		cmd->infile = open(name, O_RDONLY);
-		free(name);
+		i--;
+		i += handle_infile_loop(input + i, cmd, data);
 	}
 	return (i);
 }

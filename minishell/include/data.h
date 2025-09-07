@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/06 16:59:34 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/07 19:54:43 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,14 @@ typedef struct s_data
 	int		nb_pipes;
 	int		exit_code;
 }	t_data;
+
+typedef struct s_redir
+{
+	char	*new_input;
+	size_t	i;
+	size_t	j;
+	size_t	tmp;
+}	t_redir;
 
 extern int	g_pid;
 
