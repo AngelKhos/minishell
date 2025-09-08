@@ -1,13 +1,8 @@
---------------------------------------------------------------------------------------------------------
-le parsing des redir in et out ne prand pas en compte les extantion de fichier (.txt, .c, ect) ("ls > out.txt" pars en "ls .txt")
-
---------------------------------------------------------------------------------------------------------
-leak a la sortie du shell quand des espace on été envoyer au parsing sans commande
-
---------------------------------------------------------------------------------------------------------
-le here doc reste ouvers et n'ai pas suprimer dans le cas d'une commande apsante (<< delimit)
-a patcher au message d'erreur : 
-Error: unable to allocate command in parsing function
-
---------------------------------------------------------------------------------------------------------
-redirection avec pipe ne ferme pas les rediretion
+gerer les argument multiple de unset et export
+-----------------------------------------------
+code de retoure par signale (avec les macro)
+-----------------------------------------------
+boucle infinie expand (export a='$a')
+-----------------------------------------------
+segfault env -i
+-----------------------------------------------
