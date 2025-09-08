@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/08 17:15:19 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 18:14:13 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ int	pars_exp(t_data *data, char **raw_cmd)
 			new = make_expand(raw_cmd[i[0]], &value, i[2] - i[1], data);
 			if (!new)
 				return (0);
-			free(value);
 			raw_cmd[i[0]] = new;
-			i[2] = is_exp(raw_cmd[i[0]]);
+			i[2] = is_exp(raw_cmd[i[0]] + (i[1] + ft_strlen(value)));
+			free(value);
 		}
 		i[0]++;
 	}
