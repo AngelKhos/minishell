@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/07 19:54:43 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 17:05:55 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	free_data(t_data *data);
 void	free_cmd(t_data *data);
 void	close_file(t_data *data);
 void	close_here_doc(t_cmd *cmd);
-void	free_2(void *ptr1, void *ptr2);
+void	double_free(void *ptr1, void *ptr2);
 
 //////////////// INIT ////////////////
 

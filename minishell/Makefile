@@ -2,7 +2,7 @@ NAME=minishell
 # /////////////////////////
 
 CC=cc
-CC_FLAGS=-Wall -Wextra -Werror -g3 -fsanitize=address,leak
+CC_FLAGS=-Wall -Wextra -Werror -g3
 
 # /////////////////////////
 
@@ -11,7 +11,7 @@ DIR_DEPS=.deps
 
 # /////////////////////////
 
-SRCS=core/debug_tmp.c core/utils.c core/main.c core/free.c core/free_2.c core/signal.c \
+SRCS=core/debug_tmp.c core/utils.c core/main.c core/free.c core/global_free.c core/signal.c \
 	builtins/export.c builtins/env.c builtins/cd.c builtins/pwd.c builtins/echo.c builtins/exit.c builtins/unset.c \
 	pars/ms_split.c pars/pars.c pars/pars_utils.c pars/redir_core.c pars/redir_infile.c pars/redir_outfile.c pars/here_doc.c pars/expand.c\
 	env/tree_utils.c env/tree_utils_2.c  env/tree_handle.c \
@@ -45,19 +45,7 @@ $(DIR_OBJS)/%.o: srcs/%.c Makefile | $(DIR_OBJS) $(DIR_DEPS)
 
 # /////////////////////////
 
-$(DIR_OBJS):if (data->nb_pipes > 0)
-		{
-			if (prev_pipe[0] != -1)
-			{
-				close(prev_pipe[0]);
-				close(prev_pipe[1]);
-			}
-			if (curr_pipe[0] != -1)
-			{
-				close(curr_pipe[0]);
-				close(curr_pipe[1]);
-			}
-		}
+$(DIR_OBJS):
 	mkdir -p $(DIR_OBJS)
 
 $(DIR_DEPS):

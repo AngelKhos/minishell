@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/08 16:29:34 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/08 17:14:06 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,6 @@ void	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2])
 	prev_pipe[1] = curr_pipe[1];
 }
 
-void	free_data_in_child(int *pids, t_data *data)
-{
-	free_2(pids, data->input);
-	close_file(data);
-	free_cmd(data);
-	free_data(data);
-}
-
 int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 {
 	int		curr_pipe[2];
@@ -70,11 +62,11 @@ int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 		return (close_pipe_in_exec_cmd(prev_pipe, curr_pipe), 0);
 	if (g_pid == 0)
 	{
+		double_free(pids, data->input);
 		signal(SIGQUIT, SIG_DFL);
 		child_return = child_proc(data, prev_pipe, curr_pipe, cmd_index);
 		if (child_return == 0)
 			ft_dprintf(2, "Error in child\n");
-		free_data_in_child(pids, data);
 		exit(127);
 	}
 	else if (g_pid > 0)
