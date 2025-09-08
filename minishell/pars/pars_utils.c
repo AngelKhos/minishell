@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 11:20:01 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/06 17:02:58 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 17:27:04 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int	is_builtins(char *input)
 int	is_expkey_end(char c)
 {
 	if (ft_isspace(c))
+		return (1);
+	if (c == '=')
 		return (1);
 	if (c == '\"')
 		return (1);

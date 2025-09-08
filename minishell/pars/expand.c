@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/06 17:00:21 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 17:15:19 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*make_expand(char *token, char **value, int key_len, t_data *data)
 
 	i = 0;
 	j = 0;
-	value_len = 0;
+	value_len = 3;
 	if (*value)
 		value_len = ft_strlen(*value);
 	new_token = ft_calloc(sizeof(char), ft_strlen(token) + value_len);
