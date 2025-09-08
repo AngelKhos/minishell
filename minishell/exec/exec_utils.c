@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/25 12:45:43 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/08 19:00:33 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,12 @@ char	*find_path(char *cmd, char **envp)
 	char	*path;
 
 	i = 0;
-	while (!ft_strnstr(envp[i], "PATH", 4))
+	while (envp[i] && !ft_strnstr(envp[i], "PATH", 4))
 		i++;
-	paths = ft_split(envp[i] + 5, ':');
+	if (envp[i])
+		paths = ft_split(envp[i] + 5, ':');
+	else
+		paths = ft_split(".", ':');
 	if (!paths)
 		return (NULL);
 	path = find_loop(paths, cmd);

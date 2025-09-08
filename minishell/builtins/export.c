@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 13:14:18 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/01 15:14:47 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/08 18:34:36 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ int	ft_export(t_data *data, t_cmd *cmd)
 		code = export_part_2(leaf, val, cmd);
 		if (code == 1)
 			return (code);
-		tree_insert(data->env, leaf);
+		if (data->env)
+			tree_insert(data->env, leaf);
+		else
+			data->env = leaf;
 		free_array(val);
 	}
 	else

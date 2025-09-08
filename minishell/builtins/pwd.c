@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:18:43 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/07/24 14:04:48 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/08 18:47:21 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 int	pwd(t_data *data)
 {
-	t_env	*env_pwd;
+	char	pwd[PATH_MAX];
 
-	env_pwd = tree_search(data->env, "PWD");
-	if (env_pwd)
-		ft_printf("%s\n", env_pwd->data.value);
+	(void)data;
+	getcwd(pwd, PATH_MAX);
+	ft_printf("%s\n", pwd);
 	return (0);
 }

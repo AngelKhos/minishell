@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:14 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/08 19:15:03 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,11 @@ void	wait_all(t_data *data, int *pids)
 		if (pids[cmd_index] > 0)
 		{
 			waitpid(pids[cmd_index], &code, 0);
-			data->exit_code = code >> 8;
-			if ((code >> 8) == 127)
+			if (WIFSIGNALED(code))
+				data->exit_code = 128 + WTERMSIG(code);
+			else if (WIFEXITED(code))
+				data->exit_code = WEXITSTATUS(code);
+			if (data->exit_code == 127)
 				ft_dprintf(2,
 					"\e[1;37m%s\e[0m : Command not found\n",
 					data->cmd[cmd_index].parts->str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/08 18:24:23 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 19:01:59 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	increase_shlvl(t_data *data)
 void	init_data(t_data *data, char **envp)
 {
 	data->run = 1;
-	if(*envp)
+	if (*envp)
 		data->env = envp_to_tree(envp);
 	increase_shlvl(data);
 }
