@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/07 20:25:33 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/09 16:39:13 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 	size_t	j;
 	char	*name;
 
-	i = 1;
+	i = 0;
 	if (!input[i])
 		return (0);
 	while (input[i] && ft_isspace(input[i]))
 		i++;
 	j = i;
-	if (!input[i] || input[i] == '<' || input[i] == '>')
+	if (!input[i] || is_chevron(input[i]))
 		return (0);
-	while (input[i] && !ft_isspace(input[i]))
+	while (input[i] && !ft_isspace(input[i]) && !is_chevron(input[i]))
 		i++;
 	name = get_name(input, i, j, data);
 	if (!name)
@@ -76,13 +76,13 @@ int	handle_infile_loop(char *input, t_cmd *cmd, t_data *data)
 	int		j;
 	char	*name;
 
-	i = 1;
+	i = 0;
 	while (input[i] && ft_isspace(input[i]))
 		i++;
 	j = i;
 	if (!input[i] || input[i] == '<' || input[i] == '>')
 		return (0);
-	while (input[i] && !ft_isspace(input[i]))
+	while (input[i] && !ft_isspace(input[i]) && !is_chevron(input[i]))
 		i++;
 	name = get_name(input, i, j, data);
 	if (!name)
@@ -102,7 +102,15 @@ int	handle_infile(char *input, t_cmd *cmd, t_data *data)
 	if (!input[i])
 		return (0);
 	if (input[i++] == '<')
+	{
+		if (cmd->hd_name)
+		{
+			close(cmd->infile);
+			unlink(cmd->hd_name);
+			free(cmd->hd_name);
+		}
 		i += handle_heredoc(input + i, cmd, data);
+	}
 	else
 	{
 		i--;

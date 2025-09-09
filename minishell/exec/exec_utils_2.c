@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/08 19:15:03 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:38:26 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,6 @@ void	wait_all(t_data *data, int *pids)
 				data->exit_code = 128 + WTERMSIG(code);
 			else if (WIFEXITED(code))
 				data->exit_code = WEXITSTATUS(code);
-			if (data->exit_code == 127)
-				ft_dprintf(2,
-					"\e[1;37m%s\e[0m : Command not found\n",
-					data->cmd[cmd_index].parts->str);
 		}
 		cmd_index--;
 	}

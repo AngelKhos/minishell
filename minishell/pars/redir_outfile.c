@@ -6,13 +6,13 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 16:04:37 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/07 19:25:41 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/09 16:36:31 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 
-static int	handle_outfile_if_1(char *input, t_cmd *cmd, int i[2], t_data *data)
+static int	handle_outfile_append(char *input, t_cmd *cmd, int i[2], t_data *data)
 {
 	char	*name;
 
@@ -23,7 +23,7 @@ static int	handle_outfile_if_1(char *input, t_cmd *cmd, int i[2], t_data *data)
 	i[1] = i[0];
 	if (!input[i[0]] || input[i[0]] == '<')
 		return (0);
-	while (input[i[0]] && !ft_isspace(input[i[0]]))
+	while (input[i[0]] && !ft_isspace(input[i[0]]) && !is_chevron(input[i[0]]))
 		i[0]++;
 	if (input[i[1]] == '$')
 		name = get_expand(input + i[1], i[0] - i[1], data);
@@ -38,7 +38,7 @@ static int	handle_outfile_if_1(char *input, t_cmd *cmd, int i[2], t_data *data)
 	return (1);
 }
 
-static int	handle_outfile_if_2(char *input, t_cmd *cmd, int i[2], t_data *data)
+static int	handle_outfile_trunc(char *input, t_cmd *cmd, int i[2], t_data *data)
 {
 	char	*name;
 
@@ -46,9 +46,9 @@ static int	handle_outfile_if_2(char *input, t_cmd *cmd, int i[2], t_data *data)
 	while (input[i[0]] && ft_isspace(input[i[0]]))
 		i[0]++;
 	i[1] = i[0];
-	if (!input[i[0]] || input[i[0]] == '<' || input[i[0]] == '>')
+	if (!input[i[0]] || is_chevron(input[i[0]]))
 		return (0);
-	while (input[i[0]] && !ft_isspace(input[i[0]]))
+	while (input[i[0]] && !ft_isspace(input[i[0]]) && !is_chevron(input[i[0]]))
 		i[0]++;
 	if (input[i[1]] == '$')
 		name = get_expand(input + i[1], i[0] - i[1], data);
@@ -73,12 +73,12 @@ int	handle_outfile(char *input, t_cmd *cmd, t_data *data)
 		return (0);
 	if (input[i[0]] == '>')
 	{
-		if (handle_outfile_if_1(input, cmd, i, data) == 0)
+		if (handle_outfile_append(input, cmd, i, data) == 0)
 			return (0);
 	}
 	else
 	{
-		if (handle_outfile_if_2(input, cmd, i, data) == 0)
+		if (handle_outfile_trunc(input, cmd, i, data) == 0)
 			return (0);
 	}
 	return (i[0]);

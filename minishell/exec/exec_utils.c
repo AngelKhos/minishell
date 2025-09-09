@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/08 19:00:33 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:38:57 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,18 @@ int	execute(char **cmd, char **envp)
 
 	if (!cmd)
 		return (free_array(envp), 0);
+	if (!*cmd)
+	{
+		free(cmd);
+		free_array(envp);
+		return (1);
+	}
 	path = find_path(cmd[0], envp);
 	if (!path)
 	{
+		ft_dprintf(2,
+			"\e[1;37m%s\e[0m : Command not found\n",
+			cmd[0]);
 		free_array(envp);
 		return (free_array(cmd), 127);
 	}

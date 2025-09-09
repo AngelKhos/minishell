@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 11:20:01 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/08 17:27:04 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/09 16:04:46 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,11 @@ char	*strdup_wquotes(char *s)
 	return (free(s), dest);
 }
 
-char	*ft_strndup(const char *s, size_t n)
+int	is_chevron(char c)
 {
-	size_t	i;
-	char	*dest;
-
-	if (n < ft_strlen(s))
-		dest = malloc(sizeof(char) * (n + 1));
-	else
-		dest = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (s[i] && i < n)
-	{
-		dest[i] = s[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	if (c == '<' || c == '>')
+		return (1);
+	return (0);
 }
 
 int	is_builtins(char *input)

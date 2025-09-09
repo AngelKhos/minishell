@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/04 15:49:03 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:28:42 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	rm_quotes(char **split)
 	char	*cpy;
 
 	i = 0;
+	if (!split)
+		return ;
 	while (split[i])
 	{
 		cpy = strdup_wquotes(split[i]);
@@ -34,6 +36,14 @@ void	alloc_cmd_part_2(char **raw_cmd, t_data *data, size_t i, int is_cmd)
 	rm_quotes(raw_cmd);
 	data->cmd[i].len = get_tablen(raw_cmd);
 	data->cmd[i].parts = ft_calloc(sizeof(t_part), get_tablen(raw_cmd));
+	if(!raw_cmd)
+	{
+		free(data->cmd[i].parts);
+		data->cmd[i].parts = ft_calloc(sizeof(t_part), 1);
+		data->cmd[i].parts[part_i].str = NULL;
+		data->cmd[i].parts[part_i].type = CMD;
+			return ;
+	}
 	while (raw_cmd[part_i])
 	{
 		data->cmd[i].parts[part_i].str = ft_strdup(raw_cmd[part_i]);
@@ -70,7 +80,7 @@ int	alloc_cmd(t_data *data, char **inputs)
 			return ((void)ft_dprintf(2, "Error: unexpected token\n"), 0);
 		raw_cmd = ms_split(parsed_input, ' ');
 		free(parsed_input);
-		if (!raw_cmd)
+		if (i == 0 && !raw_cmd)
 			return (0);
 		if (!pars_exp(data, raw_cmd))
 			return (free_array(raw_cmd), 0);

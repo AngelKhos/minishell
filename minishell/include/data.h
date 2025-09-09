@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 17:07:38 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/09 18:01:40 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ char	*get_expand(char *key_src, int key_size, t_data *data);
 int		is_expkey_end(char c);
 int		get_tablen(char **inputs);
 int		is_redir(char *input);
+int		is_chevron(char c);
 int		handle_heredoc(char *input, t_cmd *cmd, t_data *data);
 int		handle_infile(char *input, t_cmd *cmd, t_data *data);
 int		handle_outfile(char *input, t_cmd *cmd, t_data *data);
