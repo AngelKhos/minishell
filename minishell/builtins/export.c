@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 13:14:18 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/08 18:34:36 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:47:17 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	export_part_2(t_env *leaf, char **val, t_cmd *cmd)
 	if (!leaf->data.key)
 		return (free(leaf), 1);
 	if (ft_isok(val[0]) == 0)
-		return (free(leaf), free_array(val), 1);
+		return (free(leaf->data.key), free(leaf), free_array(val), 1);
 	leaf->data.value = NULL;
 	if (export_part_3(cmd, leaf, val) == 1)
 		return (1);
@@ -86,6 +86,7 @@ int	ft_export(t_data *data, t_cmd *cmd)
 		if (!val)
 			return (free(leaf), 1);
 		leaf->data.key = ft_strdup(val[0]);
+		//if (!leaf->data.key)
 		code = export_part_2(leaf, val, cmd);
 		if (code == 1)
 			return (code);
