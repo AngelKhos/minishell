@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 13:14:18 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 17:47:17 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/09 18:23:14 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,34 +69,52 @@ int	export_part_2(t_env *leaf, char **val, t_cmd *cmd)
 	return (0);
 }
 
-int	ft_export(t_data *data, t_cmd *cmd)
+int	export_core(t_data *data, t_cmd *cmd, int part_i)
 {
 	t_env	*leaf;
 	char	**val;
 	int		code;
 
+	leaf = ft_calloc(sizeof(t_env), 1);
+	if (!leaf)
+		return (1);
+	val = ft_split(cmd->parts[part_i].str, '=');
+	if (!val)
+		return (free(leaf), 1);
+	leaf->data.key = ft_strdup(val[0]);
+	if (!leaf->data.key)
+		return (free(leaf), free_array(val), 1);
+	code = export_part_2(leaf, val, cmd);
+	if (code == 1)
+		return (code);
+	if (data->env)
+		tree_insert(data->env, leaf);
+	else
+		data->env = leaf;
+	free_array(val);
+	return (0);
+}
+
+int	ft_export(t_data *data, t_cmd *cmd)
+{
+	t_env	*leaf;
+	char	**val;
+	int		code;
+	int		part_i;
+
+	part_i = 1;
 	leaf = NULL;
 	val = NULL;
-	if (cmd->len > 1)
+	if (cmd->len == 1)
 	{
-		leaf = ft_calloc(sizeof(t_env), 1);
-		if (!leaf)
-			return (1);
-		val = ft_split(cmd->parts[1].str, '=');
-		if (!val)
-			return (free(leaf), 1);
-		leaf->data.key = ft_strdup(val[0]);
-		//if (!leaf->data.key)
-		code = export_part_2(leaf, val, cmd);
+		print_tree(data->env, 1);
+	}
+	while (part_i < cmd->len)
+	{
+		code = export_core(data, cmd, part_i);
 		if (code == 1)
 			return (code);
-		if (data->env)
-			tree_insert(data->env, leaf);
-		else
-			data->env = leaf;
-		free_array(val);
+		part_i++;
 	}
-	else
-		print_tree(data->env, 1);
 	return (0);
 }

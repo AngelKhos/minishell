@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 15:15:14 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/08 23:14:07 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/09 18:23:53 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	unset(t_data *data, int cmd_index)
 	}
 	if (data->cmd[cmd_index].len < 2)
 		return (0);
-	while(i < data->cmd[cmd_index].len)
+	while (i < data->cmd[cmd_index].len)
 	{
 		tree_remove(&data->env, data->cmd[cmd_index].parts[i].str);
 		i++;
