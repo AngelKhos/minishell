@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/09 16:59:53 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/09 18:56:14 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,39 @@ char	*make_expand(char *token, char **value, int key_len, t_data *data)
 	return (new_token);
 }
 
+int pars_exp_loop(t_data *data, char **raw_cmd, int *i)
+{
+	char *value;
+	char *new;
+	int value_len;
+	
+	while (i[2] != -1)
+	{
+		i[1] = i[2];
+		i[2]++;
+		while (raw_cmd[i[0]][i[2]] && !is_expkey_end(raw_cmd[i[0]][i[2]]))
+			i[2]++;
+		value = get_expand(raw_cmd[i[0]] + i[1], i[2] - i[1], data);
+		new = make_expand(raw_cmd[i[0]], &value, i[2] - i[1], data);
+		if (!new)
+			return (0);
+		raw_cmd[i[0]] = new;
+		if(!value)
+			value_len = 0;
+		else
+			value_len = ft_strlen(value);
+		i[2] = is_exp(raw_cmd[i[0]] + (i[1] + value_len));
+		free(value);
+	}
+	return (1);
+}
+
 //i[0][0] = i
 //i[0][1] = tmp
 //i[0][2] = exp_i
 int	pars_exp(t_data *data, char **raw_cmd)
 {
 	int		i[3];
-	char	*value;
-	char	*new;
 
 	i[0] = 0;
 	if (!raw_cmd)
@@ -100,20 +125,8 @@ int	pars_exp(t_data *data, char **raw_cmd)
 	while (raw_cmd[i[0]])
 	{
 		i[2] = is_exp(raw_cmd[i[0]]);
-		while (i[2] != -1)
-		{
-			i[1] = i[2];
-			i[2]++;
-			while (raw_cmd[i[0]][i[2]] && !is_expkey_end(raw_cmd[i[0]][i[2]]))
-				i[2]++;
-			value = get_expand(raw_cmd[i[0]] + i[1], i[2] - i[1], data);
-			new = make_expand(raw_cmd[i[0]], &value, i[2] - i[1], data);
-			if (!new)
-				return (0);
-			raw_cmd[i[0]] = new;
-			i[2] = is_exp(raw_cmd[i[0]] + (i[1] + ft_strlen(value)));
-			free(value);
-		}
+		if (!pars_exp_loop(data, raw_cmd, i))
+			return (0);
 		i[0]++;
 	}
 	return (1);

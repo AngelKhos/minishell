@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/09 17:28:42 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/09 18:57:21 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	parsing(t_data *data)
 	}
 	data->nb_pipes = get_tablen(inputs) - 1;
 	data->cmd = ft_calloc(sizeof(t_cmd), (data->nb_pipes + 1));
-	if (!data->cmd)
+	if (!data->cmd || data->nb_pipes > PIPE_LIMIT)
 	{
 		ft_dprintf(2, "Error: error in parsing function\n");
 		return (0);

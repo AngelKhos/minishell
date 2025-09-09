@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 18:01:40 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/09 18:07:24 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <readline/chardefs.h>
 # include <limits.h>
 
-# define PIPE_LIMITE = 20;
+# define PIPE_LIMIT 20
 
 enum e_cmd_type
 {

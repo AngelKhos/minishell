@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 17:38:57 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/09 18:08:44 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,7 @@ int	execute(char **cmd, char **envp)
 	if (!cmd)
 		return (free_array(envp), 0);
 	if (!*cmd)
-	{
-		free(cmd);
-		free_array(envp);
-		return (1);
-	}
+		return (free(cmd), free_array(envp), 1);
 	path = find_path(cmd[0], envp);
 	if (!path)
 	{

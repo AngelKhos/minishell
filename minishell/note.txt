@@ -1,5 +1,1 @@
-gerer les argument multiple de unset et export
------------------------------------------------
-si on unset une var env et qu on essaye de l afficher segfault leak en gros la merde
------------------------------------------------
-ajouter un pipe limite
+si on unset une var env et qu on l'expand segfault leak en gros la merde -> a check mais c'est surement bon
