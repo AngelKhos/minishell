@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/08 19:01:59 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:20:04 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	init_data(t_data *data, char **envp)
 	data->run = 1;
 	if (*envp)
 		data->env = envp_to_tree(envp);
+	init_default_env(data);
 	increase_shlvl(data);
 }
 

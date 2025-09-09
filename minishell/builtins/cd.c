@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/20 11:05:51 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/09 15:52:46 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,20 @@ void	cd_body(t_data *data, t_cmd cmd, int *code)
 	env_oldpwd = tree_search(data->env, "OLDPWD");
 	if (env_oldpwd)
 	{
+		if (getcwd(pwd, PATH_MAX) == NULL)
+			return ;
 		if (env_oldpwd->data.value)
 			free(env_oldpwd->data.value);
-		getcwd(pwd, PATH_MAX);
 		env_oldpwd->data.value = ft_strdup(pwd);
 	}
 	*code = change_dir(data, cmd);
 	env_pwd = tree_search(data->env, "PWD");
 	if (env_pwd)
 	{
+		if (getcwd(pwd, PATH_MAX) == NULL)
+			return ;
 		if (env_pwd->data.value)
 			free(env_pwd->data.value);
-		getcwd(pwd, PATH_MAX);
 		env_pwd->data.value = ft_strdup(pwd);
 	}
 }

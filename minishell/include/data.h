@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/08 17:05:55 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:07:38 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <linux/limits.h>
 # include <readline/chardefs.h>
 # include <limits.h>
+
+# define PIPE_LIMITE = 20;
 
 enum e_cmd_type
 {
@@ -86,6 +88,7 @@ void	double_free(void *ptr1, void *ptr2);
 
 //////////////// INIT ////////////////
 
+int		init_default_env(t_data *data);
 void	init_data(t_data *data, char **envp);
 
 //////////////// EXEC ////////////////
