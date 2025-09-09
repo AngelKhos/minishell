@@ -1,2 +1,38 @@
 gerer les argument multiple de unset et export
 -----------------------------------------------
+quand on ibrique plusieur dosier qu on ce rend au dernier et qu on retire le premier a la racine plusieur erreur en cas de cd && pwd.
+
+si on unset une var env et qu on essaye de l afficher segfault leak en gros la merde
+
+ls | cat |>lolol|cat
+exit le minishell maxileak
+/*
+(つ ╹╹)つ──☆*:export US(ER=bonjour
+export: 'US(ER': not a valid identifier
+(つ ╹╹)つ──☆*:export 1USER=bonjour
+export: '1USER': not a valid identifier
+(つ ╹╹)つ──☆*:export USER1=bonjour
+(つ ╹╹)つ──☆*:exit
+==15716== 
+==15716== FILE DESCRIPTORS: 3 open (3 std) at exit.
+==15716== 
+==15716== HEAP SUMMARY:
+==15716==     in use at exit: 198,716 bytes in 213 blocks
+==15716==   total heap usage: 663 allocs, 450 frees, 219,580 bytes allocated
+==15716== 
+==15716== 12 bytes in 2 blocks are definitely lost in loss record 3 of 50
+==15716==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15716==    by 0x406F54: ft_strdup (in /home/gchauvet/Documents/gitHub/minishell/minishell/minishell)
+==15716==    by 0x401D2C: ft_export (export.c:88)
+==15716==    by 0x405BF8: builtins_if (exec_builtins.c:34)
+==15716==    by 0x406693: read_cmd_if (exec_utils_2.c:42)
+==15716==    by 0x4059B5: read_cmd (exec.c:98)
+==15716==    by 0x4014B6: handle_readline (main.c:34)
+==15716==    by 0x401679: main (main.c:88)
+==15716== 
+==15716== LEAK SUMMARY:
+*/
+
+<<out ne prend pas de delimiter
+
+quand env-i updqte PWD oldpwd et shlv
