@@ -1,1 +1,0 @@
-si on unset une var env et qu on l'expand segfault leak en gros la merde -> a check mais c'est surement bon
