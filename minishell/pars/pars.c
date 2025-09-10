@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/10 16:20:04 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 16:35:25 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	alloc_when(t_data *data, int i, int part_i)
 {
 	free(data->cmd[i].parts);
 	data->cmd[i].parts = ft_calloc(sizeof(t_part), 1);
-	if(!data->cmd[i].parts)
+	if (!data->cmd[i].parts)
 		return ;
 	data->cmd[i].parts[part_i].str = NULL;
 	data->cmd[i].parts[part_i].type = CMD;
