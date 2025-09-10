@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 18:07:24 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 14:42:48 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	double_free(void *ptr1, void *ptr2);
 //////////////// INIT ////////////////
 
 int		init_default_env(t_data *data);
-void	init_data(t_data *data, char **envp);
+int		init_data(t_data *data, char **envp);
 
 //////////////// EXEC ////////////////
 

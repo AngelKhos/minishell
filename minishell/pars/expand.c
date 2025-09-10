@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/09 18:56:14 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 14:41:34 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ char	*make_expand(char *token, char **value, int key_len, t_data *data)
 	return (new_token);
 }
 
-int pars_exp_loop(t_data *data, char **raw_cmd, int *i)
+int	pars_exp_loop(t_data *data, char **raw_cmd, int *i)
 {
-	char *value;
-	char *new;
-	int value_len;
-	
+	char	*value;
+	char	*new;
+	int		value_len;
+
 	while (i[2] != -1)
 	{
 		i[1] = i[2];
@@ -102,7 +102,7 @@ int pars_exp_loop(t_data *data, char **raw_cmd, int *i)
 		if (!new)
 			return (0);
 		raw_cmd[i[0]] = new;
-		if(!value)
+		if (!value)
 			value_len = 0;
 		else
 			value_len = ft_strlen(value);

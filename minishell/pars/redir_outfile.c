@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   redir_outfile.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 16:04:37 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 16:36:31 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 14:38:27 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 
-static int	handle_outfile_append(char *input, t_cmd *cmd, int i[2], t_data *data)
+static int	handle_outfile_append(char *input,
+				t_cmd *cmd, int i[2], t_data *data)
 {
 	char	*name;
 
@@ -38,7 +39,8 @@ static int	handle_outfile_append(char *input, t_cmd *cmd, int i[2], t_data *data
 	return (1);
 }
 
-static int	handle_outfile_trunc(char *input, t_cmd *cmd, int i[2], t_data *data)
+static int	handle_outfile_trunc(char *input, t_cmd *cmd,
+				int i[2], t_data *data)
 {
 	char	*name;
 

@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:56:56 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 17:03:38 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/10 14:10:22 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	alloc_pwd(t_data *data, t_env *pwd)
 		pwd = ft_calloc(sizeof(t_env), 1);
 		if (!pwd)
 			return (tree_remove(&data->env, "SHLVL"),
-				tree_remove(&data->env, "PWD"), 0);
+				tree_remove(&data->env, "OLDPWD"), 0);
 		pwd->data.key = ft_strdup("PWD");
 		if (!pwd->data.key)
 			return (tree_remove(&data->env, "SHLVL"), 0);
@@ -67,12 +67,14 @@ int	init_default_env(t_data *data)
 	if (!tree_search(data->env, "SHLVL"))
 	{
 		shlvl = ft_calloc(sizeof(t_env), 1);
+		if (!shlvl)
+			return (0);
 		shlvl->data.key = ft_strdup("SHLVL");
 		if (!shlvl->data.key)
-			return (0);
+			return (free(shlvl), 0);
 		shlvl->data.value = ft_strdup("1");
 		if (!shlvl->data.value)
-			return (free(shlvl->data.key), 0);
+			return (free(shlvl->data.key), free(shlvl), 0);
 		add_to_env(data, shlvl);
 	}
 	if (alloc_pwd(data, pwd) == 0)

@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 16:20:04 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/10 14:03:31 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,15 @@ void	increase_shlvl(t_data *data)
 	}
 }
 
-void	init_data(t_data *data, char **envp)
+int	init_data(t_data *data, char **envp)
 {
 	data->run = 1;
 	if (*envp)
 		data->env = envp_to_tree(envp);
-	init_default_env(data);
+	if (!init_default_env(data))
+		return (0);
 	increase_shlvl(data);
+	return (1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -85,7 +87,8 @@ int	main(int argc, char **argv, char **envp)
 	data = ft_calloc(sizeof(t_data), 1);
 	if (!data)
 		return (EXIT_FAILURE);
-	init_data(data, envp);
+	if (!init_data(data, envp))
+		return (free_data(data), EXIT_FAILURE);
 	handle_readline(data);
 	code = data->exit_code;
 	free_data(data);
