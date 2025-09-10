@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/10 18:46:19 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 19:42:17 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 
 	i = 0;
 	if (!input[i])
-		return (0);
+		return (unexpected_token(data, 1));
 	while (input[i] && ft_isspace(input[i]))
 		i++;
 	j = i;
 	if (!input[i] || is_in_out(input[i]))
-		return (unexpected_token(data));
+		return (unexpected_token(data, 1));
 	while (input[i] && !ft_isspace(input[i]) && !is_in_out(input[i]))
 		i++;
 	name = get_name(input, i, j, data);
@@ -77,11 +77,13 @@ int	handle_infile_loop(char *input, t_cmd *cmd, t_data *data)
 	char	*name;
 
 	i = 0;
+	if (!input)
+		return (unexpected_token(data, 1));
 	while (input[i] && ft_isspace(input[i]))
 		i++;
 	j = i;
 	if (!input[i] || input[i] == '<' || input[i] == '>')
-		return (unexpected_token(data));
+		return (unexpected_token(data, 1));
 	while (input[i] && !ft_isspace(input[i]) && !is_in_out(input[i]))
 		i++;
 	name = get_name(input, i, j, data);
@@ -90,7 +92,7 @@ int	handle_infile_loop(char *input, t_cmd *cmd, t_data *data)
 	if (cmd->infile != -1)
 		close(cmd->infile);
 	cmd->infile = open(name, O_RDONLY);
-	if (permission_denied(cmd->infile, name, data))
+	if (permission_denied(1, name, data))
 		return (0);
 	free(name);
 	return (i);
@@ -99,24 +101,27 @@ int	handle_infile_loop(char *input, t_cmd *cmd, t_data *data)
 int	handle_infile(char *input, t_cmd *cmd, t_data *data)
 {
 	size_t	i;
+	size_t	tmp;
 
 	i = 1;
 	if (!input[i])
-		return (0);
+		return (unexpected_token(data, 1));
 	if (input[i++] == '<')
 	{
 		if (cmd->hd_name)
-		{
-			close(cmd->infile);
-			unlink(cmd->hd_name);
-			free(cmd->hd_name);
-		}
-		i += handle_heredoc(input + i, cmd, data);
+			close_here_doc(cmd);
+		tmp = handle_heredoc(input + i, cmd, data);
+		if (!tmp)
+			return (0);
+		i += tmp;
 	}
 	else
 	{
 		i--;
-		i += handle_infile_loop(input + i, cmd, data);
+		tmp = handle_infile_loop(input + i, cmd, data);
+		if (!tmp)
+			return (0);
+		i += tmp;
 	}
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/10 18:27:30 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 18:57:59 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,7 @@ int	parsing(t_data *data)
 	char	**inputs;
 
 	if (!checking_missing_command(data->input))
-	{
-		ft_dprintf(2, "Error: invalid arguments near token '|'\n");
-		return (0);
-	}
+		return (unexpected_token(data, 2));
 	inputs = ms_split(data->input, '|');
 	if (!inputs)
 	{
