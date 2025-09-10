@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/10 14:41:34 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/10 15:23:00 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,6 @@ char	*get_expand(char *key_src, int key_size, t_data *data)
 	if (!name)
 		return (NULL);
 	return (name);
-}
-
-int	is_exp(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] == '\'')
-			i = skip_quote(input, i);
-		if (input[i] == '$')
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-int	is_code(char *token, char **value, int *key_len, t_data *data)
-{
-	if (token[1] == '?')
-	{
-		*value = ft_itoa(data->exit_code);
-		*key_len = 2;
-		return (1);
-	}
-	return (0);
 }
 
 char	*make_expand(char *token, char **value, int key_len, t_data *data)
@@ -112,9 +85,11 @@ int	pars_exp_loop(t_data *data, char **raw_cmd, int *i)
 	return (1);
 }
 
-//i[0][0] = i
+/*
+i[0][0] = i
 //i[0][1] = tmp
-//i[0][2] = exp_i
+i[0][2] = exp_i 
+*/
 int	pars_exp(t_data *data, char **raw_cmd)
 {
 	int		i[3];

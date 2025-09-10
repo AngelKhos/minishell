@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/10 14:42:48 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/10 15:41:41 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <readline/chardefs.h>
 # include <limits.h>
 
-# define PIPE_LIMIT 20
+# define PIPE_LIMIT 200
 
 enum e_cmd_type
 {
@@ -134,6 +134,9 @@ int		is_expkey_end(char c);
 int		get_tablen(char **inputs);
 int		is_redir(char *input);
 int		is_chevron(char c);
+int		is_exp(char *input);
+int		checking_missing_command(char *input);
+int		is_code(char *token, char **value, int *key_len, t_data *data);
 int		handle_heredoc(char *input, t_cmd *cmd, t_data *data);
 int		handle_infile(char *input, t_cmd *cmd, t_data *data);
 int		handle_outfile(char *input, t_cmd *cmd, t_data *data);

@@ -63,7 +63,7 @@ DIR_DEPS=.deps
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) Makefile
 	echo "$(GREEN) Compiling libft ... $(END)" 
 	$(AR) $(AR_ARG) $@ $(OBJS)
 	

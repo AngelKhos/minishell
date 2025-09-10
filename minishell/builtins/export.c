@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 13:14:18 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 18:23:14 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/10 15:29:16 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,10 @@ int	export_core(t_data *data, t_cmd *cmd, int part_i)
 
 int	ft_export(t_data *data, t_cmd *cmd)
 {
-	t_env	*leaf;
-	char	**val;
 	int		code;
 	int		part_i;
 
 	part_i = 1;
-	leaf = NULL;
-	val = NULL;
 	if (cmd->len == 1)
 	{
 		print_tree(data->env, 1);
