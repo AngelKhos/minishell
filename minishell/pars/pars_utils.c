@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 11:20:01 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/09 16:04:46 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 16:04:13 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*strdup_wquotes(char *s)
 	return (free(s), dest);
 }
 
-int	is_chevron(char c)
+int	is_in_out(char c)
 {
 	if (c == '<' || c == '>')
 		return (1);
@@ -96,6 +96,8 @@ int	is_expkey_end(char c)
 	if (c == '\'')
 		return (1);
 	if (c == '$')
+		return (1);
+	if (is_in_out(c))
 		return (1);
 	return (0);
 }

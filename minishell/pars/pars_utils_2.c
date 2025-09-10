@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:20:49 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/10 15:23:56 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 15:59:12 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	is_code(char *token, char **value, int *key_len, t_data *data)
 	if (token[1] == '?')
 	{
 		*value = ft_itoa(data->exit_code);
+		if (!*value)
+			return (0);
 		*key_len = 2;
 		return (1);
 	}

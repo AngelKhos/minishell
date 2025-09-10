@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:28:11 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 16:22:05 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 16:29:46 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ char	*pars_redir(char *input, t_cmd *cmd, t_data *data)
 	redir = ft_calloc(sizeof(t_redir), 1);
 	redir->i = 0;
 	redir->new_input = ft_calloc(sizeof(char), ft_strlen(input) + 1);
+	if (!redir->new_input)
+		return (free(input), free(redir), NULL);
 	redir->j = 0;
 	while (redir->i < ft_strlen(input))
 	{

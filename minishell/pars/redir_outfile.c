@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_outfile.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 16:04:37 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/10 14:38:27 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/10 16:03:26 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	handle_outfile_append(char *input,
 	i[1] = i[0];
 	if (!input[i[0]] || input[i[0]] == '<')
 		return (0);
-	while (input[i[0]] && !ft_isspace(input[i[0]]) && !is_chevron(input[i[0]]))
+	while (input[i[0]] && !ft_isspace(input[i[0]]) && !is_in_out(input[i[0]]))
 		i[0]++;
 	if (input[i[1]] == '$')
 		name = get_expand(input + i[1], i[0] - i[1], data);
@@ -48,9 +48,9 @@ static int	handle_outfile_trunc(char *input, t_cmd *cmd,
 	while (input[i[0]] && ft_isspace(input[i[0]]))
 		i[0]++;
 	i[1] = i[0];
-	if (!input[i[0]] || is_chevron(input[i[0]]))
+	if (!input[i[0]] || is_in_out(input[i[0]]))
 		return (0);
-	while (input[i[0]] && !ft_isspace(input[i[0]]) && !is_chevron(input[i[0]]))
+	while (input[i[0]] && !ft_isspace(input[i[0]]) && !is_in_out(input[i[0]]))
 		i[0]++;
 	if (input[i[1]] == '$')
 		name = get_expand(input + i[1], i[0] - i[1], data);

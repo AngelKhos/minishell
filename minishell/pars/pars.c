@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/10 15:28:07 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 16:20:04 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	alloc_when(t_data *data, int i, int part_i)
 {
 	free(data->cmd[i].parts);
 	data->cmd[i].parts = ft_calloc(sizeof(t_part), 1);
+	if(!data->cmd[i].parts)
+		return ;
 	data->cmd[i].parts[part_i].str = NULL;
 	data->cmd[i].parts[part_i].type = CMD;
 }
@@ -46,6 +48,8 @@ void	alloc_cmd_part_2(char **raw_cmd, t_data *data, size_t i, int is_cmd)
 	data->cmd[i].parts = ft_calloc(sizeof(t_part), get_tablen(raw_cmd));
 	if (!raw_cmd)
 		return (alloc_when(data, i, part_i));
+	if (!data->cmd[i].parts)
+		return (free_array(raw_cmd));
 	while (raw_cmd[part_i])
 	{
 		data->cmd[i].parts[part_i].str = ft_strdup(raw_cmd[part_i]);
@@ -104,14 +108,14 @@ int	parsing(t_data *data)
 	inputs = ms_split(data->input, '|');
 	if (!inputs)
 	{
-		ft_dprintf(2, "Error: error in parsing function\n");
+		ft_dprintf(2, "Error: error in parsing\n");
 		return (0);
 	}
 	data->nb_pipes = get_tablen(inputs) - 1;
 	data->cmd = ft_calloc(sizeof(t_cmd), (data->nb_pipes + 1));
 	if (!data->cmd || data->nb_pipes > PIPE_LIMIT)
 	{
-		ft_dprintf(2, "Error: error in parsing function\n");
+		ft_dprintf(2, "Error: error in parsing\n");
 		if (data->cmd)
 			free(data->cmd);
 		return (free_array(inputs), 0);
