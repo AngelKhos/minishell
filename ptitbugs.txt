@@ -1,0 +1,39 @@
+pas de permissions denied mais un affichage dans stdout si ls > a (a pas de perm)
+et dcp retour d'erreur pas bon
+
+pas de is a directory si / (si jamais le code c'est 126)
+
+syntax error = 2 en retour d'erreur
+
+meme probleme sur redir in / out / tout
+
+ctrl + D a patch dans heredoc
+
+si expand de n'importe quoi code = 127 -> $QWEQWE devrait etre 0
+
+pipe casse l'equipe
+
+
+test a faire ->
+
+cat | cat | ls
+
+le ls s'affiche puis appuie 2 fois sur entre et tu dois sortir de la boucle
+
+ls | l | ls
+
+le code doit etre 0
+
+ls | ls | l
+
+le code doit etre 127
+
+heredoc ->
+
+<< eof cat | << eoff cat
+salut
+eof
+salutt
+eoff
+
+doit sortir salutt
