@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 18:08:44 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 16:42:59 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*find_loop_while(char **paths, char *cmd)
 		path_no_cmd = ft_strjoin(paths[i], "/");
 		if (!path_no_cmd)
 			return (free_array(paths), NULL);
+		(void)cmd;
 		path = ft_strjoin(path_no_cmd, cmd);
 		free(path_no_cmd);
 		if (!path)

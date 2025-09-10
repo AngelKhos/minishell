@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 17:38:26 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 16:40:28 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,16 @@ int	child_proc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)
 
 	envp = tree_to_envp(data->env);
 	if (!envp)
+	{
+		close_redir(data);
+		close_file(data);
+		free_cmd(data);
+		free_data(data);
 		return (0);
+	}
 	cmd = convert_part_to_arg(data, cmd_i);
 	if (!cmd)
-		return (free_array(envp), 0);
+		return (free_cmd(data), free_data(data), free_array(envp), 0);
 	redir_pipe(data, prev_pipe, curr_pipe, cmd_i);
 	redir_file(data, prev_pipe, curr_pipe, cmd_i);
 	close_child_pipe(prev_pipe, curr_pipe);

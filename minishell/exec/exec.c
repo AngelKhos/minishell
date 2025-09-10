@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:06 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/10 16:09:13 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ char	**convert_part_to_arg(t_data *data, int index)
 
 void	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2])
 {
-	close(prev_pipe[0]);
-	close(prev_pipe[1]);
+	if (prev_pipe[0] != -1)
+		close(prev_pipe[0]);
+	if (prev_pipe[1] != -1)
+		close(prev_pipe[1]);
 	prev_pipe[0] = curr_pipe[0];
 	prev_pipe[1] = curr_pipe[1];
 }
@@ -50,7 +52,6 @@ void	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2])
 int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 {
 	int		curr_pipe[2];
-	int		child_return;
 
 	curr_pipe[0] = -1;
 	curr_pipe[1] = -1;
@@ -64,9 +65,7 @@ int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	{
 		double_free(pids, data->input);
 		signal(SIGQUIT, SIG_DFL);
-		child_return = child_proc(data, prev_pipe, curr_pipe, cmd_index);
-		if (child_return == 0)
-			ft_dprintf(2, "Error in child\n");
+		child_proc(data, prev_pipe, curr_pipe, cmd_index);
 		exit(127);
 	}
 	else if (g_pid > 0)
@@ -90,7 +89,7 @@ int	read_cmd(t_data *data)
 	prev_pipe[1] = -1;
 	if (data->nb_pipes > 0)
 	{
-		if (pipe(prev_pipe) == -1)
+		if (1)
 			return (free(pids), 0);
 	}
 	while (cmd_index <= data->nb_pipes)
