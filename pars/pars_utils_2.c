@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:20:49 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/10 15:59:12 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 18:48:16 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ int	is_exp(char *input)
 	return (-1);
 }
 
+int	unexpected_token(t_data *data)
+{
+	data->exit_code = 2;
+	ft_dprintf(2, "Error: unexpected token\n");
+	return (0);
+}
+
 int	is_code(char *token, char **value, int *key_len, t_data *data)
 {
 	if (token[1] == '?')
@@ -36,6 +43,18 @@ int	is_code(char *token, char **value, int *key_len, t_data *data)
 		if (!*value)
 			return (0);
 		*key_len = 2;
+		return (1);
+	}
+	return (0);
+}
+
+int	permission_denied(int fd, char *name, t_data *data)
+{
+	if (fd == -1)
+	{
+		ft_dprintf(2, "\e[1;37m%s\e[0m : permission denied", name);
+		data->exit_code = 1;
+		free(name);
 		return (1);
 	}
 	return (0);

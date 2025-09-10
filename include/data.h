@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/10 16:27:46 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 18:45:47 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,9 @@ int		is_expkey_end(char c);
 int		get_tablen(char **inputs);
 int		is_redir(char *input);
 int		is_in_out(char c);
+char	*get_name(char *input, int i, int j, t_data *data);
+int		permission_denied(int fd, char *name, t_data *data);
+int		unexpected_token(t_data *data);
 int		is_exp(char *input);
 int		checking_missing_command(char *input);
 int		is_code(char *token, char **value, int *key_len, t_data *data);

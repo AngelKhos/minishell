@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/10 16:35:25 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/10 18:27:30 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	alloc_cmd(t_data *data, char **inputs)
 		is_cmd = 0;
 		parsed_input = pars_redir(inputs[i], &data->cmd[i], data);
 		if (!parsed_input)
-			return ((void)ft_dprintf(2, "Error: unexpected token\n"), 0);
+			return (0);
 		raw_cmd = ms_split(parsed_input, ' ');
 		free(parsed_input);
 		if (i == 0 && !raw_cmd)
