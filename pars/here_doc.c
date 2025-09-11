@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:34:36 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/04 17:14:44 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/10 18:45:02 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,21 @@ int	here_doc(char *word, t_data *data)
 	if (hd_fd == -1)
 		return (-1);
 	here_doc_input = NULL;
-	while (ft_strncmp(here_doc_input, word, -1) != 0)
+	while (1)
 	{
+		here_doc_input = readline(">");
+		if (ft_strncmp(here_doc_input, word, -1) == 0)
+			break ;
 		if (here_doc_input)
 		{
 			write(hd_fd, here_doc_input, ft_strlen(here_doc_input));
 			write(hd_fd, "\n", 1);
 		}
+		else
+			break ;
 		free(here_doc_input);
-		here_doc_input = readline(">");
 	}
-	free(here_doc_input);
 	close(hd_fd);
 	hd_fd = open(word, O_RDONLY);
-	return (hd_fd);
+	return (free(here_doc_input), hd_fd);
 }

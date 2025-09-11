@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/10 16:40:28 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/10 18:27:31 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	wait_all(t_data *data, int *pids)
 	int		code;
 
 	code = 0;
-	cmd_index = data->nb_pipes;
-	while (cmd_index >= 0)
+	cmd_index = 0;
+	while (cmd_index <= data->nb_pipes)
 	{
 		if (pids[cmd_index] > 0)
 		{
@@ -75,7 +75,7 @@ void	wait_all(t_data *data, int *pids)
 			else if (WIFEXITED(code))
 				data->exit_code = WEXITSTATUS(code);
 		}
-		cmd_index--;
+		cmd_index++;
 	}
 	g_pid = 0;
 }

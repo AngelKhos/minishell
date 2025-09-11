@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/10 16:09:13 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/10 18:17:31 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	read_cmd(t_data *data)
 	prev_pipe[1] = -1;
 	if (data->nb_pipes > 0)
 	{
-		if (1)
+		if (pipe(prev_pipe) == -1)
 			return (free(pids), 0);
 	}
 	while (cmd_index <= data->nb_pipes)
