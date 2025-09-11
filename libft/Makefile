@@ -67,7 +67,7 @@ $(NAME): $(OBJS) Makefile
 	echo "$(GREEN) Compiling libft ... $(END)" 
 	$(AR) $(AR_ARG) $@ $(OBJS)
 	
-$(DIR_OBJS)/%.o: %.c Makefile | $(DIR_OBJS) $(DIR_DEPS)
+$(DIR_OBJS)/%.o: %.c Makefile libft.h | $(DIR_OBJS) $(DIR_DEPS)
 	$(CC) $(CC_FLAGS) -MMD -MP -MF $(DIR_DEPS)/$*.d -c -o $@ $<
 
 $(DIR_OBJS):
