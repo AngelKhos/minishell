@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/10 18:17:31 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/12 17:50:51 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2])
 int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 {
 	int		curr_pipe[2];
+	int		code;
 
 	curr_pipe[0] = -1;
 	curr_pipe[1] = -1;
@@ -65,8 +66,8 @@ int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	{
 		double_free(pids, data->input);
 		signal(SIGQUIT, SIG_DFL);
-		child_proc(data, prev_pipe, curr_pipe, cmd_index);
-		exit(127);
+		code = child_proc(data, prev_pipe, curr_pipe, cmd_index);
+		exit(code);
 	}
 	else if (g_pid > 0)
 		pids[cmd_index] = g_pid;

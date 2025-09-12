@@ -6,16 +6,38 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:08:14 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/20 11:07:45 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/12 17:52:20 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 #include <unistd.h>
 
+int	exit_atoi_while(size_t i, long *res, char *s, int sign)
+{
+	while (s[i])
+	{
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			(*res) = (*res) * 10 + (s[i] - '0');
+			if (((*res) * sign) > 2147483647)
+				return (2);
+			i++;
+		}
+		else
+		{
+			ft_dprintf(2,
+				"exit: : numeric argument required\n",
+				s);
+			return (2);
+		}
+	}
+	return (0);
+}
+
 int	ft_exit_atoi(char *s)
 {
-	int			i;
+	size_t		i;
 	long		res;
 	int			sign;
 
@@ -30,13 +52,8 @@ int	ft_exit_atoi(char *s)
 			sign = sign * -1;
 		i++;
 	}
-	while (s[i] >= '0' && s[i] <= '9')
-	{
-		res = res * 10 + (s[i] - '0');
-		if ((res * sign) > 2147483647)
-			return (2);
-		i++;
-	}
+	if (exit_atoi_while(i, &res, s, sign) == 2)
+		return (2);
 	if (res > 255)
 		return ((res * sign) % 256);
 	return (res * sign);
@@ -49,7 +66,7 @@ int	is_num(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!(str[i] >= 48 && str[i] <= 57) && str[i] != '-')
+		if (!(str[i] >= 48 && str[i] <= 57) && str[i] != '-' && str[i] != '+')
 			return (0);
 		i++;
 	}
@@ -79,10 +96,6 @@ void	exit_body(t_data *data, t_cmd *cmd, int *code)
 			data->run = 1;
 		}
 	}
-	else
-		ft_dprintf(2,
-			"\e[1;37mexit\e[0m: \e[1;37m%s\e[0m: numeric argument required\n",
-			cmd->parts[1].str);
 }
 
 int	exit_minishell_edition(t_data *data, t_cmd *cmd)

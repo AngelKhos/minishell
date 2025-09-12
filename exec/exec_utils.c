@@ -6,13 +6,31 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/10 18:43:10 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/12 17:54:32 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
 
-char	*find_loop_while(char **paths, char *cmd)
+int	access_bin(char *path, int *code)
+{
+	int	r_code;
+
+	r_code = 0;
+	if (access(path, F_OK) == -1)
+	{
+		*code = 127;
+		r_code = 1;
+	}
+	else if (access(path, X_OK) == -1)
+	{
+		*code = 126;
+		r_code = 1;
+	}
+	return (r_code);
+}
+
+char	*find_loop_while(char **paths, char *cmd, int *code)
 {
 	char	*path;
 	char	*path_no_cmd;
@@ -31,7 +49,7 @@ char	*find_loop_while(char **paths, char *cmd)
 		free(path_no_cmd);
 		if (!path)
 			return (free_array(paths), NULL);
-		if (access(path, X_OK) == 0)
+		if (access_bin(path, code) == 0)
 			return (free_array(paths), path);
 		free(path);
 		i++;
@@ -39,19 +57,19 @@ char	*find_loop_while(char **paths, char *cmd)
 	return (free_array(paths), NULL);
 }
 
-char	*find_loop(char	**paths, char *cmd)
+char	*find_loop(char	**paths, char *cmd, int *code)
 {
 	if (!(cmd[0] == '.' && cmd [1] == '/') && cmd[0] != '/')
 	{
-		return (find_loop_while(paths, cmd));
+		return (find_loop_while(paths, cmd, code));
 	}
 	else
-		if (access(cmd, X_OK) == 0)
+		if (access_bin(cmd, code) == 0)
 			return (cmd);
 	return (free_array(paths), NULL);
 }
 
-char	*find_path(char *cmd, char **envp)
+char	*find_path(char *cmd, char **envp, int *code)
 {
 	char	**paths;
 	size_t	i;
@@ -66,26 +84,28 @@ char	*find_path(char *cmd, char **envp)
 		paths = ft_split(".", ':');
 	if (!paths)
 		return (NULL);
-	path = find_loop(paths, cmd);
+	path = find_loop(paths, cmd, code);
 	return (path);
 }
 
 int	execute(char **cmd, char **envp)
 {
 	char	*path;
+	int		code;
 
 	if (!cmd)
 		return (free_array(envp), 0);
 	if (!*cmd)
 		return (free(cmd), free_array(envp), 1);
-	path = find_path(cmd[0], envp);
+	path = find_path(cmd[0], envp, &code);
 	if (!path)
 	{
-		ft_dprintf(2,
-			"\e[1;37m%s\e[0m : Command not found\n",
-			cmd[0]);
+		if (code == 127)
+			ft_dprintf(2, "\e[1;37m%s\e[0m : Command not found\n", cmd[0]);
+		if (code == 126)
+			ft_dprintf(2, "\e[1;37m%s\e[0m : Permission denied\n", cmd[0]);
 		free_array(envp);
-		return (free_array(cmd), 127);
+		return (free_array(cmd), code);
 	}
 	if (execve(path, cmd, envp) == -1)
 	{
