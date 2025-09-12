@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/10 18:27:31 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:31:16 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	read_cmd_if(t_data *data, int cmd_index, int prev_pipes[2], int *pids)
 	{
 		if (is_exit_or_cd(data, cmd_index) == 1 && data->nb_pipes < 1)
 		{
-			data->exit_code = builtins_if(data, cmd_index);
+			g_pid.exit_code = builtins_if(data, cmd_index);
 		}
 		else
 		{
@@ -71,13 +71,13 @@ void	wait_all(t_data *data, int *pids)
 		{
 			waitpid(pids[cmd_index], &code, 0);
 			if (WIFSIGNALED(code))
-				data->exit_code = 128 + WTERMSIG(code);
+				g_pid.exit_code = 128 + WTERMSIG(code);
 			else if (WIFEXITED(code))
-				data->exit_code = WEXITSTATUS(code);
+				g_pid.exit_code = WEXITSTATUS(code);
 		}
 		cmd_index++;
 	}
-	g_pid = 0;
+	g_pid.pid = 0;
 }
 
 int	child_proc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)

@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:34:36 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/10 18:45:02 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:38:50 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+
+void	write_in_here_doc(int hd_fd, char *here_doc_input)
+{
+	write(hd_fd, here_doc_input, ft_strlen(here_doc_input));
+	write(hd_fd, "\n", 1);
+}
 
 int	here_doc(char *word, t_data *data)
 {
@@ -34,12 +40,12 @@ int	here_doc(char *word, t_data *data)
 		if (ft_strncmp(here_doc_input, word, -1) == 0)
 			break ;
 		if (here_doc_input)
-		{
-			write(hd_fd, here_doc_input, ft_strlen(here_doc_input));
-			write(hd_fd, "\n", 1);
-		}
+			write_in_here_doc(hd_fd, here_doc_input);
 		else
+		{
+			write(1, "\n", 1);
 			break ;
+		}
 		free(here_doc_input);
 	}
 	close(hd_fd);

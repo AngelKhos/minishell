@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/10 15:23:00 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/12 18:16:45 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_expand(char *key_src, int key_size, t_data *data)
 	return (name);
 }
 
-char	*make_expand(char *token, char **value, int key_len, t_data *data)
+char	*make_expand(char *token, char **value, int key_len)
 {
 	int		i;
 	int		j;
@@ -46,7 +46,7 @@ char	*make_expand(char *token, char **value, int key_len, t_data *data)
 		return (NULL);
 	while (token[i] && token[i] != '$')
 		new_token[j++] = token[i++];
-	if (is_code(&token[i], value, &key_len, data))
+	if (is_code(&token[i], value, &key_len))
 		value_len = ft_strlen(*value);
 	if (*value)
 		ft_strlcat(new_token, *value, ft_strlen(new_token) + value_len + 1);
@@ -71,7 +71,7 @@ int	pars_exp_loop(t_data *data, char **raw_cmd, int *i)
 		while (raw_cmd[i[0]][i[2]] && !is_expkey_end(raw_cmd[i[0]][i[2]]))
 			i[2]++;
 		value = get_expand(raw_cmd[i[0]] + i[1], i[2] - i[1], data);
-		new = make_expand(raw_cmd[i[0]], &value, i[2] - i[1], data);
+		new = make_expand(raw_cmd[i[0]], &value, i[2] - i[1]);
 		if (!new)
 			return (0);
 		raw_cmd[i[0]] = new;

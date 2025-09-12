@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:08:14 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/12 17:52:20 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:09:05 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	exit_minishell_edition(t_data *data, t_cmd *cmd)
 	}
 	else
 	{
-		code = data->exit_code;
+		code = g_pid.exit_code;
 		data->run = 0;
 	}
 	return (code);

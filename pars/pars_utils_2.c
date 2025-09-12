@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:20:49 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/10 19:42:44 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/12 18:14:23 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	is_exp(char *input)
 	return (-1);
 }
 
-int	unexpected_token(t_data *data, int type)
+int	unexpected_token(int type)
 {
-	data->exit_code = 2;
+	g_pid.exit_code = 2;
 	if (type == 1)
 		ft_dprintf(2, "Error: unexpected token\n");
 	if (type == 2)
@@ -38,11 +38,11 @@ int	unexpected_token(t_data *data, int type)
 	return (0);
 }
 
-int	is_code(char *token, char **value, int *key_len, t_data *data)
+int	is_code(char *token, char **value, int *key_len)
 {
 	if (token[1] == '?')
 	{
-		*value = ft_itoa(data->exit_code);
+		*value = ft_itoa(g_pid.exit_code);
 		if (!*value)
 			return (0);
 		*key_len = 2;
@@ -51,14 +51,14 @@ int	is_code(char *token, char **value, int *key_len, t_data *data)
 	return (0);
 }
 
-int	permission_denied(int type, char *name, t_data *data)
+int	permission_denied(int type, char *name)
 {
 	if (type == 1)
 	{
 		if (access(name, R_OK) != 0)
 		{
 			ft_dprintf(2, "\e[1;37m%s\e[0m : permission denied\n", name);
-			data->exit_code = 1;
+			g_pid.exit_code = 1;
 			free(name);
 			return (1);
 		}
@@ -68,7 +68,7 @@ int	permission_denied(int type, char *name, t_data *data)
 		if (access(name, W_OK) != 0)
 		{
 			ft_dprintf(2, "\e[1;37m%s\e[0m : permission denied\n", name);
-			data->exit_code = 1;
+			g_pid.exit_code = 1;
 			free(name);
 			return (1);
 		}
