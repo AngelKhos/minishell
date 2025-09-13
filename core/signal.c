@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:09:19 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/13 15:29:21 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 22:53:31 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,33 @@
 
 void	sigint_handle(int code)
 {
-	(void)code;
-	if (g_pid == 0)
-	{
-		ft_printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
+	g_sig_val = code + 128;
+	ft_printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
+void	exec_sigint_handle(int code)
+{
+	g_sig_val = code + 128;
+	rl_replace_line("", 0);
+}
+
+void	hd_sigint_handle(int code)
+{
+	g_sig_val = code + 128;
+	rl_replace_line("", 0);
+	rl_done = 1;
+}
+
+int		rl_hook_event_handler()
+{
+	if (g_sig_val == 130)
+		rl_done = 1;
+	return (0);
+}
+// rl_signal_event_hook = 
 void	handle_signal(void)
 {
 	signal(SIGINT, &sigint_handle);

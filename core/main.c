@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/13 15:28:59 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 23:38:08 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,19 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-int	g_pid;
+int	g_sig_val = 0;
 
 void	handle_readline(t_data *data)
 {
 	while (data->run)
 	{
 		handle_signal();
-		data->input = readline("\e[0;35m(つ ╹╹)つ\e[0;91m──\e[0;33m☆*:\e[0m");
+
+		data->input = readline("(つ ╹╹)つ──☆*:");
+		if (g_sig_val)
+			data->exit_code = g_sig_val;
+		g_sig_val = 0;
+		signal(SIGINT, exec_sigint_handle);
 		if (data->input)
 		{
 			if (ft_strlen(data->input) >= 1)
@@ -31,6 +36,7 @@ void	handle_readline(t_data *data)
 				add_history(data->input);
 				if (parsing(data))
 				{
+					display_cmd(data);
 					if (!read_cmd(data))
 						ft_dprintf(2, "Error: exec error\n");
 					close_file(data);
@@ -66,7 +72,6 @@ void	increase_shlvl(t_data *data)
 
 int	init_data(t_data *data, char **envp)
 {
-	g_pid = 0;
 	data->exit_code = 0;
 	data->run = 1;
 	if (*envp)

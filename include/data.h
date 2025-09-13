@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/13 15:31:05 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 22:42:15 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <linux/limits.h>
 # include <readline/chardefs.h>
 # include <limits.h>
+# include <signal.h>
 
 # define PIPE_LIMIT 512
 
@@ -65,7 +66,7 @@ typedef struct s_redir
 	size_t	tmp;
 }	t_redir;
 
-extern int	g_pid;
+extern int	g_sig_val;
 
 ////////////// BUILTINS //////////////
 
@@ -150,5 +151,8 @@ char	*pars_redir(char *input, t_cmd *cmd, t_data *data);
 void	handle_signal(void);
 void	sigint_handle(int code);
 void	sigabrt_handle(void);
+void	exec_sigint_handle(int code);
+void	hd_sigint_handle(int code);
+int		rl_hook_event_handler();
 
 #endif

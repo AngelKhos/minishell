@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/13 15:28:59 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:45:45 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	wait_all(t_data *data, int *pids)
 		}
 		cmd_index++;
 	}
-	g_pid = 0;
 }
 
 int	child_proc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)

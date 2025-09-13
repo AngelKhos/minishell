@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 11:20:01 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/10 16:04:13 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/13 23:32:33 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ static void	strdup_wquotes_while(char *s, int *quote_flag,
 		{
 			if ((*quote_flag) == 1)
 				(*quote_flag) = 0;
-			if ((*quote_flag) == 0)
+			else if ((*quote_flag) == 0)
 				(*quote_flag) = 1;
 		}
 		else if (s[i[0]] == '\"' && (*quote_flag) != 1)
 		{
 			if ((*quote_flag) == 2)
 				(*quote_flag) = 0;
-			if ((*quote_flag) == 0)
+			else if ((*quote_flag) == 0)
 				(*quote_flag) = 2;
 		}
 		else

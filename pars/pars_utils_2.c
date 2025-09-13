@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:20:49 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/13 15:30:41 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 23:18:41 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	is_exp(char *input)
 	{
 		if (input[i] == '\'')
 			i = skip_quote(input, i);
+		if (!input[i])
+			break ;
 		if (input[i] == '$')
 			return (i);
 		i++;
@@ -38,40 +40,28 @@ int	unexpected_token(int type, t_data *data)
 	return (0);
 }
 
-int	is_code(char *token, char **value, int *key_len, t_data *data)
-{
-	if (token[1] == '?')
-	{
-		*value = ft_itoa(data->exit_code);
-		if (!*value)
-			return (0);
-		*key_len = 2;
-		return (1);
-	}
-	return (0);
-}
-
 int	permission_denied(int type, char *name, t_data *data)
 {
-	if (type == 1)
+	if (access(name, F_OK) != 0)
 	{
-		if (access(name, R_OK) != 0)
-		{
-			ft_dprintf(2, "\e[1;37m%s\e[0m : permission denied\n", name);
-			data->exit_code = 1;
-			free(name);
-			return (1);
-		}
+		ft_dprintf(2, "\e[1;37m%s\e[0m : no such file or directory\n", name);
+		free(name);
+		data->exit_code = 1;
+		return (1);
 	}
-	if (type == 2)
+	if (access(name, R_OK) != 0 && type == 1)
 	{
-		if (access(name, W_OK) != 0)
-		{
-			ft_dprintf(2, "\e[1;37m%s\e[0m : permission denied\n", name);
-			data->exit_code = 1;
-			free(name);
-			return (1);
-		}
+		ft_dprintf(2, "\e[1;37m%s\e[0m : permission denied\n", name);
+		free(name);
+		data->exit_code = 1;
+		return (1);
+	}
+	if (access(name, W_OK) != 0 && type == 2)
+	{
+		ft_dprintf(2, "\e[1;37m%s\e[0m : permission denied\n", name);
+		free(name);
+		data->exit_code = 1;
+		return (1);
 	}
 	return (0);
 }
