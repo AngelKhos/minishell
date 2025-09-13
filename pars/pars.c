@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/12 18:12:22 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 15:31:58 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	parsing(t_data *data)
 	char	**inputs;
 
 	if (!checking_missing_command(data->input))
-		return (unexpected_token(2));
+		return (unexpected_token(2, data));
 	inputs = ms_split(data->input, '|');
 	if (!inputs)
 	{

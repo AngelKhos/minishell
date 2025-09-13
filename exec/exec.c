@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/12 18:31:41 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 15:28:59 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,18 @@ int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 	if (data->nb_pipes > 0)
 		if (pipe(curr_pipe) == -1)
 			return (0);
-	g_pid.pid = fork();
-	if (g_pid.pid == -1)
+	g_pid = fork();
+	if (g_pid == -1)
 		return (close_pipe_in_exec_cmd(prev_pipe, curr_pipe), 0);
-	if (g_pid.pid == 0)
+	if (g_pid == 0)
 	{
 		double_free(pids, data->input);
 		signal(SIGQUIT, SIG_DFL);
 		code = child_proc(data, prev_pipe, curr_pipe, cmd_index);
 		exit(code);
 	}
-	else if (g_pid.pid > 0)
-		pids[cmd_index] = g_pid.pid;
+	else if (g_pid > 0)
+		pids[cmd_index] = g_pid;
 	if (data->nb_pipes > 0)
 		close_pipe_in_exec_cmd(prev_pipe, curr_pipe);
 	return (1);

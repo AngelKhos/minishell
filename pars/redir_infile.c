@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/12 18:14:52 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 15:33:04 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 
 	i = 0;
 	if (!input[i])
-		return (unexpected_token(1));
+		return (unexpected_token(1, data));
 	while (input[i] && ft_isspace(input[i]))
 		i++;
 	j = i;
 	if (!input[i] || is_in_out(input[i]))
-		return (unexpected_token(1));
+		return (unexpected_token(1, data));
 	while (input[i] && !ft_isspace(input[i]) && !is_in_out(input[i]))
 		i++;
 	name = get_name(input, i, j, data);
@@ -78,12 +78,12 @@ int	handle_infile_loop(char *input, t_cmd *cmd, t_data *data)
 
 	i = 0;
 	if (!input)
-		return (unexpected_token(1));
+		return (unexpected_token(1, data));
 	while (input[i] && ft_isspace(input[i]))
 		i++;
 	j = i;
 	if (!input[i] || input[i] == '<' || input[i] == '>')
-		return (unexpected_token(1));
+		return (unexpected_token(1, data));
 	while (input[i] && !ft_isspace(input[i]) && !is_in_out(input[i]))
 		i++;
 	name = get_name(input, i, j, data);
@@ -92,7 +92,7 @@ int	handle_infile_loop(char *input, t_cmd *cmd, t_data *data)
 	if (cmd->infile != -1)
 		close(cmd->infile);
 	cmd->infile = open(name, O_RDONLY);
-	if (permission_denied(1, name))
+	if (permission_denied(1, name, data))
 		return (0);
 	free(name);
 	return (i);
@@ -105,7 +105,7 @@ int	handle_infile(char *input, t_cmd *cmd, t_data *data)
 
 	i = 1;
 	if (!input[i])
-		return (unexpected_token(1));
+		return (unexpected_token(1, data));
 	if (input[i++] == '<')
 	{
 		if (cmd->hd_name)

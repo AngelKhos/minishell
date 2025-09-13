@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/12 18:20:01 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 15:28:59 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-t_pid_code	g_pid;
+int	g_pid;
 
 void	handle_readline(t_data *data)
 {
@@ -66,8 +66,8 @@ void	increase_shlvl(t_data *data)
 
 int	init_data(t_data *data, char **envp)
 {
-	g_pid.pid = 0;
-	g_pid.exit_code = 0;
+	g_pid = 0;
+	data->exit_code = 0;
 	data->run = 1;
 	if (*envp)
 		data->env = envp_to_tree(envp);
@@ -90,7 +90,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!init_data(data, envp))
 		return (free_data(data), EXIT_FAILURE);
 	handle_readline(data);
-	code = g_pid.exit_code;
+	code = data->exit_code;
 	free_data(data);
 	rl_clear_history();
 	return (code);

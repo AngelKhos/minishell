@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:09:19 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/12 18:31:57 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 15:29:21 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 void	sigint_handle(int code)
 {
 	(void)code;
-	if (g_pid.pid == 0)
+	if (g_pid == 0)
 	{
-		g_pid.exit_code = 130;
 		ft_printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();

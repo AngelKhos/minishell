@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/12 18:32:20 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 15:31:05 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,7 @@ typedef struct s_redir
 	size_t	tmp;
 }	t_redir;
 
-typedef struct s_pid_code
-{
-	int	pid;
-	int	exit_code;
-}	t_pid_code;
-
-extern t_pid_code	g_pid;
+extern int	g_pid;
 
 ////////////// BUILTINS //////////////
 
@@ -141,11 +135,11 @@ int		get_tablen(char **inputs);
 int		is_redir(char *input);
 int		is_in_out(char c);
 char	*get_name(char *input, int i, int j, t_data *data);
-int		permission_denied(int type, char *name);
-int		unexpected_token(int type);
+int		permission_denied(int type, char *name, t_data *data);
+int		unexpected_token(int type, t_data *data);
 int		is_exp(char *input);
 int		checking_missing_command(char *input);
-int		is_code(char *token, char **value, int *key_len);
+int		is_code(char *token, char **value, int *key_len, t_data *data);
 int		handle_heredoc(char *input, t_cmd *cmd, t_data *data);
 int		handle_infile(char *input, t_cmd *cmd, t_data *data);
 int		handle_outfile(char *input, t_cmd *cmd, t_data *data);

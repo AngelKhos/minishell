@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:20:49 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/12 18:14:23 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 15:30:41 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	is_exp(char *input)
 	return (-1);
 }
 
-int	unexpected_token(int type)
+int	unexpected_token(int type, t_data *data)
 {
-	g_pid.exit_code = 2;
+	data->exit_code = 2;
 	if (type == 1)
 		ft_dprintf(2, "Error: unexpected token\n");
 	if (type == 2)
@@ -38,11 +38,11 @@ int	unexpected_token(int type)
 	return (0);
 }
 
-int	is_code(char *token, char **value, int *key_len)
+int	is_code(char *token, char **value, int *key_len, t_data *data)
 {
 	if (token[1] == '?')
 	{
-		*value = ft_itoa(g_pid.exit_code);
+		*value = ft_itoa(data->exit_code);
 		if (!*value)
 			return (0);
 		*key_len = 2;
@@ -51,14 +51,14 @@ int	is_code(char *token, char **value, int *key_len)
 	return (0);
 }
 
-int	permission_denied(int type, char *name)
+int	permission_denied(int type, char *name, t_data *data)
 {
 	if (type == 1)
 	{
 		if (access(name, R_OK) != 0)
 		{
 			ft_dprintf(2, "\e[1;37m%s\e[0m : permission denied\n", name);
-			g_pid.exit_code = 1;
+			data->exit_code = 1;
 			free(name);
 			return (1);
 		}
@@ -68,7 +68,7 @@ int	permission_denied(int type, char *name)
 		if (access(name, W_OK) != 0)
 		{
 			ft_dprintf(2, "\e[1;37m%s\e[0m : permission denied\n", name);
-			g_pid.exit_code = 1;
+			data->exit_code = 1;
 			free(name);
 			return (1);
 		}
