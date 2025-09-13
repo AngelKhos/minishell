@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/13 18:37:55 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 18:47:14 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	update_oldpwd(t_data *data)
 	t_env	*env_oldpwd;
 	char	*tmp;
 	char	oldpwd[PATH_MAX];
-	
+
 	env_oldpwd = tree_search(data->env, "OLDPWD");
 	if (getcwd(oldpwd, PATH_MAX) == NULL)
 		oldpwd[0] = '\0';
@@ -72,7 +72,7 @@ void	update_pwd(t_data *data)
 		pwd[0] = '\0';
 	if (env_pwd)
 	{
-		tmp = NULL;//ft_strdup(pwd);
+		tmp = ft_strdup(pwd);
 		if (tmp)
 		{
 			if (env_pwd->data.value)
