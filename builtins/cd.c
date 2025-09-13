@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 16:14:54 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/12 18:00:32 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 18:47:14 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,31 +40,53 @@ int	change_dir(t_data *data, t_cmd cmd)
 	return (0);
 }
 
-void	cd_body(t_data *data, t_cmd cmd, int *code)
+void	update_oldpwd(t_data *data)
 {
-	t_env	*env_pwd;
 	t_env	*env_oldpwd;
-	char	pwd[PATH_MAX];
+	char	*tmp;
+	char	oldpwd[PATH_MAX];
 
 	env_oldpwd = tree_search(data->env, "OLDPWD");
+	if (getcwd(oldpwd, PATH_MAX) == NULL)
+		oldpwd[0] = '\0';
 	if (env_oldpwd)
 	{
-		if (getcwd(pwd, PATH_MAX) == NULL)
-			return ;
-		if (env_oldpwd->data.value)
-			free(env_oldpwd->data.value);
-		env_oldpwd->data.value = ft_strdup(pwd);
+		tmp = ft_strdup(oldpwd);
+		if (tmp)
+		{
+			if (env_oldpwd->data.value)
+				free(env_oldpwd->data.value);
+			env_oldpwd->data.value = tmp;
+		}
 	}
-	*code = change_dir(data, cmd);
+}
+
+void	update_pwd(t_data *data)
+{
+	t_env	*env_pwd;
+	char	*tmp;
+	char	pwd[PATH_MAX];
+
 	env_pwd = tree_search(data->env, "PWD");
+	if (getcwd(pwd, PATH_MAX) == NULL)
+		pwd[0] = '\0';
 	if (env_pwd)
 	{
-		if (getcwd(pwd, PATH_MAX) == NULL)
-			return ;
-		if (env_pwd->data.value)
-			free(env_pwd->data.value);
-		env_pwd->data.value = ft_strdup(pwd);
+		tmp = ft_strdup(pwd);
+		if (tmp)
+		{
+			if (env_pwd->data.value)
+				free(env_pwd->data.value);
+			env_pwd->data.value = tmp;
+		}
 	}
+}
+
+void	cd_body(t_data *data, t_cmd cmd, int *code)
+{
+	update_oldpwd(data);
+	*code = change_dir(data, cmd);
+	update_pwd(data);
 }
 
 int	cd(t_data *data, t_cmd cmd)
