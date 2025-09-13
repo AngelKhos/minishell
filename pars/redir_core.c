@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:28:11 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/10 18:37:02 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/13 18:09:06 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ char	*pars_redir(char *input, t_cmd *cmd, t_data *data)
 		pars_redir_quote(input, redir);
 		if (input[redir->i] == '<')
 			if (pars_redir_infile(input, cmd, data, redir))
-				return (free(input), free(redir), NULL);
+				return (double_free(input, redir->new_input)
+					, free(redir), NULL);
 		if (pars_redir_outfile(input, redir, cmd, data))
-			return (free(input), free(redir), NULL);
+			return (double_free(input, redir->new_input), free(redir), NULL);
 	}
 	new_input = redir->new_input;
 	free(input);

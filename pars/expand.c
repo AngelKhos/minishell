@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/13 15:34:23 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/13 19:04:54 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,16 @@ char	*get_expand(char *key_src, int key_size, t_data *data)
 	t_env	*root;
 	char	*name;
 
+	if (key_src[1] == '?')
+	{
+		name = ft_itoa(data->exit_code);
+		if (!name)
+			return (NULL);
+		return (name);
+	}
 	key = ft_strndup(key_src + 1, key_size - 1);
+	if (!key)
+		return (NULL);
 	root = tree_search(data->env, key);
 	free(key);
 	if (!root)
@@ -29,31 +38,59 @@ char	*get_expand(char *key_src, int key_size, t_data *data)
 	return (name);
 }
 
-char	*make_expand(char *token, char **value, int key_len, t_data *data)
+// int		i;
+// int		j;
+// int		value_len;
+// char	*new_token;
+
+// i = 0;
+// j = 0;
+// value_len = 3;
+// if (*value)
+// 	value_len = ft_strlen(*value);
+// new_token = ft_calloc(sizeof(char), ft_strlen(token) + value_len);
+// if (!new_token)
+// 	return (NULL);
+// while (token[i] && token[i] != '$')
+// 	new_token[j++] = token[i++];
+// if (is_code(&token[i], value, &key_len, data))
+// 	value_len = ft_strlen(*value);
+// if (*value)
+// 	ft_strlcat(new_token, *value, ft_strlen(new_token) + value_len + 1);
+// j += value_len;
+// i += key_len;
+// ft_strlcpy(new_token + j, token + i, ft_strlen(token) - i + 1);
+// free(token);
+// return (new_token);
+
+char	*make_expand(char *token, char *value, int key_len)
 {
-	int		i;
-	int		j;
-	int		value_len;
-	char	*new_token;
+	char *new_token;
+	int i;
+	int j;
+	int value_len;
 
 	i = 0;
 	j = 0;
-	value_len = 3;
-	if (*value)
-		value_len = ft_strlen(*value);
+	value_len = key_len;
+	if (value)
+		value_len = ft_strlen(value);
 	new_token = ft_calloc(sizeof(char), ft_strlen(token) + value_len);
 	if (!new_token)
 		return (NULL);
 	while (token[i] && token[i] != '$')
+	{
 		new_token[j++] = token[i++];
-	if (is_code(&token[i], value, &key_len, data))
-		value_len = ft_strlen(*value);
-	if (*value)
-		ft_strlcat(new_token, *value, ft_strlen(new_token) + value_len + 1);
-	j += value_len;
-	i += key_len;
-	while (token[i])
-		new_token[j++] = token[i++];
+	}
+	if (!value)
+		ft_strlcpy(new_token + j, token + i + key_len, ft_strlen(token) - i + 1);
+	else
+	{
+		ft_strlcat(new_token, value, ft_strlen(new_token) + value_len + 1);
+		j += value_len;
+		i += key_len;
+		ft_strlcpy(new_token + j, token + i, ft_strlen(token) - i + 1);
+	}
 	free(token);
 	return (new_token);
 }
@@ -71,7 +108,7 @@ int	pars_exp_loop(t_data *data, char **raw_cmd, int *i)
 		while (raw_cmd[i[0]][i[2]] && !is_expkey_end(raw_cmd[i[0]][i[2]]))
 			i[2]++;
 		value = get_expand(raw_cmd[i[0]] + i[1], i[2] - i[1], data);
-		new = make_expand(raw_cmd[i[0]], &value, i[2] - i[1], data);
+		new = make_expand(raw_cmd[i[0]], value, i[2] - i[1]);
 		if (!new)
 			return (0);
 		raw_cmd[i[0]] = new;
