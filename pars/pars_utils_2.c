@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:20:49 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/13 23:18:41 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 14:04:51 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,20 @@ int	permission_denied(int type, char *name, t_data *data)
 		return (1);
 	}
 	return (0);
+}
+
+void init_redir_fd(t_data *data, int input_len)
+{
+	int i;
+
+	i = 0;
+	while (i < input_len)
+	{
+		data->cmd[i].infile = -1;
+		data->cmd[i].outfile = -1;
+		data->cmd[i].here_doc = -1;
+		i++;
+	}
 }
 
 int	checking_missing_command(char *input)

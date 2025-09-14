@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/13 23:53:52 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 14:04:08 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,9 @@ int	alloc_cmd(t_data *data, char **inputs)
 	int		is_cmd;
 
 	i = 0;
+	init_redir_fd(data, get_tablen(inputs));
 	while (inputs[i])
 	{
-		data->cmd[i].infile = -1;
-		data->cmd[i].outfile = -1;
-		data->cmd[i].here_doc = -1;
 		is_cmd = 0;
 		parsed_input = pars_redir(inputs[i], &data->cmd[i], data);
 		if (!parsed_input)

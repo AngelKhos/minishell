@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/14 13:17:20 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 13:29:44 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	handle_readline(t_data *data)
 				add_history(data->input);
 				if (parsing(data))
 				{
-					display_cmd(data);
 					if (!read_cmd(data))
 						ft_dprintf(2, "Error: exec error\n");
 					close_file(data);

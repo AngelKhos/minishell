@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/14 13:16:56 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 14:03:47 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ char	*get_expand(char *key_src, int key_size, t_data *data);
 int		is_expkey_end(char c);
 int		get_tablen(char **inputs);
 int		is_redir(char *input);
+void	init_redir_fd(t_data *data, int input_len);
 int		is_in_out(char c);
 char	*get_name(char *input, int i, int j, t_data *data);
 int		permission_denied(int type, char *name, t_data *data);
