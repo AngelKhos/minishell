@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:28:11 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/13 18:09:06 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 15:03:32 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,23 @@ char	*pars_redir(char *input, t_cmd *cmd, t_data *data)
 	char	*new_input;
 
 	if (!is_redir(input))
-		return (input);
+		return (ft_strdup(input));
 	redir = ft_calloc(sizeof(t_redir), 1);
 	redir->i = 0;
 	redir->new_input = ft_calloc(sizeof(char), ft_strlen(input) + 1);
 	if (!redir->new_input)
-		return (free(input), free(redir), NULL);
+		return (free(redir), NULL);
 	redir->j = 0;
 	while (redir->i < ft_strlen(input))
 	{
 		pars_redir_quote(input, redir);
 		if (input[redir->i] == '<')
 			if (pars_redir_infile(input, cmd, data, redir))
-				return (double_free(input, redir->new_input)
-					, free(redir), NULL);
+				return (free(redir->new_input), free(redir), NULL);
 		if (pars_redir_outfile(input, redir, cmd, data))
-			return (double_free(input, redir->new_input), free(redir), NULL);
+			return (free(redir->new_input), free(redir), NULL);
 	}
 	new_input = redir->new_input;
-	free(input);
 	free(redir);
 	return (new_input);
 }

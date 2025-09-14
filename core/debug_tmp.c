@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_tmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:28:34 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/20 11:41:16 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/14 14:48:39 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	display_cmd(t_data *data)
 	int	i;
 	int	c_i;
 
-	i = 0;
 	c_i = 0;
 	while (c_i < data->nb_pipes + 1)
 	{

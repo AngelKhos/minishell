@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/14 14:04:08 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 15:01:43 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,10 @@ int	parsing(t_data *data)
 	if (!data->cmd || data->nb_pipes > PIPE_LIMIT)
 	{
 		ft_dprintf(2, "Error: error in parsing\n");
-		if (data->cmd)
-			free(data->cmd);
+		free(data->cmd);
 		return (free_array(inputs), 0);
 	}
 	if (!alloc_cmd(data, inputs))
-		return (close_file(data), free(inputs), free(data->cmd), 0);
-	return (free(inputs), 1);
+		return (close_file(data), free_array(inputs), free(data->cmd), 0);
+	return (free_array(inputs), 1);
 }
-
-// simple quote traduit pas, double quote traduit les $var
-// les $ peuvent etre n'importe ou
