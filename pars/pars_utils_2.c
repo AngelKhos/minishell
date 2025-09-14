@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:20:49 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/14 14:04:51 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 15:09:18 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ int	permission_denied(int type, char *name, t_data *data)
 	return (0);
 }
 
-void init_redir_fd(t_data *data, int input_len)
+void	init_redir_fd(t_data *data, int input_len)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < input_len)

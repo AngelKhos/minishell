@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/13 19:20:52 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/14 16:25:49 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,34 +40,31 @@ char	*get_expand(char *key_src, int key_size, t_data *data)
 
 char	*make_expand(char *token, char *value, int key_len)
 {
-	char *new_token;
-	int i;
-	int j;
-	int value_len;
+	char	*new_token;
+	int		i[2];
+	int		value_len;
 
-	i = 0;
-	j = 0;
+	i[0] = 0;
+	i[1] = 0;
 	value_len = key_len;
 	if (value)
 		value_len = ft_strlen(value);
 	new_token = ft_calloc(sizeof(char), ft_strlen(token) + value_len);
 	if (!new_token)
 		return (NULL);
-	while (token[i] && token[i] != '$')
-	{
-		new_token[j++] = token[i++];
-	}
+	while (token[i[0]] && token[i[0]] != '$')
+		new_token[i[1]++] = token[i[0]++];
 	if (!value)
-		ft_strlcpy(new_token + j, token + i + key_len, ft_strlen(token) - i + 1);
+		ft_strlcpy(new_token + i[1], token + i[0] + key_len,
+			ft_strlen(token) - i[0] + 1);
 	else
 	{
 		ft_strlcat(new_token, value, ft_strlen(new_token) + value_len + 1);
-		j += value_len;
-		i += key_len;
-		ft_strlcpy(new_token + j, token + i, ft_strlen(token) - i + 1);
+		i[1] += value_len;
+		i[0] += key_len;
+		ft_strlcpy(new_token + i[1], token + i[0], ft_strlen(token) - i[0] + 1);
 	}
-	free(token);
-	return (new_token);
+	return (free(token), new_token);
 }
 
 int	pars_exp_loop(t_data *data, char **raw_cmd, int *i)

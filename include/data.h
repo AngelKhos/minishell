@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/14 14:03:47 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 17:46:43 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int		skip_quote(char *str, int index);
 char	*ft_strndup(const char *s, size_t n);
 int		parsing(t_data *data);
 int		is_builtins(char *input);
-int		here_doc(char *word, t_data *data);
+int		here_doc(char *word, t_data *data, char **hd_name);
 int		pars_exp(t_data *data, char **raw_cmd);
 char	*get_expand(char *key_src, int key_size, t_data *data);
 int		is_expkey_end(char c);
@@ -155,6 +155,6 @@ void	sigint_handle(int code);
 void	sigabrt_handle(void);
 void	exec_sigint_handle(int code);
 void	hd_sigint_handle(int code);
-int		rl_hook_event_handler();
+int		rl_hook_event_handler(void);
 
 #endif

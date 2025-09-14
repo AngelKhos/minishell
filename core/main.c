@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/14 13:29:44 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 16:27:44 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,28 @@
 
 int	g_sig_val = 0;
 
+void	readline_loop(t_data *data)
+{
+	if (ft_strlen(data->input) >= 1)
+	{
+		add_history(data->input);
+		if (parsing(data))
+		{
+			if (g_sig_val != 130)
+				if (!read_cmd(data))
+					ft_dprintf(2, "Error: exec error\n");
+			close_file(data);
+			free_cmd(data);
+		}
+	}
+	free(data->input);
+}
+
 void	handle_readline(t_data *data)
 {
 	while (data->run)
 	{
 		handle_signal();
-
 		data->input = readline("(つ ╹╹)つ──☆*:");
 		if (g_sig_val)
 			data->exit_code = g_sig_val;
@@ -31,18 +47,7 @@ void	handle_readline(t_data *data)
 		signal(SIGINT, exec_sigint_handle);
 		if (data->input)
 		{
-			if (ft_strlen(data->input) >= 1)
-			{
-				add_history(data->input);
-				if (parsing(data))
-				{
-					if (!read_cmd(data))
-						ft_dprintf(2, "Error: exec error\n");
-					close_file(data);
-					free_cmd(data);
-				}
-			}
-			free(data->input);
+			readline_loop(data);
 		}
 		else
 			exit_minishell_edition(data, NULL);

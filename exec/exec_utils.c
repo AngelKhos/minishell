@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/14 14:47:05 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 16:04:44 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,7 @@ int	execute(char **cmd, char **envp)
 	{
 		free_array(envp);
 		free_array(cmd);
-		free(path);
-		return (0);
+		return (free(path), 0);
 	}
 	return (1);
 }
