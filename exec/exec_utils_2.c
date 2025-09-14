@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/13 21:45:45 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 13:20:40 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	wait_all(t_data *data, int *pids)
 		}
 		cmd_index++;
 	}
+	data->pid = 0;
 }
 
 int	child_proc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)

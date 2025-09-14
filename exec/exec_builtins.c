@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/13 21:44:10 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 13:19:41 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,16 @@ int	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 {
 	int	curr_pipe[2];
 	int	code;
-	int last_pid;
 
 	curr_pipe[0] = -1;
 	curr_pipe[1] = -1;
 	if (data->nb_pipes > 0)
 		if (pipe(curr_pipe) == -1)
 			return (0);
-	last_pid = fork();
-	if (last_pid == -1)
+	data->pid = fork();
+	if (data->pid == -1)
 		return (close_pipe_in_exec_cmd(prev_pipe, curr_pipe), 0);
-	if (last_pid == 0)
+	if (data->pid == 0)
 	{
 		double_free(pids, data->input);
 		builtins_child(data, prev_pipe, curr_pipe, cmd_index);
@@ -91,8 +90,8 @@ int	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 		free_in_builtins_child(data);
 		exit(code);
 	}
-	else if (last_pid > 0)
-		pids[cmd_index] = last_pid;
+	else if (data->pid > 0)
+		pids[cmd_index] = data->pid;
 	if (data->nb_pipes > 0)
 		close_pipe_in_exec_cmd(prev_pipe, curr_pipe);
 	return (1);

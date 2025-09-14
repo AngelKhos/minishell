@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/13 23:38:08 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 13:17:20 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	increase_shlvl(t_data *data)
 
 int	init_data(t_data *data, char **envp)
 {
+	data->pid = 0;
 	data->exit_code = 0;
 	data->run = 1;
 	if (*envp)

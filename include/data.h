@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/13 22:42:15 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/14 13:16:56 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_data
 	t_cmd	*cmd;
 	int		run;
 	int		nb_pipes;
+	int		pid;
 	int		exit_code;
 }	t_data;
 
