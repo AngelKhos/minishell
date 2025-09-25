@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/14 16:25:49 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/25 16:11:25 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ int	pars_exp_loop(t_data *data, char **raw_cmd, int *i)
 		value = get_expand(raw_cmd[i[0]] + i[1], i[2] - i[1], data);
 		new = make_expand(raw_cmd[i[0]], value, i[2] - i[1]);
 		if (!new)
+		{
+			free(value);
 			return (0);
+		}
 		raw_cmd[i[0]] = new;
 		if (!value)
 			value_len = 0;

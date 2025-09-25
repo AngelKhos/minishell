@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_core.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:28:11 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/14 15:03:32 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/25 16:12:34 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ char	*pars_redir(char *input, t_cmd *cmd, t_data *data)
 	if (!is_redir(input))
 		return (ft_strdup(input));
 	redir = ft_calloc(sizeof(t_redir), 1);
+	if (!redir)
+		return (NULL);
 	redir->i = 0;
 	redir->new_input = ft_calloc(sizeof(char), ft_strlen(input) + 1);
 	if (!redir->new_input)

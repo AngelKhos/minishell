@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:44:57 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/08/27 13:04:39 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:13:51 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_env	*envp_to_tree(char **envp)
 	while (envp[i])
 	{
 		leaf = env_parse_node(envp[i]);
+		if (!leaf)
+			return (NULL);
 		tree_insert(root, leaf);
 		i++;
 	}

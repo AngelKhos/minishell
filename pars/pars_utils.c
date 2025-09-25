@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 11:20:01 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/13 23:32:33 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/25 15:56:12 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,17 @@ char	*strdup_wquotes(char *s)
 	int		quote_flag;
 
 	quote_flag = 0;
-	dest = ft_calloc(sizeof(char), (ft_strlen(s) + 1));
+	dest = ft_calloc(sizeof(char), (ft_strlen(s) + 1)); // INVALID READ !!!!!!!
 	if (!dest)
+	{
+		free(s);
 		return (NULL);
+	}
 	i[0] = 0;
 	i[1] = 0;
 	strdup_wquotes_while(s, &quote_flag, i, dest);
-	return (free(s), dest);
+	free(s);
+	return (dest);
 }
 
 int	is_in_out(char c)

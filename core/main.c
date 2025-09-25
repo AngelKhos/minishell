@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/25 14:48:24 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:44:15 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,11 @@ int	init_data(t_data *data, char **envp)
 	data->exit_code = 0;
 	data->run = 1;
 	if (*envp)
+	{
 		data->env = envp_to_tree(envp);
+		if (data->env == NULL)
+			return (0);
+	}
 	if (!init_default_env(data))
 		return (0);
 	increase_shlvl(data);
