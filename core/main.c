@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/14 16:27:44 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/25 14:48:24 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,10 @@ int	main(int argc, char **argv, char **envp)
 	if (!data)
 		return (EXIT_FAILURE);
 	if (!init_data(data, envp))
-		return (free_data(data), EXIT_FAILURE);
+	{
+		free_data(data);
+		return (EXIT_FAILURE);
+	}
 	handle_readline(data);
 	code = data->exit_code;
 	free_data(data);

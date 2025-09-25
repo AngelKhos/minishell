@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:08:14 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/13 15:28:36 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:47:16 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,18 @@ int	exit_atoi_while(size_t i, long *res, char *s, int sign)
 		{
 			(*res) = (*res) * 10 + (s[i] - '0');
 			if (((*res) * sign) > 2147483647)
+			{
+				ft_dprintf(2,
+					"exit : numeric argument required\n",
+					s);
 				return (2);
+			}
 			i++;
 		}
 		else
 		{
 			ft_dprintf(2,
-				"exit: : numeric argument required\n",
+				"exit : numeric argument required\n",
 				s);
 			return (2);
 		}
@@ -77,6 +82,9 @@ void	exit_body(t_data *data, t_cmd *cmd, int *code)
 {
 	if (!is_num(cmd->parts[1].str))
 	{
+		ft_dprintf(2,
+			"exit : numeric argument required\n",
+			cmd->parts[1].str);
 		*code = 2;
 		data->run = 0;
 	}
