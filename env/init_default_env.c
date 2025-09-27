@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_default_env.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:56:56 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/10 15:44:59 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/25 16:08:07 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,12 @@ int	alloc_oldpwd(t_data *data, t_env *oldpwd)
 				tree_remove(&data->env, "PWD"), 0);
 		oldpwd->data.key = ft_strdup("OLDPWD");
 		if (!oldpwd->data.key)
-			return (tree_remove(&data->env, "SHLVL"),
-				tree_remove(&data->env, "PWD"), 0);
+		{
+			tree_remove(&data->env, "SHLVL");
+			tree_remove(&data->env, "PWD");
+			free(oldpwd);
+			return (0);
+		}
 		oldpwd->data.value = NULL;
 		add_to_env(data, oldpwd);
 	}
@@ -45,11 +49,18 @@ int	alloc_pwd(t_data *data, t_env *pwd)
 	{
 		pwd = ft_calloc(sizeof(t_env), 1);
 		if (!pwd)
-			return (tree_remove(&data->env, "SHLVL"),
-				tree_remove(&data->env, "OLDPWD"), 0);
+		{
+			tree_remove(&data->env, "SHLVL");
+			tree_remove(&data->env, "OLDPWD");
+			return (0);
+		}
 		pwd->data.key = ft_strdup("PWD");
 		if (!pwd->data.key)
-			return (tree_remove(&data->env, "SHLVL"), 0);
+		{
+			free(pwd);
+			tree_remove(&data->env, "SHLVL");
+			return (0);
+		}
 		pwd->data.value = NULL;
 		add_to_env(data, pwd);
 	}

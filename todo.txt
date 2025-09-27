@@ -1,8 +1,0 @@
-si pwd crash message d' erreur de preference 
-
-creer mkdir a1 a2 a3, aller dans a3 puis supprimer a2 ,
-cd est bloquer et ne sort jamais /!\
-
-malloc non proteger sur cd ligne 56
-
->> $oui leak sur parse_redir  definitely lost

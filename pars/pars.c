@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/25 21:02:41 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/27 15:08:09 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	alloc_cmd_part_2(char **raw_cmd, t_data *data, size_t i, int is_cmd)
 	part_i = 0;
 	rm_quotes(raw_cmd);
 	data->cmd[i].len = get_tablen(raw_cmd);
-	data->cmd[i].parts = ft_calloc(sizeof(t_part), get_tablen(raw_cmd));
+	data->cmd[i].parts = ft_calloc(sizeof(t_part), get_tablen(raw_cmd)); // LEAK / SEGFAULT
 	if (!raw_cmd)
 		return (alloc_when(data, i, part_i));
 	if (!data->cmd[i].parts)

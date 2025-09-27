@@ -6,7 +6,7 @@
 /*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:46:55 by authomas          #+#    #+#             */
-/*   Updated: 2025/07/21 12:50:11 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:09:12 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@ t_env	*env_parse_node(char *envstr)
 		return (NULL);
 	new = malloc(sizeof(t_env));
 	if (!new)
+	{
+		free(kv.key);
+		free(kv.value);
 		return (NULL);
+	}
 	new->data = kv;
 	new->left = NULL;
 	new->right = NULL;

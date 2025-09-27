@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:34:36 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/27 14:56:04 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/27 15:07:20 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,23 @@ char	*rand_name(char *word)
 	tmp = ft_itoa(i);
 	if (!tmp)
 		return (NULL);
-	name = ft_strjoin(tmp, word);
+	(void)word;
+	name = ft_strjoin(tmp, word);//fait de la merde que in crash
 	free(tmp);
 	if (!name)
 		return (NULL);
 	return (name);
 }
 
-int	here_doc(char *word, t_data *data, char **hd_name)
+int	here_doc(char *word, char **hd_name)
 {
 	int		hd_fd;
 	char	*here_doc_input;
 	char	*file_name;
 
-	(void)data;
 	file_name = rand_name(word);
+	if (!file_name)
+		return (-1);
 	hd_fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (hd_fd == -1)
 		return (-1);
