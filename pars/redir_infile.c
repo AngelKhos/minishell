@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/14 17:54:20 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/25 20:39:04 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ char	*get_name(char *input, int i, int j, t_data *data)
 {
 	char	*name;
 
-	if (input[j] == '$')
-		name = get_expand(input + j, i - j, data);
-	else
-		name = ft_strndup(input + j, i - j);
+	name = ft_substr(input, j, i - j);
+	if (!name)
+		return (NULL);
+	if (!pars_exp(data, &name))
+		return (NULL);
+	name = strdup_wquotes(name);
 	return (name);
 }
 
@@ -56,7 +58,11 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 	if (!input[i] || is_in_out(input[i]))
 		return (unexpected_token(1, data));
 	while (input[i] && !ft_isspace(input[i]) && !is_in_out(input[i]))
+	{
 		i++;
+		if (input[i] == '\"' || input[i] == '\'')
+			i = skip_quote(input, i);
+	}
 	name = get_name(input, i, j, data);
 	if (!name)
 		return (0);
@@ -84,7 +90,11 @@ int	handle_infile_loop(char *input, t_cmd *cmd, t_data *data)
 	if (!input[i] || input[i] == '<' || input[i] == '>')
 		return (unexpected_token(1, data));
 	while (input[i] && !ft_isspace(input[i]) && !is_in_out(input[i]))
+	{
 		i++;
+		if (input[i] == '\"' || input[i] == '\'')
+			i = skip_quote(input, i);
+	}
 	name = get_name(input, i, j, data);
 	if (!name)
 		return (0);

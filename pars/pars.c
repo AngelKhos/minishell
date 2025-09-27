@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/14 15:01:43 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/25 21:02:41 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ int	alloc_cmd(t_data *data, char **inputs)
 		parsed_input = pars_redir(inputs[i], &data->cmd[i], data);
 		if (!parsed_input)
 			return (0);
-		raw_cmd = ms_split(parsed_input, ' ');
+		if (!pars_exp(data, &parsed_input))
+			return (free(parsed_input), 0);
+		raw_cmd = ms_split(parsed_input, " \r\t\v\f");
 		free(parsed_input);
 		if (i == 0 && !raw_cmd)
 			return (0);
-		if (!pars_exp(data, raw_cmd))
-			return (free_array(raw_cmd), 0);
 		alloc_cmd_part_2(raw_cmd, data, i, is_cmd);
 		i++;
 	}
@@ -100,7 +100,7 @@ int	parsing(t_data *data)
 
 	if (!checking_missing_command(data->input))
 		return (unexpected_token(2, data));
-	inputs = ms_split(data->input, '|');
+	inputs = ms_split(data->input, "|");
 	if (!inputs)
 	{
 		ft_dprintf(2, "Error: error in parsing\n");

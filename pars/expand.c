@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/14 16:25:49 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/25 20:19:56 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ char	*get_expand(char *key_src, int key_size, t_data *data)
 {
 	char	*key;
 	t_env	*root;
-	char	*name;
+	char	*value;
 
 	if (key_src[1] == '?')
 	{
-		name = ft_itoa(data->exit_code);
-		if (!name)
+		value = ft_itoa(data->exit_code);
+		if (!value)
 			return (NULL);
-		return (name);
+		return (value);
 	}
 	key = ft_strndup(key_src + 1, key_size - 1);
 	if (!key)
@@ -32,10 +32,10 @@ char	*get_expand(char *key_src, int key_size, t_data *data)
 	free(key);
 	if (!root)
 		return (NULL);
-	name = ft_strdup(root->data.value);
-	if (!name)
+	value = ft_strdup(root->data.value);
+	if (!value)
 		return (NULL);
-	return (name);
+	return (value);
 }
 
 char	*make_expand(char *token, char *value, int key_len)
@@ -77,18 +77,22 @@ int	pars_exp_loop(t_data *data, char **raw_cmd, int *i)
 	{
 		i[1] = i[2];
 		i[2]++;
-		while (raw_cmd[i[0]][i[2]] && !is_expkey_end(raw_cmd[i[0]][i[2]]))
+		while ((*raw_cmd)[i[2]] && !is_expkey_end((*raw_cmd)[i[2]]))
+		{
 			i[2]++;
-		value = get_expand(raw_cmd[i[0]] + i[1], i[2] - i[1], data);
-		new = make_expand(raw_cmd[i[0]], value, i[2] - i[1]);
+		}
+		value = get_expand(*raw_cmd + i[1], i[2] - i[1], data);
+		new = make_expand(*raw_cmd, value, i[2] - i[1]);
 		if (!new)
 			return (0);
-		raw_cmd[i[0]] = new;
+		*raw_cmd = new;
 		if (!value)
 			value_len = 0;
 		else
 			value_len = ft_strlen(value);
-		i[2] = is_exp(raw_cmd[i[0]] + (i[1] + value_len));
+		i[2] = is_exp(*raw_cmd + (i[1] + value_len));
+		if (i[2] != -1)
+			i[2] += i[1] + value_len;
 		free(value);
 	}
 	return (1);
@@ -103,15 +107,11 @@ int	pars_exp(t_data *data, char **raw_cmd)
 {
 	int		i[3];
 
-	i[0] = 0;
+	(void)i[0];
 	if (!raw_cmd)
 		return (1);
-	while (raw_cmd[i[0]])
-	{
-		i[2] = is_exp(raw_cmd[i[0]]);
-		if (!pars_exp_loop(data, raw_cmd, i))
-			return (0);
-		i[0]++;
-	}
+	i[2] = is_exp(*raw_cmd);
+	if (!pars_exp_loop(data, raw_cmd, i))
+		return (0);
 	return (1);
 }

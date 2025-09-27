@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_outfile.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 16:04:37 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/13 15:33:42 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/25 20:34:50 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ static int	handle_outfile_append(char *input,
 	if (!input[i[0]] || is_in_out(input[i[0]]))
 		return (unexpected_token(1, data));
 	while (input[i[0]] && !ft_isspace(input[i[0]]) && !is_in_out(input[i[0]]))
+	{
 		i[0]++;
+		if (input[i[0]] == '\"' || input[i[0]] == '\'')
+			i[0] = skip_quote(input, i[0]);
+	}
 	name = get_name(input, i[0], i[1], data);
 	if (!name)
 		return (0);
@@ -50,7 +54,11 @@ static int	handle_outfile_trunc(char *input, t_cmd *cmd,
 	if (!input[i[0]] || is_in_out(input[i[0]]))
 		return (unexpected_token(1, data));
 	while (input[i[0]] && !ft_isspace(input[i[0]]) && !is_in_out(input[i[0]]))
+	{
 		i[0]++;
+		if (input[i[0]] == '\"' || input[i[0]] == '\'')
+			i[0] = skip_quote(input, i[0]);
+	}
 	name = get_name(input, i[0], i[1], data);
 	if (!name)
 		return (0);

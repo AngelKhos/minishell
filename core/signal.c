@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:09:19 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/25 15:04:43 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/25 19:17:31 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	sigint_handle(int code)
 
 void	exec_sigint_handle(int code)
 {
-	g_sig_val = code + 128;
+	(void)code;
 	write(2, "\n", 1);
 	rl_replace_line("", 0);
 }
