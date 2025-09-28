@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:08:14 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/25 14:47:16 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/28 19:38:22 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,21 +88,18 @@ void	exit_body(t_data *data, t_cmd *cmd, int *code)
 		*code = 2;
 		data->run = 0;
 	}
+	else if (cmd && cmd->len > 2)
+	{
+		ft_dprintf(2,
+			"\e[1;37mexit\e[0m: too many arguments\n",
+			cmd->parts[1].str);
+		*code = 1;
+		data->run = 1;
+	}
 	else
 	{
 		*code = ft_exit_atoi(cmd->parts[1].str);
 		data->run = 0;
-	}
-	if (*code != 2)
-	{
-		if (cmd && cmd->len > 2)
-		{
-			ft_dprintf(2,
-				"\e[1;37mexit\e[0m: too many arguments\n",
-				cmd->parts[1].str);
-			*code = 1;
-			data->run = 1;
-		}
 	}
 }
 

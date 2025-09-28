@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/27 15:08:16 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/28 19:43:21 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ int	is_redir(char *input)
 	return (0);
 }
 
-char	*get_name(char *input, int i, int j, t_data *data)
+char	*get_name(char *input, int i, int j, t_data *data, int is_heredoc)
 {
 	char	*name;
 
 	name = ft_substr(input, j, i - j);
 	if (!name)
 		return (NULL);
-	if (!pars_exp(data, &name))
+	if (!is_heredoc && !pars_exp(data, &name))
 		return (NULL);
 	name = strdup_wquotes(name);
 	return (name);
@@ -59,16 +59,16 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 		return (unexpected_token(1, data));
 	while (input[i] && !ft_isspace(input[i]) && !is_in_out(input[i]))
 	{
-		i++;
 		if (input[i] == '\"' || input[i] == '\'')
 			i = skip_quote(input, i);
+		i++;
 	}
-	name = get_name(input, i, j, data);
+	name = get_name(input, i, j, data, 1);
 	if (!name)
 		return (0);
 	if (cmd->infile != -1)
 		close(cmd->infile);
-	cmd->infile = here_doc(name, &(cmd->hd_name));
+	cmd->infile = here_doc(name, &(cmd->hd_name), data);
 	if (cmd->infile == -1)
 		return (unlink(cmd->hd_name), free(cmd->hd_name), i);
 	cmd->here_doc = 1;
@@ -91,11 +91,11 @@ int	handle_infile_loop(char *input, t_cmd *cmd, t_data *data)
 		return (unexpected_token(1, data));
 	while (input[i] && !ft_isspace(input[i]) && !is_in_out(input[i]))
 	{
-		i++;
 		if (input[i] == '\"' || input[i] == '\'')
 			i = skip_quote(input, i);
+		i++;
 	}
-	name = get_name(input, i, j, data);
+	name = get_name(input, i, j, data, 0);
 	if (!name)
 		return (0);
 	if (cmd->infile != -1)

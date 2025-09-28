@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/27 15:08:09 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/28 20:10:12 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int	alloc_cmd(t_data *data, char **inputs)
 			return (free(parsed_input), 0);
 		raw_cmd = ms_split(parsed_input, " \r\t\v\f");
 		free(parsed_input);
-		if (i == 0 && !raw_cmd)
-			return (0);
 		alloc_cmd_part_2(raw_cmd, data, i, is_cmd);
 		i++;
 	}

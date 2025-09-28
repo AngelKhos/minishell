@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:34:36 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/27 15:07:20 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/28 19:40:18 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-void	write_in_here_doc(int hd_fd, char *here_doc_input)
+void	write_in_here_doc(int hd_fd, char *here_doc_input, t_data *data)
 {
+	pars_exp(data, &here_doc_input);
 	write(hd_fd, here_doc_input, ft_strlen(here_doc_input));
 	write(hd_fd, "\n", 1);
+	free(here_doc_input);
 }
 
-int	heredoc_loop(char *here_doc_input, char *word, int hd_fd)
+int	heredoc_loop(char *here_doc_input, char *word, int hd_fd, t_data *data)
 {
 	free(here_doc_input);
 	here_doc_input = readline(">");
@@ -41,8 +43,7 @@ int	heredoc_loop(char *here_doc_input, char *word, int hd_fd)
 			free(here_doc_input);
 			return (0);
 		}
-		write_in_here_doc(hd_fd, here_doc_input);
-		free(here_doc_input);
+		write_in_here_doc(hd_fd, here_doc_input, data);
 		here_doc_input = NULL;
 	}
 	else
@@ -71,7 +72,7 @@ char	*rand_name(char *word)
 	return (name);
 }
 
-int	here_doc(char *word, char **hd_name)
+int	here_doc(char *word, char **hd_name, t_data *data)
 {
 	int		hd_fd;
 	char	*here_doc_input;
@@ -88,7 +89,7 @@ int	here_doc(char *word, char **hd_name)
 	rl_event_hook = rl_hook_event_handler;
 	while (1)
 	{
-		if (!heredoc_loop(here_doc_input, word, hd_fd))
+		if (!heredoc_loop(here_doc_input, word, hd_fd, data))
 			break ;
 	}
 	rl_event_hook = NULL;

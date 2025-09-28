@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/25 16:14:46 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/28 16:18:34 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*find_loop_while(char **paths, char *cmd, int *code)
 
 char	*find_loop(char	**paths, char *cmd, int *code)
 {
-	if (!(cmd[0] == '.' && cmd [1] == '/') && cmd[0] != '/')
+	if (!(cmd[0] == '.' && cmd [1] == '/') && cmd[0] != '/' && cmd[0] != '.')
 	{
 		return (find_loop_while(paths, cmd, code));
 	}

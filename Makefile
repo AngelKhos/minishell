@@ -2,7 +2,7 @@ NAME=minishell
 # /////////////////////////
 
 CC=cc
-CC_FLAGS=-Wall -Wextra -Werror -g3 -fsanitize=address,leak
+CC_FLAGS=-Wall -Wextra -Werror -g3 #-fsanitize=address,leak
 
 # /////////////////////////
 
@@ -19,37 +19,30 @@ SRCS=core/debug_tmp.c core/utils.c core/main.c core/free.c core/global_free.c co
 
 LIB= libft/libft.a
 INCS= include/data.h include/env.h
-OBJS=$(SRCS:srcs/%.c=$(DIR_OBJS)/%.o)
-DEPS=$(SRCS:srcs/%.c=$(DIR_DEPS)/%.d)
+OBJS=$(SRCS:%.c=$(DIR_OBJS)/%.o)
+DEPS=$(SRCS:%.c=$(DIR_DEPS)/%.d)
 
 # /////////////////////////
 
 all: compile_start libft $(NAME) compile_done
 
 compile_start:
-	echo "$(GREEN) Compile start ... $(END)"
+	echo "$(GREEN)Compile start... $(END)"
 
 compile_done:
-	echo "$(GREEN) Compiling done $(END)"
+	echo "$(GREEN)Compiling done $(END)"
 
 libft:
 	$(MAKE) --silent -C ./libft
 
 $(NAME): $(OBJS) $(DEPS) $(INCS) Makefile $(LIB)
 	$(CC) $(CC_FLAGS) $(OBJS) $(LIB) -lreadline -o $@
-	echo "$(BLUE) Your minishell is ready $(END)"
+	echo "$(BLUE)Your minishell is ready $(END)"
 
 
-$(DIR_OBJS)/%.o: srcs/%.c Makefile | $(DIR_OBJS) $(DIR_DEPS) 
+$(DIR_OBJS)/%.o: %.c Makefile 
+	mkdir -p $(dir $@) $(DIR_DEPS)/$(dir $*)
 	$(CC) $(CC_FLAGS) -MMD -MP -MF $(DIR_DEPS)/$*.d -c -o $@ $<
-
-# /////////////////////////
-
-$(DIR_OBJS):
-	mkdir -p $(DIR_OBJS)
-
-$(DIR_DEPS):
-	mkdir -p $(DIR_DEPS)
 
 # /////////////////////////
 

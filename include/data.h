@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/27 15:05:37 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/28 19:42:43 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int		skip_quote(char *str, int index);
 char	*ft_strndup(const char *s, size_t n);
 int		parsing(t_data *data);
 int		is_builtins(char *input);
-int		here_doc(char *word, char **hd_name);
+int		here_doc(char *word, char **hd_name, t_data *data);
 int		pars_exp(t_data *data, char **raw_cmd);
 char	*get_expand(char *key_src, int key_size, t_data *data);
 int		is_expkey_end(char c);
@@ -137,7 +137,7 @@ int		get_tablen(char **inputs);
 int		is_redir(char *input);
 void	init_redir_fd(t_data *data, int input_len);
 int		is_in_out(char c);
-char	*get_name(char *input, int i, int j, t_data *data);
+char	*get_name(char *input, int i, int j, t_data *data, int is_heredoc);
 int		permission_denied(int type, char *name, t_data *data);
 int		unexpected_token(int type, t_data *data);
 int		is_exp(char *input);

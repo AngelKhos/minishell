@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 16:04:37 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/25 20:34:50 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/28 19:44:07 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ static int	handle_outfile_append(char *input,
 		return (unexpected_token(1, data));
 	while (input[i[0]] && !ft_isspace(input[i[0]]) && !is_in_out(input[i[0]]))
 	{
-		i[0]++;
 		if (input[i[0]] == '\"' || input[i[0]] == '\'')
 			i[0] = skip_quote(input, i[0]);
+		i[0]++;
 	}
-	name = get_name(input, i[0], i[1], data);
+	name = get_name(input, i[0], i[1], data, 0);
 	if (!name)
 		return (0);
 	if (cmd->outfile != -1)
@@ -55,11 +55,11 @@ static int	handle_outfile_trunc(char *input, t_cmd *cmd,
 		return (unexpected_token(1, data));
 	while (input[i[0]] && !ft_isspace(input[i[0]]) && !is_in_out(input[i[0]]))
 	{
-		i[0]++;
 		if (input[i[0]] == '\"' || input[i[0]] == '\'')
 			i[0] = skip_quote(input, i[0]);
+		i[0]++;
 	}
-	name = get_name(input, i[0], i[1], data);
+	name = get_name(input, i[0], i[1], data, 0);
 	if (!name)
 		return (0);
 	if (cmd->outfile != -1)
