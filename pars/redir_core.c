@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_core.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:28:11 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/25 16:12:34 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/29 15:10:51 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,16 @@ char	*pars_redir(char *input, t_cmd *cmd, t_data *data)
 	redir->i = 0;
 	redir->new_input = ft_calloc(sizeof(char), ft_strlen(input) + 1);
 	if (!redir->new_input)
-		return (free(redir), NULL);
+		return (double_free_ptr(redir, NULL));
 	redir->j = 0;
 	while (redir->i < ft_strlen(input))
 	{
 		pars_redir_quote(input, redir);
 		if (input[redir->i] == '<')
 			if (pars_redir_infile(input, cmd, data, redir))
-				return (free(redir->new_input), free(redir), NULL);
+				return (double_free_ptr(redir->new_input, redir));
 		if (pars_redir_outfile(input, redir, cmd, data))
-			return (free(redir->new_input), free(redir), NULL);
+			return (double_free_ptr(redir->new_input, redir));
 	}
 	new_input = redir->new_input;
 	free(redir);

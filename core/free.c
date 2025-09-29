@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:40:46 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/09 17:24:36 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 15:12:15 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,19 @@ void	close_file(t_data *data)
 		close_here_doc(cmd);
 		i_cmd++;
 	}
+}
+
+void	*free_array_ptr(char **array)
+{
+	size_t	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+	array = NULL;
+	return (NULL);
 }

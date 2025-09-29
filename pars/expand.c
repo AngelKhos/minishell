@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:57:57 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/27 15:06:53 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 14:55:31 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,33 @@ char	*get_expand(char *key_src, int key_size, t_data *data)
 	return (value);
 }
 
-char	*make_expand(char *token, char *value, int key_len)
+char	*make_expand(char *t, char *value, int keylen)
 {
-	char	*new_token;
+	char	*n_token;
 	int		i[2];
 	int		value_len;
 
 	i[0] = 0;
 	i[1] = 0;
-	value_len = key_len;
+	value_len = keylen;
 	if (value)
 		value_len = ft_strlen(value);
-	new_token = ft_calloc(sizeof(char), ft_strlen(token) + value_len);
-	if (!new_token)
+	n_token = ft_calloc(sizeof(char), ft_strlen(t) + value_len);
+	if (!n_token)
 		return (NULL);
-	while (token[i[0]] && token[i[0]] != '$')
-		new_token[i[1]++] = token[i[0]++];
+	while (t[i[0]] && t[i[0]] != '$')
+		n_token[i[1]++] = t[i[0]++];
 	if (!value)
-		ft_strlcpy(new_token + i[1], token + i[0] + key_len,
-			ft_strlen(token) - i[0] + 1);
+		ft_strlcpy(n_token + i[1], t + i[0] + keylen, ft_strlen(t) - i[0] + 1);
 	else
 	{
-		ft_strlcat(new_token, value, ft_strlen(new_token) + value_len + 1);
+		ft_strlcat(n_token, value, ft_strlen(n_token) + value_len + 1);
 		i[1] += value_len;
-		i[0] += key_len;
-		ft_strlcpy(new_token + i[1], token + i[0], ft_strlen(token) - i[0] + 1);
+		i[0] += keylen;
+		ft_strlcpy(n_token + i[1], t + i[0], ft_strlen(t) - i[0] + 1);
 	}
-	return (free(token), new_token);
+	free(t);
+	return (n_token);
 }
 
 int	pars_exp_loop(t_data *data, char **raw_cmd, int *i)

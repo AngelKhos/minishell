@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:10:36 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/27 15:07:55 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 14:57:21 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char	**ms_split(char *input_str, char *separator)
 		return (NULL);
 	if (!fill_token(token_lst, input_str, separator, nbr_token))
 	{
-		free_array(token_lst);
+		free_array(token_lst, 0);
 		return (NULL);
 	}
 	return (token_lst);

@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/29 14:15:17 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 14:48:26 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**convert_part_to_arg(t_data *data, int index)
 		cmd[i] = ft_strdup(data->cmd[index].parts[i].str);
 		if (!cmd[i])
 		{
-			free_array(cmd);
+			free_array(cmd, 0);
 			return (NULL);
 		}
 		i++;
@@ -62,7 +62,7 @@ int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 			return (0);
 	data->pid = fork();
 	if (data->pid == -1)
-		return (close_pipe_in_exec_cmd(prev_pipe, curr_pipe), 0);
+		return (close_pipe_in_exec_cmd(prev_pipe, curr_pipe));
 	if (data->pid == 0)
 	{
 		double_free(pids, data->input, 0);
@@ -94,7 +94,7 @@ int	read_cmd(t_data *data)
 	if (data->nb_pipes > 0)
 	{
 		if (pipe(prev_pipe) == -1)
-			return (free(pids), 0);
+			return (double_free(pids, NULL, 0));
 	}
 	while (cmd_index <= data->nb_pipes)
 	{
@@ -105,5 +105,5 @@ int	read_cmd(t_data *data)
 	wait_all(data, pids);
 	read_cmd_end_close(data, prev_pipe);
 	close_redir(data);
-	return (free(pids), 1);
+	return (double_free(pids, NULL, 1));
 }

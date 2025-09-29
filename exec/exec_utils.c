@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/28 16:18:34 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 15:14:58 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,26 @@ char	*find_loop_while(char **paths, char *cmd, int *code)
 	size_t	i;
 
 	path = NULL;
-	i = 0;
+	i = -1;
 	path_no_cmd = NULL;
-	while (paths[i])
+	while (paths[++i])
 	{
 		path_no_cmd = ft_strjoin(paths[i], "/");
 		if (!path_no_cmd)
-			return (free_array(paths), NULL);
+			return (free_array_ptr(paths));
 		(void)cmd;
 		path = ft_strjoin(path_no_cmd, cmd);
 		free(path_no_cmd);
 		if (!path)
-			return (free_array(paths), NULL);
+			return (free_array_ptr(paths));
 		if (access_bin(path, code) == 0)
-			return (free_array(paths), path);
+		{
+			free_array(paths, 0);
+			return (path);
+		}
 		free(path);
-		i++;
 	}
-	return (free_array(paths), NULL);
+	return (free_array_ptr(paths));
 }
 
 char	*find_loop(char	**paths, char *cmd, int *code)
@@ -67,11 +69,11 @@ char	*find_loop(char	**paths, char *cmd, int *code)
 	{
 		if (access_bin(cmd, code) == 0)
 		{
-			free_array(paths);
+			free_array(paths, 0);
 			return (cmd);
 		}
 	}
-	free_array(paths);
+	free_array(paths, 0);
 	return (NULL);
 }
 
@@ -100,9 +102,9 @@ int	execute(char **cmd, char **envp)
 	int		code;
 
 	if (!cmd)
-		return (free_array(envp), 0);
+		return (free_array(envp, 0));
 	if (!*cmd)
-		return (free(cmd), free_array(envp), 1);
+		return (free_more(cmd, envp, 1));
 	code = 0;
 	path = find_path(cmd[0], envp, &code);
 	if (!path)
@@ -111,14 +113,13 @@ int	execute(char **cmd, char **envp)
 			ft_dprintf(2, "\e[1;37m%s\e[0m : Command not found\n", cmd[0]);
 		if (code == 126)
 			ft_dprintf(2, "\e[1;37m%s\e[0m : Permission denied\n", cmd[0]);
-		free_array(envp);
-		return (free_array(cmd), code);
+		free_array(envp, 0);
+		return (free_array(cmd, code));
 	}
 	if (execve(path, cmd, envp) == -1)
 	{
-		free_array(envp);
-		free_array(cmd);
-		return (0);
+		free_array(envp, 0);
+		return (free_array(cmd, 0));
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/28 19:43:21 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 15:51:05 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 		close(cmd->infile);
 	cmd->infile = here_doc(name, &(cmd->hd_name), data);
 	if (cmd->infile == -1)
-		return (unlink(cmd->hd_name), free(cmd->hd_name), i);
+		return (double_free(cmd->hd_name, NULL, i));
 	cmd->here_doc = 1;
 	return (i);
 }

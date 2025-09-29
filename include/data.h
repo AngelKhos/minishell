@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/29 14:20:08 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 15:12:25 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,15 @@ int		unset(t_data *data, int cmd_index);
 
 //////////////// FREE ////////////////
 
-void	free_array(char **array);
+int		free_array(char **array, int ret);
+int		free_more(void *to_free, char **array, int ret);
 void	free_data(t_data *data);
 void	free_cmd(t_data *data);
 void	close_file(t_data *data);
 void	close_here_doc(t_cmd *cmd);
 int		double_free(void *ptr1, void *ptr2, int ret);
+void	*double_free_ptr(void *ptr1, void *ptr2);
+void	*free_array_ptr(char **array);
 int		spe_free(t_data *data, char **envp);
 
 //////////////// INIT ////////////////

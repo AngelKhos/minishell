@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:20:49 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/14 15:09:18 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 14:58:12 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	checking_missing_command(char *input)
 					|| str[i] == '\r' || str[i] == '\f'))
 				i++;
 			if (!str[i] || str[i] == '|')
-				return (free(str), 0);
+				return (double_free(str, NULL, 0));
 		}
 		i++;
 	}

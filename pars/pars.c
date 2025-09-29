@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:11:18 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/28 20:10:12 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 15:41:41 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,31 @@ void	rm_quotes(char **split)
 	}
 }
 
-void	alloc_when(t_data *data, int i, int part_i)
+int	alloc_when(t_data *data, int i, int part_i)
 {
 	free(data->cmd[i].parts);
 	data->cmd[i].parts = ft_calloc(sizeof(t_part), 1);
 	if (!data->cmd[i].parts)
-		return ;
+		return (0);
 	data->cmd[i].parts[part_i].str = NULL;
 	data->cmd[i].parts[part_i].type = CMD;
+	return (1);
 }
 
-void	alloc_cmd_part_2(char **raw_cmd, t_data *data, size_t i, int is_cmd)
+int	alloc_cmd_part_2(char **raw_cmd, t_data *data, size_t i, int is_cmd)
 {
 	size_t	part_i;
 
 	part_i = 0;
 	rm_quotes(raw_cmd);
 	data->cmd[i].len = get_tablen(raw_cmd);
-	data->cmd[i].parts = ft_calloc(sizeof(t_part), get_tablen(raw_cmd)); // LEAK / SEGFAULT
+	data->cmd[i].parts = ft_calloc(sizeof(t_part), get_tablen(raw_cmd));
+	if (!data->cmd[i].parts)
+		return (0);
 	if (!raw_cmd)
 		return (alloc_when(data, i, part_i));
 	if (!data->cmd[i].parts)
-		return (free_array(raw_cmd));
+		return (free_array(raw_cmd, 0));
 	while (raw_cmd[part_i])
 	{
 		data->cmd[i].parts[part_i].str = ft_strdup(raw_cmd[part_i]);
@@ -64,7 +67,7 @@ void	alloc_cmd_part_2(char **raw_cmd, t_data *data, size_t i, int is_cmd)
 			data->cmd[i].parts[part_i].type = ARG;
 		part_i++;
 	}
-	free_array(raw_cmd);
+	return (free_array(raw_cmd, 1));
 }
 
 int	alloc_cmd(t_data *data, char **inputs)
@@ -83,10 +86,14 @@ int	alloc_cmd(t_data *data, char **inputs)
 		if (!parsed_input)
 			return (0);
 		if (!pars_exp(data, &parsed_input))
-			return (free(parsed_input), 0);
+		{
+			free(parsed_input);
+			return (0);
+		}
 		raw_cmd = ms_split(parsed_input, " \r\t\v\f");
 		free(parsed_input);
-		alloc_cmd_part_2(raw_cmd, data, i, is_cmd);
+		if (!alloc_cmd_part_2(raw_cmd, data, i, is_cmd))
+			return (free_array(raw_cmd, 0));
 		i++;
 	}
 	return (1);
@@ -110,9 +117,13 @@ int	parsing(t_data *data)
 	{
 		ft_dprintf(2, "Error: error in parsing\n");
 		free(data->cmd);
-		return (free_array(inputs), 0);
+		return (free_array(inputs, 0));
 	}
 	if (!alloc_cmd(data, inputs))
-		return (close_file(data), free_array(inputs), free(data->cmd), 0);
-	return (free_array(inputs), 1);
+	{
+		close_file(data);
+		free(data->cmd);
+		return (free_array(inputs, 0));
+	}
+	return (free_array(inputs, 1));
 }
