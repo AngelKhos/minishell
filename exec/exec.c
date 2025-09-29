@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:20:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/25 16:10:09 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/29 14:15:17 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**convert_part_to_arg(t_data *data, int index)
 	return (cmd);
 }
 
-void	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2])
+int	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2])
 {
 	if (prev_pipe[0] != -1)
 		close(prev_pipe[0]);
@@ -47,6 +47,7 @@ void	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2])
 		close(prev_pipe[1]);
 	prev_pipe[0] = curr_pipe[0];
 	prev_pipe[1] = curr_pipe[1];
+	return (0);
 }
 
 int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
@@ -64,7 +65,7 @@ int	exec_cmd(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 		return (close_pipe_in_exec_cmd(prev_pipe, curr_pipe), 0);
 	if (data->pid == 0)
 	{
-		double_free(pids, data->input);
+		double_free(pids, data->input, 0);
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
 		code = child_proc(data, prev_pipe, curr_pipe, cmd_index);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 13:14:18 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/10 17:27:33 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/29 14:10:47 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,15 @@ int	ft_isok(char *str)
 int	export_part_2(t_env *leaf)
 {
 	if (!leaf->data.key)
-		return (free(leaf), 1);
+	{
+		free(leaf);
+		return (1);
+	}
 	if (ft_isok(leaf->data.key) == 0)
-		return (tree_delete_node(leaf), 1);
+	{
+		tree_delete_node(leaf);
+		return (1);
+	}
 	return (0);
 }
 
@@ -58,7 +64,10 @@ int	export_core(t_data *data, t_cmd *cmd, int part_i)
 	if (!leaf)
 		return (1);
 	if (!leaf->data.key)
-		return (tree_delete_node(leaf), 1);
+	{
+		tree_delete_node(leaf);
+		return (1);
+	}
 	code = export_part_2(leaf);
 	if (code == 1)
 		return (code);

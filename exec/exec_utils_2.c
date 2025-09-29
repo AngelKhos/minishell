@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:23:30 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/14 14:49:28 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 14:20:50 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	child_proc(t_data *data, int prev_pipe[2], int curr_pipe[2], int cmd_i)
 	}
 	cmd = convert_part_to_arg(data, cmd_i);
 	if (!cmd)
-		return (free_cmd(data), free_data(data), free_array(envp), 0);
+		return (spe_free(data, envp));
 	redir_pipe(data, prev_pipe, curr_pipe, cmd_i);
 	redir_file(data, prev_pipe, curr_pipe, cmd_i);
 	close_child_pipe(prev_pipe, curr_pipe);

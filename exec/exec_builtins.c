@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:49 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/14 16:40:02 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 14:16:04 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ int	exec_builtins(t_data *data, int prev_pipe[2], int *pids, int cmd_index)
 			return (0);
 	data->pid = fork();
 	if (data->pid == -1)
-		return (close_pipe_in_exec_cmd(prev_pipe, curr_pipe), 0);
+		return (close_pipe_in_exec_cmd(prev_pipe, curr_pipe));
 	if (data->pid == 0)
 	{
-		double_free(pids, data->input);
+		double_free(pids, data->input, 0);
 		builtins_child(data, prev_pipe, curr_pipe, cmd_index);
 		code = builtins_if(data, cmd_index);
 		free_in_builtins_child(data);

@@ -6,16 +6,17 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 10:58:42 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/14 14:58:26 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 14:18:18 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "../include/data.h"
 
-void	double_free(void *ptr1, void *ptr2)
+int	double_free(void *ptr1, void *ptr2, int ret)
 {
 	free(ptr1);
 	free(ptr2);
+	return (ret);
 }
 
 void	free_array(char **array)
@@ -30,4 +31,12 @@ void	free_array(char **array)
 	}
 	free(array);
 	array = NULL;
+}
+
+int spe_free(t_data *data, char **envp)
+{
+	free_cmd(data);
+	free_data(data);
+	free_array(envp);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_default_env.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:56:56 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/25 16:08:07 by gchauvet         ###   ########.fr       */
+/*   Updated: 2025/09/29 14:14:28 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	init_default_env(t_data *data)
 			return (free(shlvl), 0);
 		shlvl->data.value = ft_strdup("0");
 		if (!shlvl->data.value)
-			return (free(shlvl->data.key), free(shlvl), 0);
+			return (double_free(shlvl->data.key, shlvl, 0));
 		add_to_env(data, shlvl);
 	}
 	if (alloc_pwd(data, pwd) == 0)

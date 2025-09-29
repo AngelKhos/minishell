@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/28 19:42:43 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/29 14:20:08 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	free_data(t_data *data);
 void	free_cmd(t_data *data);
 void	close_file(t_data *data);
 void	close_here_doc(t_cmd *cmd);
-void	double_free(void *ptr1, void *ptr2);
+int		double_free(void *ptr1, void *ptr2, int ret);
+int		spe_free(t_data *data, char **envp);
 
 //////////////// INIT ////////////////
 
@@ -111,7 +112,7 @@ void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
 int		child_proc(t_data *data, int prev_pipe[2],
 			int curr_pipe[2], int cmd_index);
 int		read_cmd(t_data *data);
-void	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2]);
+int 	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2]);
 void	close_redir(t_data *data);
 void	close_redir_one_cmd(t_cmd cmd);
 
