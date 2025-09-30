@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: gchauvet <gchauvet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:30:45 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/29 15:14:58 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/30 21:25:54 by gchauvet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int	execute(char **cmd, char **envp)
 	}
 	if (execve(path, cmd, envp) == -1)
 	{
+		free(path);
 		free_array(envp, 0);
 		return (free_array(cmd, 0));
 	}
