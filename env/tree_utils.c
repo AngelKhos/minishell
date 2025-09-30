@@ -22,12 +22,17 @@ t_env	*envp_to_tree(char **envp)
 	int		i;
 
 	root = env_parse_node(envp[0]);
+	if (!root)
+		return (NULL);
 	i = 1;
 	while (envp[i])
 	{
 		leaf = env_parse_node(envp[i]);
 		if (!leaf)
+		{
+			tree_destroy(root);
 			return (NULL);
+		}
 		tree_insert(root, leaf);
 		i++;
 	}
