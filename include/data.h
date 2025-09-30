@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:16:25 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/29 15:12:25 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/30 19:20:07 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	redir_file(t_data *data, int pr_pip[2], int cur_pip[2], int cmd_index);
 int		child_proc(t_data *data, int prev_pipe[2],
 			int curr_pipe[2], int cmd_index);
 int		read_cmd(t_data *data);
-int 	close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2]);
+int		close_pipe_in_exec_cmd(int prev_pipe[2], int curr_pipe[2]);
 void	close_redir(t_data *data);
 void	close_redir_one_cmd(t_cmd cmd);
 
@@ -141,7 +141,7 @@ int		get_tablen(char **inputs);
 int		is_redir(char *input);
 void	init_redir_fd(t_data *data, int input_len);
 int		is_in_out(char c);
-char	*get_name(char *input, int i, int j, t_data *data, int is_heredoc);
+char	*get_name(char *input, int i, int j, t_data *data);
 int		permission_denied(int type, char *name, t_data *data);
 int		unexpected_token(int type, t_data *data);
 int		is_exp(char *input);
@@ -150,6 +150,7 @@ int		is_code(char *token, char **value, int *key_len, t_data *data);
 int		handle_heredoc(char *input, t_cmd *cmd, t_data *data);
 int		handle_infile(char *input, t_cmd *cmd, t_data *data);
 int		handle_outfile(char *input, t_cmd *cmd, t_data *data);
+int		name_delimiter(char *input, size_t *i, size_t *j);
 char	*pars_redir(char *input, t_cmd *cmd, t_data *data);
 
 /////////////// SIGNALS /////////////

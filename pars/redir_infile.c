@@ -6,7 +6,7 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 17:26:39 by authomas          #+#    #+#             */
-/*   Updated: 2025/09/29 15:51:05 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/30 19:19:36 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,12 @@ int	is_redir(char *input)
 	return (0);
 }
 
-char	*get_name(char *input, int i, int j, t_data *data, int is_heredoc)
+char	*get_name_hd(char *input, int i, int j)
 {
 	char	*name;
 
 	name = ft_substr(input, j, i - j);
 	if (!name)
-		return (NULL);
-	if (!is_heredoc && !pars_exp(data, &name))
 		return (NULL);
 	name = strdup_wquotes(name);
 	return (name);
@@ -52,18 +50,9 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 	i = 0;
 	if (!input[i])
 		return (unexpected_token(1, data));
-	while (input[i] && ft_isspace(input[i]))
-		i++;
-	j = i;
-	if (!input[i] || is_in_out(input[i]))
+	if (!name_delimiter(input, &i, &j))
 		return (unexpected_token(1, data));
-	while (input[i] && !ft_isspace(input[i]) && !is_in_out(input[i]))
-	{
-		if (input[i] == '\"' || input[i] == '\'')
-			i = skip_quote(input, i);
-		i++;
-	}
-	name = get_name(input, i, j, data, 1);
+	name = get_name_hd(input, i, j);
 	if (!name)
 		return (0);
 	if (cmd->infile != -1)
@@ -77,25 +66,16 @@ int	handle_heredoc(char *input, t_cmd *cmd, t_data *data)
 
 int	handle_infile_loop(char *input, t_cmd *cmd, t_data *data)
 {
-	int		i;
-	int		j;
-	char	*name;
+	size_t		i;
+	size_t		j;
+	char		*name;
 
 	i = 0;
 	if (!input)
 		return (unexpected_token(1, data));
-	while (input[i] && ft_isspace(input[i]))
-		i++;
-	j = i;
-	if (!input[i] || input[i] == '<' || input[i] == '>')
+	if (!name_delimiter(input, &i, &j))
 		return (unexpected_token(1, data));
-	while (input[i] && !ft_isspace(input[i]) && !is_in_out(input[i]))
-	{
-		if (input[i] == '\"' || input[i] == '\'')
-			i = skip_quote(input, i);
-		i++;
-	}
-	name = get_name(input, i, j, data, 0);
+	name = get_name(input, i, j, data);
 	if (!name)
 		return (0);
 	if (cmd->infile != -1)

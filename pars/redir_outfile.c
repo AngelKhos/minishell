@@ -6,11 +6,24 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 16:04:37 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/28 19:44:07 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/30 19:18:38 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
+
+char	*get_name(char *input, int i, int j, t_data *data)
+{
+	char	*name;
+
+	name = ft_substr(input, j, i - j);
+	if (!name)
+		return (NULL);
+	if (!pars_exp(data, &name))
+		return (NULL);
+	name = strdup_wquotes(name);
+	return (name);
+}
 
 static int	handle_outfile_append(char *input,
 				t_cmd *cmd, int i[2], t_data *data)
@@ -30,7 +43,7 @@ static int	handle_outfile_append(char *input,
 			i[0] = skip_quote(input, i[0]);
 		i[0]++;
 	}
-	name = get_name(input, i[0], i[1], data, 0);
+	name = get_name(input, i[0], i[1], data);
 	if (!name)
 		return (0);
 	if (cmd->outfile != -1)
@@ -59,7 +72,7 @@ static int	handle_outfile_trunc(char *input, t_cmd *cmd,
 			i[0] = skip_quote(input, i[0]);
 		i[0]++;
 	}
-	name = get_name(input, i[0], i[1], data, 0);
+	name = get_name(input, i[0], i[1], data);
 	if (!name)
 		return (0);
 	if (cmd->outfile != -1)

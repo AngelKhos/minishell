@@ -6,11 +6,27 @@
 /*   By: authomas <authomas@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:28:11 by gchauvet          #+#    #+#             */
-/*   Updated: 2025/09/29 15:10:51 by authomas         ###   ########lyon.fr   */
+/*   Updated: 2025/09/30 19:19:49 by authomas         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/data.h"
+
+int	name_delimiter(char *input, size_t *i, size_t *j)
+{
+	while (input[*i] && ft_isspace(input[*i]))
+		(*i)++;
+	*j = *i;
+	if (!input[*i] || is_in_out(input[*i]))
+		return (0);
+	while (input[*i] && !ft_isspace(input[*i]) && !is_in_out(input[*i]))
+	{
+		if (input[*i] == '\"' || input[*i] == '\'')
+			*i = skip_quote(input, *i);
+		(*i)++;
+	}
+	return (1);
+}
 
 static void	pars_redir_quote(char *input, t_redir *redir)
 {
